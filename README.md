@@ -64,7 +64,7 @@ here:**
 
 
 Mockup photos
-![Homepage](/static/images/homepagemockup.png)
+![Homepage](/static/images/homepagemockup.PNG)
 
 This is our stock application homepage. The application itself is leaning towards more of a *stock tips* direction instead of trading so there are social media elements.
 This homepage describes the site for a new user and shows trending posts with tips that are getting a lot of traction and stocks that are on the rise.
