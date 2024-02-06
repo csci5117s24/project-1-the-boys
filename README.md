@@ -64,20 +64,20 @@ here:**
 
 
 Mockup photos
-![Homepage](/static/images/homepagemockup.png?raw=true)
+![Homepage](/static/images/homepagemockup.png)
 
 This is our stock application homepage. The application itself is leaning towards more of a *stock tips* direction instead of trading so there are social media elements.
 This homepage describes the site for a new user and shows trending posts with tips that are getting a lot of traction and stocks that are on the rise.
 
-![Profile Page](/static/images/profilepagemockup.png?raw=true)
+![Profile Page](/static/images/profilepagemockup.png)
 
 This is a basic user profile page. When users create an account they can customize this page in a variety of ways, they can then create posts and manage notification settings.
-![Feed Page](/static/images/feedpagemockup.png?raw=true)
+![Feed Page](/static/images/feedpagemockup.png)
 
 This is the very low fidelity outline of what our feed page will look like. Each tip/post will have interaction options for other users in the community (like, comment etc). 
 Further modifications will likely be made but this is low-fidelity stuff.
 
-![Browse Stocks](/static/images/browsestocksmockup.png?raw=true)
+![Browse Stocks](/static/images/browsestocksmockup.png)
 
 A website dedicated to stocks would be incomplete without a means to browse through them. Although we no longer plan to facilitate stock transactions, we have a page that displays stock information.
 There will likely be different pages based on how you want the information displayed (graphs/lists) and different filter options depending on how things pan out with the stock API.
