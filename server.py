@@ -3,7 +3,6 @@ from flask import Flask, render_template, url_for, request, redirect
 from jinja2 import Environment, Template
 import os
 from contextlib import contextmanager
-from datebase_stuff import store_results, fetch_results, setup
 import json
 
 app = Flask(__name__)
