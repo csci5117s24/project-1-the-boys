@@ -11,24 +11,23 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
         
     <body>
+        <div class="pure-g" id="topBar">
+            <div class="pure-u-3-24">
+                <button id="moreButton">More</button>
 
-        <div class= "pure-g" id="sortButton">
-            <div class="pure-u-1-5">
-                <button type="button" id="sort">Sort</button>
             </div>
-            <div class="pure-u-3-5" id="searchBar">
-                <form class="pure-form">
-                    <input type="text" placeholder="Search" id="search" required size="25" class="pure-input-rounded" />
-                    <button type="submit" class="pure-button pure-button-primary">Search</button>
-                </form>
-                
+            <div class="pure-u-18-24">
+                <h1>Stock Up</h1>
             </div>
-            <div class="pure-u-1-5" id="cornerProfileButton">
-                <button type="button">
+            <div class="pure-u-3-24">
+                <button id="profileButton">Profile</button>
             </div>
-            
         </div>
+
         
+        {%block content%}
+        
+        {%endblock%}
         
     </body>
 </html>

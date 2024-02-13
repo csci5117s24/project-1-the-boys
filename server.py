@@ -10,5 +10,5 @@ environment = Environment
 
 @app.route("/", methods=['GET'])
 def mainpage():
-    url_for('static', filename = 'styling/styling.css')
-    return render_template('frame.html') #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    url_for('static', filename = 'styling/style.css')
+    return render_template('mainpage.html') #This will be changed when the basic frame is created and then used as an extension for all of our pages

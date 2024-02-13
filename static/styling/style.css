@@ -1,0 +1,19 @@
+body{
+    margin:0;
+    background-color: #0C1D48;
+}
+#topBar{
+    background-color: #000939;
+    height: 10vh;
+    width: 100vw;
+}
+.pure-u-3-24{
+    text-align: center;
+    position: relative;
+    top: 50%;
+}
+#risingStocks, #fallingStocks{
+    margin-top:5%;
+    border-style: solid;
+    border-radius: 2vw;
+}
