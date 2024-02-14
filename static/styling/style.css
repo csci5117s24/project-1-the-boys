@@ -17,9 +17,9 @@ body{
 .sideColumn, .centerColumn{
     margin-top:5%;
     border-style: solid;
-    /* border-radius: 2vw; */
+    text-align: center;
     
-    height: 100%;
+    height: 95%;
 }
 div h1{
     font-size: medium;
@@ -27,7 +27,7 @@ div h1{
 }
 
 .sideBarHeaders{
-    margin-top: 5%;
+    
     height:8vh;
     width:100%;
     background-color:black;
@@ -39,4 +39,12 @@ div h1{
     height:8vh;
     color:white;
 }
+h3{
+    margin-top:0;
+}
 
+.sideBarContent{
+    background-color: #000939;
+    height:100%;
+    width:100%;
+}

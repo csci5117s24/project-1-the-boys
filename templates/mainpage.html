@@ -2,17 +2,24 @@
 {%block left%}
 <div class="sideBarHeaders">
     <h3>
-        Top Risers
+        Rising Stocks
     </h3>
+    <div class="sideBarContent">
+        <h2>{{topStock[0]}}</h2>
+        <h2>+${{topStock[1]}}</h2>
+        <h2>High ${{topStock[2]}}</h2>
+        <h2>Low ${{topStock[3]}}</h2>
+
+    </div>
 
 </div>
 
 {%endblock%}
 {%block center%}
 <div class="centerTrendingHeader">
-    <h2>
+    <h3>
         Trending posts
-    </h2>
+    </h3>
 
 </div>
 {%endblock%}
