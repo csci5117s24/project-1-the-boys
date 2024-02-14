@@ -17,10 +17,8 @@ body{
 .sideColumn, .centerColumn{
     margin-top:5%;
     border-style: solid;
-    border-radius: 2vw;
-    display:flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    /* border-radius: 2vw; */
+    
     height: 100%;
 }
 div h1{
@@ -29,6 +27,7 @@ div h1{
 }
 
 .sideBarHeaders{
+    margin-top: 5%;
     height:8vh;
     width:100%;
     background-color:black;
@@ -37,7 +36,7 @@ div h1{
 }
 .centerTrendingHeader{
     background-color: black;
-    height:10vh;
+    height:8vh;
     color:white;
 }
 
