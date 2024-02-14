@@ -17,3 +17,19 @@ body{
     border-style: solid;
     border-radius: 2vw;
 }
+#profile-container
+{
+    background-color: blueviolet;
+    position: center;
+}
+#profile-table
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+#signup-container
+{
+    margin-left:auto;
+    margin-right: auto;
+    background-color: rgb(5, 5, 59);
+}
