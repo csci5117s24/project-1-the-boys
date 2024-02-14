@@ -1,0 +1,2 @@
+CREATE TABLE userData (ID SERIAL references userInfo(ID),profilePic bytea, realName varchar(20));
+CREATE TABLE userInfo (ID SERIAL NOT NULL PRIMARY KEY,username varchar(20), password varchar(20));
