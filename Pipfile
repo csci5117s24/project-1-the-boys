@@ -7,6 +7,9 @@ name = "pypi"
 flask = "*"
 jinja2 = "*"
 requests = "*"
+authlib = "*"
+psycopg = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
