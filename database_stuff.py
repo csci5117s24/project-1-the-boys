@@ -7,11 +7,8 @@ import logging
 from psycopg2.pool import ThreadedConnectionPool
 from psycopg2.extras import DictCursor
 from stock_api import *
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, current_app, app
 import os
-
-
-
 
 
 
