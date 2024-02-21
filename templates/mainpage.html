@@ -1,34 +1,35 @@
 {%extends "columns.html"%}
-{%block left%}
-<div class="sideBarHeaders">
-    <h3>
-        Rising Stocks
-    </h3>
-    <div class="sideBarContent">
-        <h2>{{topStock[0]}}</h2>
-        <h2>+${{topStock[1]}}</h2>
-        <h2>High ${{topStock[2]}}</h2>
-        <h2>Low ${{topStock[3]}}</h2>
+{%block main%}
 
-    </div>
-
-</div>
-
+<h2>Trending Posts</h2>
+    
 {%endblock%}
-{%block center%}
-<div class="centerTrendingHeader">
-    <h3>
-        Trending posts
-    </h3>
 
-</div>
+{%block secondary%}
+<h2>Something stocks</h2>
+<table class="pure-table pure-table-bordered">
+    <thead>
+        <tr>
+            
+            <th>Symbol</th>
+            <th>Name</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {%for stock in splist%}
+        <tr>
+            
+           <td><a href="https://finance.yahoo.com/quote/"+{{stock.symbol}}>{{stock.symbol}}</td>
+            <td>{{stock.name}}</td>
+            
+        </tr>
+        {%endfor%}
+       
+    </tbody>
+</table>
 {%endblock%}
-{%block right%}
-<div class="sideBarHeaders">
-    <h3>
-        Falling Stocks
-    </h3>
 
-</div>
-
+{%block tertiary%}
+<h2>Something stocks</h2>
 {%endblock%}

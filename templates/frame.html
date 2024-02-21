@@ -1,33 +1,53 @@
-<!DOCTYPE html>
 
-<html>
+<!doctype html>
+<html lang="en">
+<head>
     <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Stock Website</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../static/styling/style.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
-        
-    <body>
-        <div class="pure-g" id="topBar">
-            <div class="pure-u-3-24" >
-                <button id="moreButton" class="pure-button-primary">More</button>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Responsive Side Menu &ndash; Layout Examples &ndash; Pure</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/styling/style.css">
+</head>
+<body>
 
-            </div>
-            <div class="pure-u-18-24">
-                <h1>Stock Up</h1>
-            </div>
-            <div class="pure-u-3-24">
-                <button id="profileButton" class="pure-button-primary">Profile</button>
-            </div>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#company">Stock Up</a>
+
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><a href="#home" class="pure-menu-link">Home</a></li>
+                <li class="pure-menu-item"><a href="#about" class="pure-menu-link">About</a></li>
+
+                <li class="pure-menu-item menu-item-divided pure-menu-selected">
+                    <a href="#" class="pure-menu-link">Services</a>
+                </li>
+
+                <li class="pure-menu-item"><a href="#contact" class="pure-menu-link">Contact</a></li>
+            </ul>
         </div>
-        {%block content%}
+        <div >
+            <img src="../static/images/profile-user.png"  id="user-menu-photo" />
+        </div>
+        
 
-        {%endblock%}
-        
-        
-        
-    </body>
+    </div>
+
+    {%block content%}
+    {%endblock%}
+       
+    </div>
+</div>
+
+<script src="../static/js/us.js"></script>
+
+</body>
 </html>
