@@ -64,18 +64,15 @@ here:**
 
 
 Mockup photos
-![Homepage](/static/images/frontpage.jpg)
+![Homepage](/static/images/landingpage.jpg)
 
-This is our stock application homepage. The application itself is leaning towards more of a *stock tips* direction instead of trading so there are social media elements. The homepage shows top stock gains (with a related user post), stock losses (with a related user post), and trending posts from the users on the app. There are two main buttons, one for a profile dropdown and the other for more site navigation
-![Profile Page](/static/images/signup.JPG)
-This is the user signup page and user profile page, what the user can customize is still under discussion as we continue to design our tables.
+This is our stock application homepage. The application itself is leaning towards more of a *stock tips* direction instead of trading so there are social media elements. The homepage shows trending user posts, and two sections of stock data that is yet to be decided (possibly set by the user). The top left has the placeholder name of the site "Stock Up", the user will be prompted to create an account if not logged in or taken to the home page. The home button will redirect the user to the / landing page.  When you click the profile picture popup, the buttons will redirect the user to OAUTH. If a user is logged in and the click the profile picture, they will be redirected to their profile page. If a user is logged in, there will be a button to create a post (like on the left). When a user makes a search, the trending posts section is replaced by the results. Each post has the ability to be liked by logged in users.
+![Create Post](/static/images/post.JPG)
+Create post view.
+![Profile Page](/static/images/sideprofile.JPG)
+This is how viewing user profiles will look, the left is a logged in user looking at their own account and the right is otherwise. We do intend to allow the user to set their picture and edit their account information. Content created by a user can be edited/deleted through their profile page while logged in.
 
-![Feed Page](/static/images/userfeed.JPG)
 
-This is a basic user feed page. It is focused solely on the people that the user follows with some other information not yet decided upon. There is also the option to create a post from the top right button. There are interaction buttons for like, repost and comment.
 
-![Browse Stocks](/static/images/stockview.JPG)
-
-A website dedicated to stocks would be incomplete without a means to browse through them. Although we no longer plan to facilitate stock transactions, we have a page that displays stock information. This information is going to be embedded in the webpage from an existing stock API
 
 
