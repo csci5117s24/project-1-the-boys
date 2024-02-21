@@ -76,11 +76,9 @@ This is how viewing user profiles will look, the left is a logged in user lookin
 
 
 ![Profile Page](/static/images/figma_edit_profile.JPG)
-
+this is the page if you click the edit gear icon
 
 ![Profile Page](/static/images/figma_signup_with_stuff.JPG)
-
-
-![Profile Page](/static/images/figma_edit_signup.JPG)
+this is if you click the main page without being signed in. clicking signup will redirect to oauth which callback will be the edit profile
 
 
