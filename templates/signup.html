@@ -2,7 +2,6 @@
 {%block content%}
 <div id="signup-container">
     
-
     <form action="/submitUser" method="POST" class="pure-form pure-form-stacked">
         <fieldset>
             <legend>CSCI 5117 survey Maurice Yu</legend>
@@ -13,12 +12,8 @@
                 <span class="pure-form-message-inline">This is a required field.</span>
             </div>
             <div class="pure-control-group">
-                <label for="aligned-password">Password</label>
-                <input type="password" id="aligned-password" name="password" placeholder="Password" />
-            </div>
-            <div class="pure-control-group">
-                <label for="aligned-password">Repeat password</label>
-                <input type="password" id="aligned-password" placeholder="Password" />
+                <label for="aligned-password">Realname</label>
+                <input type="password" id="aligned-password" name="realname" placeholder="Password" />
             </div>
             <button type="submit" class="pure-button pure-button-primary">submit</button>
         </fieldset>

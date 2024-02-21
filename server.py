@@ -67,6 +67,29 @@ def logout():
         )
     )
 
+@app.route("/callback", methods=["GET", "POST"])
+def callback():
+    token = oauth.auth0.authorize_access_token()
+    session["user"] = token
+    print (session["user"])
+    with get_db_cursor(True) as cur:
+        query = ("select ID FROM users WHERE id= %s",(session["user"].get("userinfo").get("sub")))
+        print("printing"+str(session["user"].get("sub")))
+        cur.execute("select ID FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
+        returnval = cur.fetchall()
+        if len(returnval) != 0:
+            print("found users with query: " +"and userinfo of" + str(returnval[0]))  
+
+            return render_template("profile.html")
+        else:
+            print("found no users with query: ")
+            cur.execute("INSERT INTO Users (ID, realname) VALUES (%s, %s)", (session["user"].get("userinfo").get("sub"),token.get("userinfo").get("given_name")))
+            print("\n added\n")
+            return render_template("login.html")
+            
+
+        
+
 def setup():
     global pool
     DATABASE_URL = os.environ['DATABASE_URL']
@@ -74,12 +97,19 @@ def setup():
     pool = ThreadedConnectionPool(1, 100, dsn=DATABASE_URL, sslmode='require')
 
 
+@app.route("/login")
+def login():
+    return oauth.auth0.authorize_redirect(
+        redirect_uri=url_for("callback", _external=True)
+    )
+
 @contextmanager
 def get_db_connection():
     try:
         setup()
         connection = pool.getconn()
         yield connection
+
     finally:
         pool.putconn(connection)
 
@@ -87,26 +117,13 @@ def get_db_connection():
 @contextmanager
 def get_db_cursor(commit=False):
     with get_db_connection() as connection:
-      cursor = connection.cursor(cursor_factory=DictCursor)
-      try:
-          yield cursor
-          if commit:
+        cursor = connection.cursor(cursor_factory=DictCursor)
+        try:
+            yield cursor
+            if commit:
               connection.commit()
-      finally:
-          cursor.close()
-
-@app.route("/login")
-def login():
-    return oauth.auth0.authorize_redirect(
-        redirect_uri=url_for("callback", _external=True)
-    )
-
-@app.route("/callback", methods=["GET", "POST"])
-def callback():
-    token = oauth.auth0.authorize_access_token()
-    session["user"] = token
-    return redirect("/")
-
+        finally:
+            cursor.close()
 
 @app.route("/profile", methods=['GET'])
 def profilepage():
