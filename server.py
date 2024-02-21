@@ -20,28 +20,25 @@ import logging
 from psycopg2.pool import ThreadedConnectionPool
 from psycopg2.extras import DictCursor
 from stock_api import *
+from database_stuff import *
 
 app = Flask(__name__)
 environment = Environment
 
-pool = None
 
-
-app = Flask(__name__)
-environment = Environment
 app.secret_key = os.environ["FLASK_SECRET"]
 
+oauth = OAuth(app)
 
-
-
-@app.route("/", methods=['GET'])
-def mainpage():
-    url_for('static', filename = 'styling/style.css')
-    splist=SPCSV()
-    splist.pop(0)
-    return render_template('frame.html', splist=splist) #This will be changed when the basic frame is created and then used as an extension for all of our pages
-
-
+oauth.register(
+    "auth0",
+    client_id=os.environ.get("AUTH0_CLIENT_ID"),
+    client_secret=os.environ.get("AUTH0_CLIENT_SECRET"),
+    client_kwargs={
+        "scope": "openid profile email",
+    },
+    server_metadata_url=f'https://{os.environ.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
+)
 
 @app.route("/logout")
 def logout():
@@ -57,6 +54,16 @@ def logout():
             quote_via=quote_plus,
         )
     )
+
+
+@app.route("/", methods=['GET'])
+def mainpage():
+    url_for('static', filename = 'styling/style.css')
+    splist=SPCSV()
+    splist.pop(0)
+    return render_template('mainpage.html', splist=splist) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+
+
 
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
@@ -81,11 +88,6 @@ def callback():
 
         
 
-def setup():
-    global pool
-    DATABASE_URL = os.environ['DATABASE_URL']
-    current_app.logger.info(f"creating db connection pool")
-    pool = ThreadedConnectionPool(1, 100, dsn=DATABASE_URL, sslmode='require')
 
 
 @app.route("/login")
@@ -94,27 +96,7 @@ def login():
         redirect_uri=url_for("callback", _external=True)
     )
 
-@contextmanager
-def get_db_connection():
-    try:
-        setup()
-        connection = pool.getconn()
-        yield connection
 
-    finally:
-        pool.putconn(connection)
-
-
-@contextmanager
-def get_db_cursor(commit=False):
-    with get_db_connection() as connection:
-        cursor = connection.cursor(cursor_factory=DictCursor)
-        try:
-            yield cursor
-            if commit:
-              connection.commit()
-        finally:
-            cursor.close()
 
 @app.route("/profile", methods=['GET'])
 def profilepage():

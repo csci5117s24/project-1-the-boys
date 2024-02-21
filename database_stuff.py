@@ -14,32 +14,8 @@ import os
 
 
 
-oauth = OAuth(app)
 
-oauth.register(
-    "auth0",
-    client_id=os.environ.get("AUTH0_CLIENT_ID"),
-    client_secret=os.environ.get("AUTH0_CLIENT_SECRET"),
-    client_kwargs={
-        "scope": "openid profile email",
-    },
-    server_metadata_url=f'https://{os.environ.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
-)
 
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect(
-        "https://" + os.environ.get("AUTH0_DOMAIN")
-        + "/v2/logout?"
-        + urlencode(
-            {
-                "returnTo": url_for("home", _external=True),
-                "client_id": os.environ.get("AUTH0_CLIENT_ID"),
-            },
-            quote_via=quote_plus,
-        )
-    )
 
 def setup():
     global pool
