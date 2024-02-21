@@ -1,0 +1,1 @@
+CREATE TABLE Users (ID VARCHAR(1700) NOT NULL PRIMARY KEY, username VARCHAR(30), realname VARCHAR(30), avatar bytea);
