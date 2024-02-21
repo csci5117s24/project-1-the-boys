@@ -75,6 +75,10 @@ Create post view.
 This is how viewing user profiles will look, the left is a logged in user looking at their own account and the right is otherwise. We do intend to allow the user to set their picture and edit their account information. Content created by a user can be edited/deleted through their profile page while logged in.
 
 
+![Profile Page](/static/images/figma_edit_profile.JPG)
+this is the page if you click the edit gear icon
 
+![Profile Page](/static/images/figma_signup_with_stuff.JPG)
+this is if you click the main page without being signed in. clicking signup will redirect to oauth which callback will be the edit profile
 
 
