@@ -1,11 +1,5 @@
 
 
-
-
-
-
-
-
 from flask import Flask, render_template, url_for, request, redirect
 from jinja2 import Environment, Template
 import os
@@ -27,6 +21,7 @@ environment = Environment
 
 
 app.secret_key = os.environ["FLASK_SECRET"]
+
 
 oauth = OAuth(app)
 
@@ -73,11 +68,13 @@ def callback():
     with get_db_cursor(True) as cur:
         query = ("select ID FROM users WHERE id= %s",(session["user"].get("userinfo").get("sub")))
         print("printing"+str(session["user"].get("sub")))
-        cur.execute("select ID FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
+        cur.execute("select * FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
         returnval = cur.fetchall()
         if len(returnval) != 0:
-            print("found users with query: " +"and userinfo of" + str(returnval[0]))  
-
+            print("found users with query: " +"and userinfo of" + str(returnval[0][0]))  
+            session["username"]=returnval[0][1]
+            session["realname"]=returnval[0][2]
+            session["avatar"]=returnval[0][3]
             return render_template("profile.html")
         else:
             print("found no users with query: ")
@@ -101,7 +98,7 @@ def login():
 @app.route("/profile", methods=['GET'])
 def profilepage():
     url_for('static', filename = 'styling/style.css')
-    return render_template('profile.html') #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('profile.html',username=session["username"],realname=session["realname"]) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 
         
@@ -110,6 +107,7 @@ def profilepage():
 def userCreate():
     createUser(request)
     return redirect("/profile")
+
 
 @app.route("/signup", methods=['GET'])
 def signup():
