@@ -28,7 +28,7 @@
 
         element.className = classes.join(' ');
     }
-
+    
     function toggleAll() {
         var active = 'active';
         var elements = getElements();

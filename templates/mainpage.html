@@ -1,13 +1,21 @@
 {%extends "columns.html"%}
 {%block main%}
 
-<h2>Trending Posts</h2>
+<h1>Trending Posts</h1>
+<div class="pure-g">
+    <div class="pure-u-1-12">
+    </div>
+    <div class="pure-u-20-24">
+    </div>
+    <div class="pure-u-1-12">
+    </div>
+</div>
     
 {%endblock%}
 
 {%block secondary%}
 <h2>Something stocks</h2>
-<table class="pure-table pure-table-bordered">
+<table class="pure-table pure-table-horizontal pure-table-striped">
     <thead>
         <tr>
             
@@ -20,7 +28,7 @@
         {%for stock in splist%}
         <tr>
             
-           <td><a href="https://finance.yahoo.com/quote/"+{{stock.symbol}}>{{stock.symbol}}</td>
+           <td><a href={{stock.link}}>{{stock.symbol}}</td>
             <td>{{stock.name}}</td>
             
         </tr>

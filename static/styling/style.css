@@ -327,14 +327,26 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     
 }
 
+
+
+
 .pure-g div:nth-child(even){
     background-color: black;
-    height:75vh;
     position:relative;
     top:50%;
 }
-.pure-g:nth-child(odd){
-    background-color: white;
-    height:30vh;
-}
 
+
+#stock-view-div, #trending-div{
+    overflow-y:scroll;
+    height:75vh;
+    display:block;
+}
+#trending-div{
+    display:flex;
+    flex-direction: column;
+}
+#top-space{
+    height: 20vh;
+    background-color: transparent;
+}

@@ -26,9 +26,6 @@ environment = Environment
 
 pool = None
 
-
-app = Flask(__name__)
-environment = Environment
 app.secret_key = os.environ["FLASK_SECRET"]
 
 
@@ -39,8 +36,10 @@ def mainpage():
     url_for('static', filename = 'styling/style.css')
     splist=SPCSV()
     splist.pop(0)
-    return render_template('frame.html', splist=splist) #This will be changed when the basic frame is created and then used as an extension for all of our pages
-
+    for stock in splist:
+        stock['link'] = "https://finance.yahoo.com/quote/"+stock["symbol"]+"?.tsrc=fin-srch"
+    
+    return render_template('mainpage.html', splist=splist) 
 
 
 

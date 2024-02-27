@@ -26,10 +26,8 @@ def fetch_tops():
 def SPCSV():
     file = open('static\csv\constituents.csv')
     csvreader = csv.reader(file)
-    
-    
     spAll = []
     for row in csvreader:
         spAll.append({"symbol":row[0],"name":row[1]})
-    print(len(spAll))
+    
     return spAll
