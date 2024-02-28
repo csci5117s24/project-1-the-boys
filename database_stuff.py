@@ -42,6 +42,7 @@ def get_db_cursor(commit=False):
       finally:
           cursor.close()
 
+
 def createUser(request):
     with get_db_cursor(True) as cur:
         current_app.logger.info("submitting form")
