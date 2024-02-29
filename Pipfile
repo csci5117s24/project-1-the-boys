@@ -10,6 +10,9 @@ requests = "*"
 authlib = "*"
 psycopg = "*"
 psycopg2 = "*"
+pandas = "*"
+lxml = "*"
+numpy = "*"
 
 [dev-packages]
 

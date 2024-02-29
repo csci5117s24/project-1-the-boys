@@ -34,12 +34,13 @@ app.secret_key = os.environ["FLASK_SECRET"]
 @app.route("/", methods=['GET'])
 def mainpage():
     url_for('static', filename = 'styling/style.css')
+    gainers=top_gainers()
     splist=SPCSV()
     splist.pop(0)
     for stock in splist:
-        stock['link'] = "https://finance.yahoo.com/quote/"+stock["symbol"]+"?.tsrc=fin-srch"
+        stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
     
-    return render_template('mainpage.html', splist=splist) 
+    return render_template('mainpage.html', splist=splist, gainers=gainers) 
 
 
 

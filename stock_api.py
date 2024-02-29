@@ -2,6 +2,8 @@
 import requests
 import json
 import csv
+import pandas as pd
+import numpy as np
 def fetch_tops():
     #change below to make the url changeable
     url="https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2024-01-03?adjusted=true&apiKey=JppXf9iaJ1aRS17NPdbBO1Xu6cWwL9QA"
@@ -13,7 +15,6 @@ def fetch_tops():
     high=0
     for stock in results:
         change=stock['h']-stock['l']
-       
         if(change>high):
             topStock=stock.get('T')
             high=change
@@ -31,3 +32,35 @@ def SPCSV():
         spAll.append({"symbol":row[0],"name":row[1]})
     
     return spAll
+
+def top_gainers():
+    data=pd.read_html("https://markets.businessinsider.com/index/market-movers/s&p_500")
+    print(data[0].columns.str.strip())
+    
+  
+    gname,gprice,gpercent,Lname,Lprice,Lpercent = [],[],[],[],[],[]
+    gainList = []
+    for i in range(13):
+        gainList.append({"gname":data[0]["Name"].get(i),"gprice":data[0]["Latest Price Previous Close"].get(i)})
+        
+    # for i in range(13):
+    #     gname.append(data[0]["Name"].get(i))
+    #     gprice.append(data[0]["Latest Price Previous Close"].get(i))
+    #     gpercent.append(data[0]["+/- %"].get(i))
+    #     Lname.append(data[1]["Name"].get(i))
+    #     Lprice.append(data[1]["Latest Price Previous Close"].get(i))
+    #     Lpercent.append(data[1]["+/- %"].get(i))
+   
+    Gainers=[
+        gname,
+        gprice
+        # gpercent,
+        # Lname,
+        # Lprice,
+        # Lpercent    
+    ]
+    
+    
+
+    
+    return gainList

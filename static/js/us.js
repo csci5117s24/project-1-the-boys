@@ -52,3 +52,14 @@
     document.addEventListener('click', handleEvent);
 
 }(this, this.document));
+
+// let menu = document.getElementById("menu")
+
+// let items = menu.getElementsByTagName("li")
+// for(item of items){
+//     item.addEventListener("click",()=>{
+//         console.log(item.toggleClass("pure-menu-selected"))
+//     });
+// }
+
+
