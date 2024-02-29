@@ -14,7 +14,31 @@
 {%endblock%}
 
 {%block secondary%}
-<h2>Something stocks</h2>
+<h2>Top Gainers</h2>
+<table class="pure-table pure-table-horizontal pure-table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+
+        
+        
+    </tr>
+</thead>
+<tbody>
+{%for data in gainers%}
+    <tr>
+        <td>{{data.gname}}</td> 
+        <td>{{data.gprice}}</td> 
+    </tr>
+    {%endfor%}
+</tbody>
+</table>
+{%endblock%}
+
+{%block tertiary%}
+
+<h2>List of stocks</h2>
 <table class="pure-table pure-table-horizontal pure-table-striped">
     <thead>
         <tr>
@@ -34,28 +58,5 @@
         {%endfor%}
        
     </tbody>
-</table>
-{%endblock%}
-
-{%block tertiary%}
-<h2>Something stocks</h2>
-<table class="pure-table pure-table-horizontal pure-table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-
-        
-        
-    </tr>
-</thead>
-<tbody>
-{%for data in gainers%}
-    <tr>
-        <td>{{data.gname}}</td> 
-        <td>{{data.gprice}}</td> 
-    </tr>
-    {%endfor%}
-</tbody>
 </table>
 {%endblock%}
