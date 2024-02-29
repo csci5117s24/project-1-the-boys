@@ -313,7 +313,20 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     #stock-view-div, #trending-div, #top-gain-div{
         overflow-y:scroll;
         height:75vh;
-        display:block;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        background:black;
+        
+    }
+    #stock-view-div{
+        margin-left:2vw;
+    }
+    #stock-view-div *, #top-gain-div *{
+        width: 100%;
+    }
+    #stock-view-div h2, #top-gain-div h2{
+        text-align: center;
     }
 }
 
@@ -336,6 +349,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
     #stock-view-div, #top-gain-div{
         display:none
+        
     }
     #trending-div{
         overflow-y:scroll;
@@ -360,6 +374,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 #trending-div{
     display:flex;
     flex-direction: column;
+    
 }
 #top-space{
     height: 15vh;
