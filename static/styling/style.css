@@ -316,11 +316,12 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         display:flex;
         flex-direction: column;
         align-items: center;
-        background:black;
+        
         
     }
     #stock-view-div{
         margin-left:2vw;
+        background-color: black;
     }
     #stock-view-div *, #top-gain-div *{
         width: 100%;
@@ -348,7 +349,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     
     }
     #stock-view-div, #top-gain-div{
-        display:none
+        display:none;
         
     }
     #trending-div{
