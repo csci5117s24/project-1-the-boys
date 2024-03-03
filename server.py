@@ -57,7 +57,9 @@ def mainpage():
     gainers=top_gainers()
     splist=SPCSV()
     splist.pop(0)
-    return render_template('mainpage.html', splist=splist) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    for stock in splist:
+        stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
+    return render_template('mainpage.html', splist=splist, gainers=gainers) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 
 
