@@ -1,16 +1,51 @@
 {%extends "columns.html"%}
 {%block main%}
 
-<h2>Trending Posts</h2>
+<h1>Trending Posts</h1>
+<div class="pure-g">
+    <div class="pure-u-1-12">
+    </div>
+    <div class="pure-u-20-24">
+    </div>
+    <div class="pure-u-1-12">
+    </div>
+</div>
     
 {%endblock%}
 
 {%block secondary%}
-<h2>Something stocks</h2>
-<table class="pure-table pure-table-bordered">
+<h2>Top Gainers</h2>
+<table class="pure-table pure-table-horizontal pure-table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>New 
+            Old </th>
+        <th>+/-%</th>
+        
+
+        
+        
+    </tr>
+</thead>
+<tbody>
+{%for data in gainers%}
+    <tr>
+        <td>{{data.gname}}</td> 
+        <td>{{data.gprice}}</td> 
+        <td>{{data.gpercent}}</td> 
+    </tr>
+    {%endfor%}
+</tbody>
+</table>
+{%endblock%}
+
+{%block tertiary%}
+
+<h2>List of stocks</h2>
+<table class="pure-table pure-table-horizontal pure-table-striped">
     <thead>
         <tr>
-            
             <th>Symbol</th>
             <th>Name</th>
             
@@ -20,7 +55,7 @@
         {%for stock in splist%}
         <tr>
             
-           <td><a href="https://finance.yahoo.com/quote/"+{{stock.symbol}}>{{stock.symbol}}</td>
+           <td><a href={{stock.link}}>{{stock.symbol}}</td>
             <td>{{stock.name}}</td>
             
         </tr>
@@ -28,8 +63,4 @@
        
     </tbody>
 </table>
-{%endblock%}
-
-{%block tertiary%}
-<h2>Something stocks</h2>
 {%endblock%}

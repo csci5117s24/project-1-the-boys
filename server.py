@@ -54,6 +54,7 @@ def logout():
 @app.route("/", methods=['GET'])
 def mainpage():
     url_for('static', filename = 'styling/style.css')
+    gainers=top_gainers()
     splist=SPCSV()
     splist.pop(0)
     return render_template('mainpage.html', splist=splist) #This will be changed when the basic frame is created and then used as an extension for all of our pages

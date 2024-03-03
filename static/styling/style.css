@@ -269,6 +269,7 @@ small screens.
         }
 
 
+
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
 
 /*
@@ -309,6 +310,25 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         border:#000 solid;
     
     }
+    #stock-view-div, #trending-div, #top-gain-div{
+        overflow-y:scroll;
+        height:75vh;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        
+        
+    }
+    #stock-view-div{
+        margin-left:2vw;
+        background-color: black;
+    }
+    #stock-view-div *, #top-gain-div *{
+        width: 100%;
+    }
+    #stock-view-div h2, #top-gain-div h2{
+        text-align: center;
+    }
 }
 
 @media (max-width: 48em) {
@@ -324,17 +344,40 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
     /* 
     User photo styling for sidebar */
+    #user-menu-photo{
+        display:none;
+    
+    }
+    #stock-view-div, #top-gain-div{
+        display:none;
+        
+    }
+    #trending-div{
+        overflow-y:scroll;
+        height:75vh;
+        display:block;
+        width:50%;
+    }
     
 }
 
+
+
+
 .pure-g div:nth-child(even){
     background-color: black;
-    height:75vh;
     position:relative;
-    top:50%;
-}
-.pure-g:nth-child(odd){
-    background-color: white;
-    height:30vh;
+    
 }
 
+
+
+#trending-div{
+    display:flex;
+    flex-direction: column;
+    
+}
+#top-space{
+    height: 15vh;
+    background-color: transparent;
+}
