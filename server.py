@@ -4,7 +4,7 @@ from flask import Flask, render_template, url_for, request, redirect
 from jinja2 import Environment, Template
 import os
 from flask import Flask, render_template, redirect
-from flask import current_app, g, request, url_for, session
+from flask import current_app, g, request, url_for, session,send_file
 from contextlib import contextmanager
 import json
 from urllib.parse import quote_plus, urlencode
@@ -15,6 +15,9 @@ from psycopg2.pool import ThreadedConnectionPool
 from psycopg2.extras import DictCursor
 from stock_api import *
 from database_stuff import *
+from werkzeug.utils import secure_filename
+from io import *
+import io
 
 app = Flask(__name__)
 environment = Environment
@@ -61,8 +64,21 @@ def mainpage():
         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
     return render_template('mainpage.html', splist=splist, gainers=gainers) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
-
-
+@app.route("/editProfile", methods=['POST'])
+def editProfile():
+    file = request.files["image"]
+    file.filename = secure_filename(file.filename)
+    print(file.filename)
+    fs=file.read()
+    with get_db_cursor(True) as cur:
+        print(request.form)
+        
+        cur.execute("UPDATE users SET (username,realname,avatar) = (%s,%s,%s) WHERE ID = %s",(request.form['username'],request.form['realname'],fs,session["user"].get("userinfo").get("sub")))
+        cur.execute("select * FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
+        returnval = cur.fetchall()
+        session["username"]=returnval[0][1]
+        session["realname"]=returnval[0][2]
+        return redirect("/profile")
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     token = oauth.auth0.authorize_access_token()
@@ -77,8 +93,7 @@ def callback():
             print("found users with query: " +"and userinfo of" + str(returnval[0][0]))  
             session["username"]=returnval[0][1]
             session["realname"]=returnval[0][2]
-            session["avatar"]=returnval[0][3]
-            return render_template("profile.html")
+            return redirect("/profile")
         else:
             print("found no users with query: ")
             cur.execute("INSERT INTO Users (ID, realname) VALUES (%s, %s)", (session["user"].get("userinfo").get("sub"),token.get("userinfo").get("given_name")))
@@ -103,6 +118,13 @@ def profilepage():
     url_for('static', filename = 'styling/style.css')
     return render_template('profile.html',username=session["username"],realname=session["realname"]) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
+@app.route("/getAvatar")
+def getAvatar():
+    with get_db_cursor(True) as cur:
+        cur.execute("select avatar FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
+        returnval = cur.fetchall()
+        stream = io.BytesIO(returnval[0][0])
+        return send_file(stream,mimetype="image/jpg")
 
         
 

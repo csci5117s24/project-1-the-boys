@@ -8,9 +8,15 @@
                 <th>profile</th>
                 <th>
                 <ul>
-                    <li>username: {{session.username}}</li>
-                    <li>real name: {{session.realname}}</li>
+                    <li>username: {{username}}</li>
+                    <li>real name: {{realname}}</li>
+                    <li>avatar: <img src="/getAvatar"></li>
                 </ul>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <button id="edit"> edit profile</button>
                 </th>
             </tr>
         </thead>
@@ -36,7 +42,20 @@
         </tbody> -->
     </table>
 
-
+<form enctype="multipart/form-data" hidden="true" action="/editProfile" id="profileUpdate" method="POST" class="pure-form pure-form-stacked">
+            <fieldset>
+                <legend>update your profile</legend>
+                <span class="pure-form-message">This is a required field.</span>
+                <label for="multi-first-name">real name</label>
+                <input name="realname"  type="text" minlength="3" id="realname" class="pure-u-23-24" />
+                <label for="multi-first-name">username</label>
+                <input name="username"  type="text" minlength="3" id="username" class="pure-u-23-24" />
+                <input type = "file" name = "image" />
+                <button type="submit" class="pure-button pure-button-primary">submit</button>
+            
+            </fieldset>
+        </form>
+    <form> 
 </div>
-
+<script src="../static/js/edit_profile.js"> </script>
 {%endblock%}
