@@ -113,7 +113,7 @@ def login():
 @app.route("/profile", methods=['GET'])
 def profilepage():
     url_for('static', filename = 'styling/style.css')
-    return render_template('profile.html',username=session["username"],realname=session["realname"],avatar=session["avatar"]) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('profile.html',username=session["username"],realname=session["realname"]) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 @app.route("/getAvatar")
 def getAvatar():
