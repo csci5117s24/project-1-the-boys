@@ -56,6 +56,22 @@
             </fieldset>
         </form>
     <form> 
-</div>
+
+        <form enctype="multipart/form-data" hidden="true" action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
+            <fieldset>
+                <legend>Create your post</legend>
+                <span class="pure-form-message">This is a required field.</span>
+                <label for="multi-first-name">description</label>
+                <input name="description"  type="text" minlength="3" id="realname" class="pure-u-23-24" />
+                <label for="multi-first-name">username</label>
+                <input name="username"  type="text" minlength="3" id="username" class="pure-u-23-24" />
+                <input type = "file" name = "image" />
+                <button type="submit" class="pure-button pure-button-primary">submit</button>
+            
+            </fieldset>
+        </form>
+        
+    </div>
+
 <script src="../static/js/edit_profile.js"> </script>
 {%endblock%}
