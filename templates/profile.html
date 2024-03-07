@@ -41,7 +41,12 @@
             </tr>
         </tbody> -->
     </table>
-
+<ul>
+    <ul><a>your posts</a></ul>
+    {%for post in posts%}
+    <ul><a>{{post[3]}}</a></ul>
+    {%endfor%}
+</ul>
 <form enctype="multipart/form-data" hidden="true" action="/editProfile" id="profileUpdate" method="POST" class="pure-form pure-form-stacked">
             <fieldset>
                 <legend>update your profile</legend>
@@ -52,22 +57,29 @@
                 <input name="username"  type="text" minlength="3" id="username" class="pure-u-23-24" />
                 <input type = "file" name = "image" />
                 <button type="submit" class="pure-button pure-button-primary">submit</button>
-            
             </fieldset>
-        </form>
-    <form> 
+        </form> 
 
-        <form enctype="multipart/form-data" hidden="true" action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
+        <form action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
             <fieldset>
                 <legend>Create your post</legend>
                 <span class="pure-form-message">This is a required field.</span>
                 <label for="multi-first-name">description</label>
-                <input name="description"  type="text" minlength="3" id="realname" class="pure-u-23-24" />
-                <label for="multi-first-name">username</label>
-                <input name="username"  type="text" minlength="3" id="username" class="pure-u-23-24" />
-                <input type = "file" name = "image" />
+                <input name="description"  type="text" minlength="3" id="postDescription" class="pure-u-23-24" />
+                <label for="tags" class="pure-checkbox">
+                    <input type="checkbox" id="tags" name="tags"value="bullish"/>
+                    <input type="checkbox" id="tags" name="tags" value="bearish"/>
+                    <input type="checkbox" id="tags" name="tags" value="top-pick"/> 
+                </label>
+                <div class="pure-u-1 pure-u-md-1-3">
+                <label for="stock">Stock</label>
+                <select id="stock" name="stock" class="pure-input-1-2">
+                    <option value="MSFT">MSFT</option>
+                    <option value="AAPL">AAPL</option>
+                    <option value="AMZN">AMZN</option>
+                </select>
+                </div>
                 <button type="submit" class="pure-button pure-button-primary">submit</button>
-            
             </fieldset>
         </form>
         

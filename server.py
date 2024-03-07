@@ -101,7 +101,17 @@ def callback():
             return render_template("login.html")
             
 
-        
+
+@app.route("/Post",methods=['POST'])
+def post():
+    with get_db_cursor(True) as cur:
+        tags=request.form.getlist("tags")
+        user=session["user"].get("userinfo").get("sub")
+        ticker=request.form.get("stock")
+        postContent = request.form.get("description")
+        cur.execute("INSERT INTO posts (tags, ID, postContent ) VALUES (%s, %s,%s)", (tags,session["user"].get("userinfo").get("sub"),postContent,))
+        return render_template('profile.html')
+
 
 
 
@@ -116,7 +126,12 @@ def login():
 @app.route("/profile", methods=['GET'])
 def profilepage():
     url_for('static', filename = 'styling/style.css')
-    return render_template('profile.html',username=session["username"],realname=session["realname"]) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    with get_db_cursor(True) as cur:
+        cur.execute("select * FROM posts WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
+        posts = cur.fetchall()
+        print("printing posts")
+        print(posts)
+    return render_template('profile.html',username=session["username"],realname=session["realname"],posts=posts) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 @app.route("/getAvatar")
 def getAvatar():
