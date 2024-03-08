@@ -57,7 +57,7 @@ def mainpage():
     gainers=top_gainers()
     splist=SPCSV()
     splist.pop(0)
-    return render_template('mainpage.html', splist=splist) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('mainpage.html', splist=splist, gainers=gainers) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 
 
