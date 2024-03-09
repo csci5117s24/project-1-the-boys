@@ -371,7 +371,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 }
 
 
-
+.post-div{
+    width: 100%;
+}
 #trending-div{
     display:flex;
     flex-direction: column;

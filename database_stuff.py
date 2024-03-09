@@ -47,3 +47,59 @@ def createUser(request):
         current_app.logger.info("submitting form")
         cur.execute("INSERT INTO userinfo (username, password) VALUES (%s, %s)", (request.form.get("username","test"),request.form.get("password","test")))
         
+# def populate_stocks(stocks):
+   
+#     with get_db_cursor(True) as cur:
+        
+#         for stock in stocks:
+#             cur.execute("INSERT INTO Stocks (Ticker, name) VALUES (%s, %s)", (stock["symbol"], stock["name"]))
+#     return True
+
+def get_recent_posts():
+    with get_db_cursor(True) as cur:
+        cur.execute("SELECT * FROM Posts")
+        posts=cur.fetchall()
+        
+        postList={}
+        for post in posts:
+            key = f'post_id_{post[0]}'
+            postList[key]={
+            "tags":post[1],
+            "posterID":post[2],
+            "content":post[3]}
+    
+    with get_db_cursor(True) as cur:
+        
+        
+        # cur.execute(f'SELECT * FROM Users WHERE ID="{postList["post_id_1"]["posterID"]}"')
+        # cur.execute("SELECT * FROM Users WHERE ID='google-oauth2|109900604195285248544'")
+        # user=cur.fetchall()
+        # cur.execute("SELECT username, avatar FROM Users WHERE ID=(%s)", postList["post_id_1"]["posterID"]) #Rewrite with separate function
+        # user=cur.fetchall()
+        
+        userInfo={}
+        for  post in postList:
+            cur.execute("SELECT username, avatar FROM Users WHERE ID=%s", [postList[post]["posterID"]]) #Rewrite with separate function
+            user=cur.fetchall()
+            print(user)
+            key=postList[post]["posterID"]
+            userInfo[key]={
+                "username":user[0][0],
+                "avatar":user[0][1]
+            }
+        for post in postList:
+            key=postList[post]["posterID"]
+            postList[post]["username"]=userInfo[key]["username"]
+            postList[post]["avatar"]=userInfo[key]["avatar"]
+        
+            
+        return postList
+def get_user_info(id):
+    return True
+def get_stock_list():
+    with get_db_cursor(True) as cur:
+        cur.execute("SELECT * FROM Stocks")
+        print(cur.fetchall())
+        
+
+    

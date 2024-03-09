@@ -25,7 +25,7 @@ environment = Environment
 
 app.secret_key = os.environ["FLASK_SECRET"]
 
-
+\
 oauth = OAuth(app)
 
 oauth.register(
@@ -60,9 +60,14 @@ def mainpage():
     gainers=top_gainers()
     splist=SPCSV()
     splist.pop(0)
+    recent_posts=get_recent_posts()
+   
     for stock in splist:
         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
-    return render_template('mainpage.html', splist=splist, gainers=gainers) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    
+    # for post in recent_posts:
+    #     recent_posts[post]=getAvatar(recent_posts[post]["avatar"])
+    return render_template('mainpage.html', splist=splist, gainers=gainers, recent=recent_posts) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 @app.route("/editProfile", methods=['POST'])
 def editProfile():
@@ -131,7 +136,10 @@ def profilepage():
         posts = cur.fetchall()
         print("printing posts")
         print(posts)
-    return render_template('profile.html',username=session["username"],realname=session["realname"],posts=posts) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+        splist=SPCSV()
+        splist.pop(0)
+        
+    return render_template('profile.html',username=session["username"],realname=session["realname"],posts=posts, stocks=splist) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 @app.route("/getAvatar")
 def getAvatar():
