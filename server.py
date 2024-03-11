@@ -64,7 +64,7 @@ def mainpage():
    
     for stock in splist:
         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
-    
+    print(recent_posts)
     # for post in recent_posts:
     #     recent_posts[post]=getAvatar(recent_posts[post]["avatar"])
     return render_template('mainpage.html', splist=splist, gainers=gainers, recent=recent_posts) #This will be changed when the basic frame is created and then used as an extension for all of our pages

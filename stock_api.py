@@ -34,9 +34,6 @@ def top_gainers():
     #     Lprice.append(data[1]["Latest Price Previous Close"].get(i))
     #     Lpercent.append(data[1]["+/- %"].get(i))
     return gainList
-    
-# url = f'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey={os.environ["ALPHA_ADVANTAGE_API_KEY"]}'
-#     r = requests.get(url)
-#     AAdata = r.json()
 
-#     print("alpha advantage",AAdata)    
+def query_stock():
+    pass
