@@ -12,14 +12,14 @@
             <div class="pure-g ">
                 <div class="pure-u-10-12">
                     <div class="post-design">
-                        <img id="userImage">{{recent[post]["avatar"]}}
+                       <a href="/profile/{{recent[post]['posterID']}}"><button href> <img id="userImage" src="/getAvatar/{{recent[post]['posterID']}}" > </button></a>
                         <h1>{{recent[post]["username"]}}</h1>
                         <h1>{{recent[post]["posterID"]}}</h1>
                         <h2>{{recent[post]["tags"]}}</h2>
                         <p>{{recent[post]["content"]}}</p>
                     </div>
                     <div class="post-buttons">
-                        <button id="follow-button">Follow</button>
+                        <a href="/follow/{{recent[post]['posterID']}}"><button id="follow-button" >Follow</button></a>
                         <button id="like-button">Like</button>
                     </div>
                 </div>
