@@ -13,14 +13,15 @@
             <div class="pure-g ">
                 <div class="pure-u-10-12">
                     <div class="post-design">
-                        <img id="userImage">{{recent[post]["avatar"]}}
+                       <a href="/profile/{{recent[post]['posterID']}}"><button href> <img id="userImage" src="/getAvatar/{{recent[post]['posterID']}}" > </button></a>
                         <h1>{{recent[post]["username"]}}</h1>
                         <h1>{{recent[post]["posterID"]}}</h1>
                         <h2>{{recent[post]["tags"]}}</h2>
                         <p>{{recent[post]["content"]}}</p>
                     </div>
                     <div class="post-buttons">
-                        <button id="follow-button" class="pure-button">Follow</button>
+                        <a href="/follow/{{recent[post]['posterID']}}"><button id="follow-button" >Follow</button></a>
+                        <button id="like-button">Like</button>
                     </div>
                 </div>
             </div>
@@ -53,6 +54,7 @@
         <td>{{data.gname}}</td> 
         <td>{{data.gprice}}</td> 
         <td>{{data.gpercent}}</td> 
+        
     </tr>
     {%endfor%}
 </tbody>
@@ -76,7 +78,8 @@
             
            <td><a href={{stock.link}}>{{stock.symbol}}</td>
             <td>{{stock.name}}</td>
-            
+            <td><a href="/followStock/{{stock.symbol}}"><button>follow stock</button></a></td>
+        
         </tr>
         {%endfor%}
        

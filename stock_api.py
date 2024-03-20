@@ -10,7 +10,7 @@ import os
 
 
 def SPCSV():
-    file = open('static\csv\constituents.csv')
+    file = open('static/csv/constituents.csv')
     csvreader = csv.reader(file)
     spAll = []
     

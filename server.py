@@ -25,7 +25,6 @@ environment = Environment
 
 app.secret_key = os.environ["FLASK_SECRET"]
 
-\
 oauth = OAuth(app)
 
 oauth.register(
@@ -83,6 +82,8 @@ def editProfile():
         session["username"]=returnval[0][1]
         session["realname"]=returnval[0][2]
         return redirect("/profile")
+    
+    
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     token = oauth.auth0.authorize_access_token()
@@ -97,7 +98,7 @@ def callback():
             print("found users with query: " +"and userinfo of" + str(returnval[0][0]))  
             session["username"]=returnval[0][1]
             session["realname"]=returnval[0][2]
-            return redirect("/profile")
+            return redirect("/profile/" + returnval[0][0])
         else:
             print("found no users with query: ")
             cur.execute("INSERT INTO Users (ID, realname) VALUES (%s, %s)", (session["user"].get("userinfo").get("sub"),token.get("userinfo").get("given_name")))
@@ -163,8 +164,31 @@ def profilepage():
         print(posts)
         splist=SPCSV()
         splist.pop(0)
-        
-    return render_template('profile.html',username=session["username"],realname=session["realname"],posts=posts, stocks=splist) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+        cur.execute("select * FROM users WHERE ID = %s",((str(session["user"].get("userinfo").get("sub")),)))
+        userret=cur.fetchall()
+        return render_template('profile.html',username=userret[0][1],realname=userret[0][2],posts=posts, stocks=splist,userid=session["user"].get("userinfo").get("sub")) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+
+
+@app.route("/profile/<user>", methods=['GET'])
+def profilepageUser(user):
+    url_for('static', filename = 'styling/style.css')
+    with get_db_cursor(True) as cur:
+        cur.execute("select * FROM posts WHERE ID = %s",(user,)) 
+        posts = cur.fetchall()
+        print("printing posts")
+        print(posts)
+        splist=SPCSV()
+        splist.pop(0)        
+        cur.execute("select * FROM users WHERE ID = %s",(user,)) 
+        userret=cur.fetchall()
+        return render_template('profile.html',username=userret[0][1],realname=userret[0][2],posts=posts, stocks=splist,userid=user) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+
+@app.route("/follow/<uid>")
+def follow(uid):
+    with get_db_cursor(True) as cur:
+        user=session["user"].get("userinfo").get("sub")
+        cur.execute("INSERT INTO followers (follower, poster ) VALUES (%s, %s)", (user,uid,))
+        return redirect("/profile")
 
 @app.route("/getAvatar")
 def getAvatar():
@@ -174,6 +198,13 @@ def getAvatar():
         stream = io.BytesIO(returnval[0][0])
         return send_file(stream,mimetype="image/jpg")
 
+@app.route("/getAvatar/<uid>")
+def getAvatarWithUid(uid):
+    with get_db_cursor(True) as cur:
+        cur.execute("select avatar FROM users WHERE ID = %s",(uid,)) 
+        returnval = cur.fetchall()
+        stream = io.BytesIO(returnval[0][0])
+        return send_file(stream,mimetype="image/jpg")
         
 
 @app.route("/submitUser", methods=['POST'])
@@ -186,8 +217,12 @@ def userCreate():
 def signup():
     return render_template("signup.html")
 
-# @app.route("/api/searchPosts")
-
+@app.route("/followStock/<ticker>")
+def followStock(ticker):
+    with get_db_cursor(True) as cur:
+        cur.execute("INSERT INTO subscriptions (uid,ticker) VALUES (%s,%s)",(session["user"].get("userinfo").get("sub"),ticker,))
+        print("executed")
+        return redirect("/")
 
 
 
