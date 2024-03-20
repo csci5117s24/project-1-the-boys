@@ -66,7 +66,7 @@ def mainpage():
         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
     
     
-    return render_template('mainpage.html', splist=splist,  recent=recent_posts) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('mainpage.html', splist=splist,  posts=recent_posts) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 @app.route("/editProfile", methods=['POST'])
 def editProfile():
@@ -116,14 +116,14 @@ def post():
         cur.execute("INSERT INTO posts (tags, ID, postContent ) VALUES (%s, %s,%s)", (tags,session["user"].get("userinfo").get("sub"),postContent,))
         return render_template('profile.html')
 
-@app.route("/stocks", methods=["GET", "POST"])
+@app.route("/stocks", methods=["GET"])
 def viewStocks():
     splist=SPCSV()
     splist.pop(0)
     stockData=''
     
-    if(request.form.get("stock")):
-        ticker=request.form.get("stock")
+    if(request.args.get("stock")):
+        ticker=request.args.get("stock")
         today=date.today()
         if(date.weekday(today)>4):
             daysBack= date.weekday(today)-4
@@ -132,7 +132,7 @@ def viewStocks():
             today = today-timedelta(days=3)
         else:
             today= today-timedelta(days=1)
-        #url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={os.environ.get("ALPHA_ADVANTAGE_API_KEY")}'
+       
         url=f'https://api.polygon.io/v1/open-close/{ticker}/{today}?adjusted=true&apiKey={os.environ.get("POLYGON.IO_API_KEY")}'
         print(url)
         r = requests.get(url)
@@ -159,8 +159,6 @@ def profilepage():
     with get_db_cursor(True) as cur:
         cur.execute("select * FROM posts WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
         posts = cur.fetchall()
-        print("printing posts")
-        print(posts)
         splist=SPCSV()
         splist.pop(0)
         
@@ -186,8 +184,19 @@ def userCreate():
 def signup():
     return render_template("signup.html")
 
-# @app.route("/api/searchPosts")
-
+@app.route("/api/searchPosts")
+def searchPosts():
+    splist=SPCSV()
+    splist.pop(0)
+    searchPost = ""
+    search_post = search_posts_db(request.args.get("searchPosts"))
+    if(search_post):
+        searchPosts=search_post
+    
+    
+    for stock in splist:
+        stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
+    return render_template('mainpage.html', splist=splist,  posts=searchPost )
 
 
 

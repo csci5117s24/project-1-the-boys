@@ -48,6 +48,7 @@ def createUser(request):
         cur.execute("INSERT INTO userinfo (username, password) VALUES (%s, %s)", (request.form.get("username","test"),request.form.get("password","test")))
         
 
+
 def get_recent_posts():
     with get_db_cursor(True) as cur:
         cur.execute("SELECT * FROM Posts")
@@ -60,16 +61,13 @@ def get_recent_posts():
             "tags":post[1],
             "posterID":post[2],
             "content":post[3]}
-    
+
     with get_db_cursor(True) as cur:
-        
-        
-        
         userInfo={}
         for  post in postList:
             cur.execute("SELECT username, avatar FROM Users WHERE ID=%s", [postList[post]["posterID"]]) #Rewrite with separate function
             user=cur.fetchall()
-            print(user)
+           
             key=postList[post]["posterID"]
             userInfo[key]={
                 "username":user[0][0],
@@ -83,15 +81,19 @@ def get_recent_posts():
             
         return postList
 def get_user_info(id):
+    
     return True
 def get_stock_list():
     with get_db_cursor(True) as cur:
         cur.execute("SELECT * FROM Stocks")
         print(cur.fetchall())
-def search_posts(query):
+def search_posts_db(query):
+    query = query
     with get_db_cursor(True) as cur:
-        cur.execute(f'SELECT * FROM Posts WHERE postContent LIKE %{query}%')
+        cur.execute(f"SELECT * FROM Posts WHERE postContent LIKE '{query}%'")
+        
         print(cur.fetchall())
+    
     
         
 
