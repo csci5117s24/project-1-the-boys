@@ -53,6 +53,7 @@
         <td>{{data.gname}}</td> 
         <td>{{data.gprice}}</td> 
         <td>{{data.gpercent}}</td> 
+        
     </tr>
     {%endfor%}
 </tbody>
@@ -76,7 +77,8 @@
             
            <td><a href={{stock.link}}>{{stock.symbol}}</td>
             <td>{{stock.name}}</td>
-            
+            <td><a href="/followStock/{{stock.symbol}}"><button>follow stock</button></a></td>
+        
         </tr>
         {%endfor%}
        

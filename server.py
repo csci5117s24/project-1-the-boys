@@ -25,7 +25,6 @@ environment = Environment
 
 app.secret_key = os.environ["FLASK_SECRET"]
 
-\
 oauth = OAuth(app)
 
 oauth.register(
@@ -193,8 +192,12 @@ def userCreate():
 def signup():
     return render_template("signup.html")
 
-
-
+@app.route("/followStock/<ticker>")
+def followStock(ticker):
+    with get_db_cursor(True) as cur:
+        cur.execute("INSERT INTO subscriptions (uid,ticker) VALUES (%s,%s)",(session["user"].get("userinfo").get("sub"),ticker,))
+        print("executed")
+        return redirect("/")
 
 
 
