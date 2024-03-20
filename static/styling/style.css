@@ -383,3 +383,8 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     height: 15vh;
     background-color: transparent;
 }
+#stock-viewer-back{
+    background-color: black;
+    height:75vh;
+    margin:auto
+}

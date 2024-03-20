@@ -47,13 +47,6 @@ def createUser(request):
         current_app.logger.info("submitting form")
         cur.execute("INSERT INTO userinfo (username, password) VALUES (%s, %s)", (request.form.get("username","test"),request.form.get("password","test")))
         
-# def populate_stocks(stocks):
-   
-#     with get_db_cursor(True) as cur:
-        
-#         for stock in stocks:
-#             cur.execute("INSERT INTO Stocks (Ticker, name) VALUES (%s, %s)", (stock["symbol"], stock["name"]))
-#     return True
 
 def get_recent_posts():
     with get_db_cursor(True) as cur:
@@ -71,11 +64,6 @@ def get_recent_posts():
     with get_db_cursor(True) as cur:
         
         
-        # cur.execute(f'SELECT * FROM Users WHERE ID="{postList["post_id_1"]["posterID"]}"')
-        # cur.execute("SELECT * FROM Users WHERE ID='google-oauth2|109900604195285248544'")
-        # user=cur.fetchall()
-        # cur.execute("SELECT username, avatar FROM Users WHERE ID=(%s)", postList["post_id_1"]["posterID"]) #Rewrite with separate function
-        # user=cur.fetchall()
         
         userInfo={}
         for  post in postList:
@@ -100,6 +88,11 @@ def get_stock_list():
     with get_db_cursor(True) as cur:
         cur.execute("SELECT * FROM Stocks")
         print(cur.fetchall())
+def search_posts(query):
+    with get_db_cursor(True) as cur:
+        cur.execute(f'SELECT * FROM Posts WHERE postContent LIKE %{query}%')
+        print(cur.fetchall())
+    
         
 
     

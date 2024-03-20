@@ -1,7 +1,8 @@
 {%extends "columns.html"%}
 
 {%block main%}
-
+<input type="text" name="searchPosts" id="searchContent">
+<button type="submit" for="searchPosts" id="searchButton">Search</button>
 <h1>Recent Posts</h1>
 <div class="pure-g post-div">
     <div class="pure-u-1-12">
@@ -19,8 +20,7 @@
                         <p>{{recent[post]["content"]}}</p>
                     </div>
                     <div class="post-buttons">
-                        <button id="follow-button">Follow</button>
-                        <button id="like-button">Like</button>
+                        <button id="follow-button" class="pure-button">Follow</button>
                     </div>
                 </div>
             </div>
