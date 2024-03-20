@@ -10,7 +10,7 @@ import os
 
 
 def SPCSV():
-    file = open('static/csv/constituents.csv')
+    file = open('static\csv\constituents.csv')
     csvreader = csv.reader(file)
     spAll = []
     
@@ -20,15 +20,7 @@ def SPCSV():
     
     return spAll
 
-# def top_gainers():
-#     data=pd.read_html("https://markets.businessinsider.com/index/market-movers/s&p_500")
 
-#     # gainList = [i for i in range(15) {"gname":data[0]["Name"].get(i),"gprice":data[0]["Latest Price Previous Close"].get(i)}]
-#     gainList=[]
-#     for i in range(15):
-#         gainList.append({"gname":data[0]["Name"].get(i),"gprice":data[0]["Latest Price Previous Close"].get(i),"gpercent":data[0]["+/- %"].get(i)})
-    
-#     return gainList
     
 def query_stock():
     pass

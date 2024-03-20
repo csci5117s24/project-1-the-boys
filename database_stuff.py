@@ -90,7 +90,8 @@ def get_stock_list():
 def search_posts(query):
     with get_db_cursor(True) as cur:
         cur.execute(f'SELECT * FROM Posts WHERE postContent LIKE %{query}%')
-        print(cur.fetchall())
+        return cur.fetchall()
+    
     
         
 
