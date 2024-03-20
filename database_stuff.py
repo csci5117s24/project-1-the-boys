@@ -46,6 +46,8 @@ def createUser(request):
     with get_db_cursor(True) as cur:
         current_app.logger.info("submitting form")
         cur.execute("INSERT INTO userinfo (username, password) VALUES (%s, %s)", (request.form.get("username","test"),request.form.get("password","test")))
+        
+
 
 def get_recent_posts():
     with get_db_cursor(True) as cur:
@@ -85,6 +87,11 @@ def get_stock_list():
     with get_db_cursor(True) as cur:
         cur.execute("SELECT * FROM Stocks")
         print(cur.fetchall())
+def search_posts(query):
+    with get_db_cursor(True) as cur:
+        cur.execute(f'SELECT * FROM Posts WHERE postContent LIKE %{query}%')
+        print(cur.fetchall())
+    
         
 
     

@@ -5,6 +5,7 @@ import csv
 import pandas as pd
 import numpy as np
 import os
+# import lightweight-charts
 
 
 
@@ -19,9 +20,10 @@ def SPCSV():
     
     return spAll
 
-def top_gainers():
-    data=pd.read_html("https://markets.businessinsider.com/index/market-movers/s&p_500")
+# def top_gainers():
+#     data=pd.read_html("https://markets.businessinsider.com/index/market-movers/s&p_500")
 
+<<<<<<< HEAD
     # gainList = [i for i in range(15) {"gname":data[0]["Name"].get(i),"gprice":data[0]["Latest Price Previous Close"].get(i)}]
     gainList=[]
     for i in range(15):
@@ -37,3 +39,14 @@ def top_gainers():
 
 def query_stock():
     pass
+=======
+#     # gainList = [i for i in range(15) {"gname":data[0]["Name"].get(i),"gprice":data[0]["Latest Price Previous Close"].get(i)}]
+#     gainList=[]
+#     for i in range(15):
+#         gainList.append({"gname":data[0]["Name"].get(i),"gprice":data[0]["Latest Price Previous Close"].get(i),"gpercent":data[0]["+/- %"].get(i)})
+    
+#     return gainList
+    
+def query_stock():
+    pass
+>>>>>>> brady

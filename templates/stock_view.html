@@ -1,0 +1,23 @@
+{%extends "focus_view.html"%}
+
+
+{%block focus%}
+<form method="post">
+    <input list="stock" name="stock">
+    <datalist id="stock" class="pure-input-1-2">
+        {%for stock in stocks%}
+        <option value={{stock.symbol}}>{{stock.symbol}} - {{stock.name}}</option>
+        {%endfor%}
+    </datalist>
+
+    <button type="submit" class="pure-button">Search</button>
+</form>
+<h1>Symbol {{stockData.symbol}}</h1>
+<h1>Date of data {{stockData.from}}</h1>
+<h1>Open Price {{stockData.open}}</h1>
+<h1>Close Price {{stockData.close}}</h1>
+<h1>High {{stockData.high}}</h1>
+<h1>Low {{stockData.low}}</h1>
+<h1>Volume {{stockData.volume}}</h1>
+
+{%endblock%}

@@ -18,7 +18,7 @@ from database_stuff import *
 from werkzeug.utils import secure_filename
 from io import *
 import io
-
+from datetime import date, timedelta
 app = Flask(__name__)
 environment = Environment
 
@@ -57,17 +57,16 @@ def logout():
 @app.route("/", methods=['GET'])
 def mainpage():
     url_for('static', filename = 'styling/style.css')
-    gainers=top_gainers()
+    
     splist=SPCSV()
     splist.pop(0)
     recent_posts=get_recent_posts()
    
     for stock in splist:
         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
-    print(recent_posts)
-    # for post in recent_posts:
-    #     recent_posts[post]=getAvatar(recent_posts[post]["avatar"])
-    return render_template('mainpage.html', splist=splist, gainers=gainers, recent=recent_posts) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    
+    
+    return render_template('mainpage.html', splist=splist,  recent=recent_posts) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 @app.route("/editProfile", methods=['POST'])
 def editProfile():
@@ -117,8 +116,34 @@ def post():
         cur.execute("INSERT INTO posts (tags, ID, postContent ) VALUES (%s, %s,%s)", (tags,session["user"].get("userinfo").get("sub"),postContent,))
         return render_template('profile.html')
 
-
-
+@app.route("/stocks", methods=["GET", "POST"])
+def viewStocks():
+    splist=SPCSV()
+    splist.pop(0)
+    stockData=''
+    
+    if(request.form.get("stock")):
+        ticker=request.form.get("stock")
+        today=date.today()
+        if(date.weekday(today)>4):
+            daysBack= date.weekday(today)-4
+            today=  today-timedelta(days=daysBack)
+        elif(date.weekday(today)==0):
+            today = today-timedelta(days=3)
+        else:
+            today= today-timedelta(days=1)
+        #url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={os.environ.get("ALPHA_ADVANTAGE_API_KEY")}'
+        url=f'https://api.polygon.io/v1/open-close/{ticker}/{today}?adjusted=true&apiKey={os.environ.get("POLYGON.IO_API_KEY")}'
+        print(url)
+        r = requests.get(url)
+        stockData = r.json()
+        print("huh",stockData)
+        
+    
+    return render_template('stock_view.html', stocks=splist, stockData=stockData)
+@app.route("/stocks/<ticker>")
+def stockRedirect():
+    pass
 
 @app.route("/login")
 def login():
@@ -161,7 +186,7 @@ def userCreate():
 def signup():
     return render_template("signup.html")
 
-
+# @app.route("/api/searchPosts")
 
 
 
