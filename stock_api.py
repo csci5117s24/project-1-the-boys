@@ -5,6 +5,7 @@ import csv
 import pandas as pd
 import numpy as np
 import os
+from datetime import date, timedelta
 # import lightweight-charts
 
 
@@ -20,15 +21,20 @@ def SPCSV():
     
     return spAll
 
-# def top_gainers():
-#     data=pd.read_html("https://markets.businessinsider.com/index/market-movers/s&p_500")
-
-#     # gainList = [i for i in range(15) {"gname":data[0]["Name"].get(i),"gprice":data[0]["Latest Price Previous Close"].get(i)}]
-#     gainList=[]
-#     for i in range(15):
-#         gainList.append({"gname":data[0]["Name"].get(i),"gprice":data[0]["Latest Price Previous Close"].get(i),"gpercent":data[0]["+/- %"].get(i)})
+def query_stock(ticker):
     
-#     return gainList
+    today=date.today()
+    if(date.weekday(today)>4):
+        daysBack= date.weekday(today)-4
+        today=  today-timedelta(days=daysBack)
+    elif(date.weekday(today)==0):
+        today = today-timedelta(days=3)
+    else:
+        today= today-timedelta(days=1)
+       
+    url=f'https://api.polygon.io/v1/open-close/{ticker}/{today}?adjusted=true&apiKey={os.environ.get("POLYGON.IO_API_KEY")}'
     
-def query_stock():
-    pass
+    r = requests.get(url)
+    stockData = r.json()
+    return stockData
+    

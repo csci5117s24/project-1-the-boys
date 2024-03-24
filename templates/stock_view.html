@@ -2,7 +2,7 @@
 
 
 {%block focus%}
-<form method="GET">
+<form method="GET" id="stockForm">
     <input list="stock" name="stock">
     <datalist id="stock" class="pure-input-1-2">
         {%for stock in stocks%}
@@ -12,12 +12,18 @@
 
     <button type="submit" class="pure-button">Search</button>
 </form>
-<h1>Symbol {{stockData.symbol}}</h1>
-<h1>Date of data {{stockData.from}}</h1>
-<h1>Open Price {{stockData.open}}</h1>
-<h1>Close Price {{stockData.close}}</h1>
-<h1>High {{stockData.high}}</h1>
-<h1>Low {{stockData.low}}</h1>
-<h1>Volume {{stockData.volume}}</h1>
+<div class="pure-g">
 
+
+<h1 class="pure-u-1-2">Symbol: {{stockData.symbol}}</h1>
+<h1 class="pure-u-1-2">Date of Data: {{stockData.from}}</h1>
+</div>
+<div clas="pure-g">
+    <h1>Open Price: {{stockData.open}}</h1>
+    <h1>Close Price: {{stockData.close}}</h1>
+    <h1>High: {{stockData.high}}</h1>
+    <h1>Low: {{stockData.low}}</h1>
+    <h1>Volume: {{stockData.volume}}</h1>
+</div>
+<script src="../static/js/stock_api.js"></script>
 {%endblock%}
