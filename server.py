@@ -195,6 +195,7 @@ def mainpage():
     print(subs)
     
     return render_template('mainpage.html', splist=splist,  recent=recent_posts,subscriptions=subs,followers=follows,stockData=stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('mainpage.html', splist=splist,  recent=recent_posts,subscriptions=subs,followers=follows,stockData=stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 # # @requires_auth
 @app.route("/editProfile", methods=['POST'])
@@ -215,7 +216,7 @@ def editProfile():
         session["username"]=returnval[0][1]
         session["realname"]=returnval[0][2]
         return redirect("/profile")
-    
+
     
     
     
@@ -373,6 +374,7 @@ def searchPosts():
         stockData = query_stock(ticker)
     for stock in splist:
         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
+    
     
     return render_template('mainpage.html', splist=splist, posts=searchPosts, stockData = stockData)
 
