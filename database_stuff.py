@@ -31,6 +31,7 @@ def get_db_connection():
         pool.putconn(connection)
 
 
+
 @contextmanager
 def get_db_cursor(commit=False):
     with get_db_connection() as connection:
@@ -39,7 +40,7 @@ def get_db_cursor(commit=False):
           yield cursor
           if commit:
               connection.commit()
-      finally:
+      finally:  
           cursor.close()
 
 def createUser(request):
