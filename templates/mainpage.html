@@ -1,7 +1,7 @@
 {%extends "columns.html"%}
 <script src="../static/js/stock_api.js"></script>
 {%block main%}
-<form method="GET" id="searchForm">
+<form method="GET" id="searchForm" action="/api/searchPosts">
     <input type="text" name="searchPosts" id="searchContent">
     <button type="submit" for="searchPosts" id="searchButton">Search</button>
 </form>
@@ -15,14 +15,14 @@
             <div class="pure-g ">
                 <div class="pure-u-10-12">
                     <div class="post-design">
-                       <a href="/profile/{{recent[post]['posterID']}}"><button href> <img id="userImage" src="/getAvatar/{{recent[post]['posterID']}}" > </button></a>
-                        <h1>{{recent[post]["username"]}}</h1>
-                        <h1>{{recent[post]["posterID"]}}</h1>
-                        <h2>{{recent[post]["tags"]}}</h2>
-                        <p>{{recent[post]["content"]}}</p>
+                       <a href="/profile/{{posts[post]['posterID']}}"><button href> <img id="userImage" src="/getAvatar/{{posts[post]['posterID']}}" > </button></a>
+                        <h1>{{posts[post]["username"]}}</h1>
+                        <h1>{{posts[post]["posterID"]}}</h1>
+                        <h2>{{posts[post]["tags"]}}</h2>
+                        <p>{{posts[post]["content"]}}</p>
                     </div>
                     <div class="post-buttons">
-                        <a href="/follow/{{recent[post]['posterID']}}"><button id="follow-button" >Follow</button></a>
+                        <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" >Follow</button></a>
                         <button id="like-button">Like</button>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
            <td><a href={{stock.link}}>{{stock.symbol}}</td>
             <td>{{stock.name}}</td>
             <td><a href="/followStock/{{stock.symbol}}"><button>follow stock</button></a></td>
-        
+            <td><a href="/?stock={{stock.symbol}}"><button>view stock</button></a></td>
         </tr>
         {%endfor%}
        

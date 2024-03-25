@@ -4,6 +4,7 @@ from flask import Flask, render_template, url_for, request, redirect
 from jinja2 import Environment, Template
 import os
 from flask import Flask, render_template, redirect
+import jinja2
 from flask import current_app, g, request, url_for, session,send_file
 from contextlib import contextmanager
 import json
@@ -85,7 +86,7 @@ def editProfile():
         session["username"]=returnval[0][1]
         session["realname"]=returnval[0][2]
         return redirect("/profile")
-    
+
     
     
     
@@ -226,6 +227,7 @@ def searchPosts():
         stockData = query_stock(ticker)
     for stock in splist:
         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
+    
     
     return render_template('mainpage.html', splist=splist, posts=searchPosts, stockData = stockData)
 
