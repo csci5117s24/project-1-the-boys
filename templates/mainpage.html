@@ -22,8 +22,12 @@
                         <p>{{recent[post]["content"]}}</p>
                     </div>
                     <div class="post-buttons">
+                        {%if [recent[post]["posterID"]] in followers %}
+                        <a href="/follow/{{recent[post]['posterID']}}"><button id="follow-button" >unFollow</button></a>
+                        {%else%}
                         <a href="/follow/{{recent[post]['posterID']}}"><button id="follow-button" >Follow</button></a>
                         <button id="like-button">Like</button>
+                        {%endif%}
                     </div>
                 </div>
             </div>
@@ -90,14 +94,18 @@
             
         </tr>
     </thead>
-    <tbody>
+    <tbody>        
         {%for stock in splist%}
         <tr>
             
            <td><a href={{stock.link}}>{{stock.symbol}}</td>
             <td>{{stock.name}}</td>
+            {%if [stock.symbol,stock.name] in subscriptions %}
+
+            <td><a href="/followStock/{{stock.symbol}}"><button>unfollow stock</button></a></td>
+            {%else%}
             <td><a href="/followStock/{{stock.symbol}}"><button>follow stock</button></a></td>
-        
+            {%endif%}
         </tr>
         {%endfor%}
        

@@ -13,6 +13,13 @@ pandas = "*"
 lxml = "*"
 numpy = "*"
 lightweight-charts = "*"
+flask-cors = "*"
+six = "*"
+jsonify = "*"
+python-jose = "*"
+flask-oauth2-validation = "*"
+python-dotenv = "*"
+filetype = "*"
 
 [dev-packages]
 
