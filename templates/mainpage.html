@@ -1,7 +1,7 @@
 {%extends "columns.html"%}
 <script src="../static/js/stock_api.js"></script>
 {%block main%}
-<form method="GET" id="searchForm">
+<form method="GET" id="searchForm" action="/api/searchPosts">
     <input type="text" name="searchPosts" id="searchContent">
     <button type="submit" for="searchPosts" id="searchButton">Search</button>
 </form>
@@ -91,6 +91,7 @@
             {%else%}
             <td><a href="/followStock/{{stock.symbol}}"><button>follow stock</button></a></td>
             {%endif%}
+            <td><a href="/?stock={{stock.symbol}}"><button>view stock</button></a></td>
         </tr>
         {%endfor%}
        
