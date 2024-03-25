@@ -22,10 +22,10 @@
                         <p>{{posts[post]["content"]}}</p>
                     </div>
                     <div class="post-buttons">
-                        {%if [recent[post]["posterID"]] in followers %}
-                        <a href="/follow/{{recent[post]['posterID']}}"><button id="follow-button" >unFollow</button></a>
+                        {%if [posts[post]["posterID"]] in followers %}
+                        <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" >unFollow</button></a>
                         {%else%}
-                        <a href="/follow/{{recent[post]['posterID']}}"><button id="follow-button" >Follow</button></a>
+                        <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" >Follow</button></a>
                         <button id="like-button">Like</button>
                         {%endif%}
                     </div>
@@ -66,24 +66,6 @@
 </div>
 
 
-<<<<<<< HEAD
-        
-        
-    </tr>
-</thead>
-<tbody>
-{%for data in gainers%}
-    <tr>
-        <td>{{data.gname}}</td> 
-        <td>{{data.gprice}}</td> 
-        <td>{{data.gpercent}}</td> 
-        
-    </tr>
-    {%endfor%}
-</tbody>
-</table>
-=======
->>>>>>> brady
 {%endblock%}
 
 {%block tertiary%}

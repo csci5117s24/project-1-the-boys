@@ -194,7 +194,7 @@ def mainpage():
             print(follows)
     print(subs)
     
-    return render_template('mainpage.html', splist=splist,  recent=recent_posts,subscriptions=subs,followers=follows) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 # # @requires_auth
 @app.route("/editProfile", methods=['POST'])
