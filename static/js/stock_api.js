@@ -1,9 +1,17 @@
 let submitSearch = document.getElementById("searchButton")
 submitSearch.addEventListener("click", searchPosts)
+let searchForm = document.getElementById("searchForm").addEventListener("submit", function(event){
+    event.preventDefault()
+})
+let stockForm = document.getElementById("stockForm").addEventListener("submit", function(event){
+    event.preventDefault()
+})
+
 
 async function searchPosts(){
+    
     let input = document.getElementById("searchContent")
-    console.log(input)
+    
     let searchResults  = await fetch("/api/searchPosts", {
         method:"GET",
         headers:{
@@ -13,4 +21,3 @@ async function searchPosts(){
 
 
 }
-<script src="../static/js/stock_api.js"></script>

@@ -1,14 +1,16 @@
 {%extends "columns.html"%}
-
+<script src="../static/js/stock_api.js"></script>
 {%block main%}
-<input type="text" name="searchPosts" id="searchContent">
-<button type="submit" for="searchPosts" id="searchButton">Search</button>
+<form method="GET" id="searchForm">
+    <input type="text" name="searchPosts" id="searchContent">
+    <button type="submit" for="searchPosts" id="searchButton">Search</button>
+</form>
 <h1>Recent Posts</h1>
 <div class="pure-g post-div">
     <div class="pure-u-1-12">
     </div>
     <div class="pure-u-20-24">
-        {%for post in recent%}
+        {%for post in posts%}
             
             <div class="pure-g ">
                 <div class="pure-u-10-12">
@@ -34,15 +36,31 @@
 {%endblock%}
 
 {%block secondary%}
-<h2>Top Gainers</h2>
-<table class="pure-table pure-table-horizontal pure-table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>New 
-            Old </th>
-        <th>+/-%</th>
-        
+<h2>Stock Data</h2>
+<form method="GET" id="stockForm">
+    <input list="stock" name="stock">
+    <datalist id="stock" class="pure-input-1-2">
+        {%for stock in stocks%}
+        <option value={{stock.symbol}}>{{stock.symbol}} - {{stock.name}}</option>
+        {%endfor%}
+    </datalist>
+
+    <button type="submit" class="pure-button">Search</button>
+</form>
+<div class="pure-g">
+
+
+<h1 class="pure-u-1-2">Symbol: {{stockData.symbol}}</h1>
+<h1 class="pure-u-1-2">Date of Data: {{stockData.from}}</h1>
+</div>
+<div clas="pure-g">
+    <h1>Open Price: {{stockData.open}}</h1>
+    <h1>Close Price: {{stockData.close}}</h1>
+    <h1>High: {{stockData.high}}</h1>
+    <h1>Low: {{stockData.low}}</h1>
+    <h1>Volume: {{stockData.volume}}</h1>
+</div>
+
 
         
         
@@ -85,4 +103,5 @@
        
     </tbody>
 </table>
+
 {%endblock%}

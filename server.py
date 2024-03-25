@@ -60,12 +60,15 @@ def mainpage():
     splist=SPCSV()
     splist.pop(0)
     recent_posts=get_recent_posts()
-   
+    stockData=''
+    if(request.args.get("stock")):
+        ticker=request.args.get("stock")
+        stockData = query_stock(ticker)
     for stock in splist:
         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
     
     
-    return render_template('mainpage.html', splist=splist,  recent=recent_posts) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('mainpage.html', splist=splist,  posts=recent_posts, stockData = stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 @app.route("/editProfile", methods=['POST'])
 def editProfile():
@@ -82,6 +85,8 @@ def editProfile():
         session["username"]=returnval[0][1]
         session["realname"]=returnval[0][2]
         return redirect("/profile")
+    
+    
     
     
 @app.route("/callback", methods=["GET", "POST"])
@@ -117,28 +122,15 @@ def post():
         cur.execute("INSERT INTO posts (tags, ID, postContent ) VALUES (%s, %s,%s)", (tags,session["user"].get("userinfo").get("sub"),postContent,))
         return render_template('profile.html')
 
-@app.route("/stocks", methods=["GET", "POST"])
+@app.route("/stocks", methods=["GET"])
 def viewStocks():
     splist=SPCSV()
     splist.pop(0)
     stockData=''
     
-    if(request.form.get("stock")):
-        ticker=request.form.get("stock")
-        today=date.today()
-        if(date.weekday(today)>4):
-            daysBack= date.weekday(today)-4
-            today=  today-timedelta(days=daysBack)
-        elif(date.weekday(today)==0):
-            today = today-timedelta(days=3)
-        else:
-            today= today-timedelta(days=1)
-        #url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={os.environ.get("ALPHA_ADVANTAGE_API_KEY")}'
-        url=f'https://api.polygon.io/v1/open-close/{ticker}/{today}?adjusted=true&apiKey={os.environ.get("POLYGON.IO_API_KEY")}'
-        print(url)
-        r = requests.get(url)
-        stockData = r.json()
-        print("huh",stockData)
+    if(request.args.get("stock")):
+        ticker=request.args.get("stock")
+        stockData = query_stock(ticker)
         
     
     return render_template('stock_view.html', stocks=splist, stockData=stockData)
@@ -160,8 +152,6 @@ def profilepage():
     with get_db_cursor(True) as cur:
         cur.execute("select * FROM posts WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
         posts = cur.fetchall()
-        print("printing posts")
-        print(posts)
         splist=SPCSV()
         splist.pop(0)
         cur.execute("select * FROM users WHERE ID = %s",((str(session["user"].get("userinfo").get("sub")),)))
@@ -224,7 +214,20 @@ def followStock(ticker):
         print("executed")
         return redirect("/")
 
-
+@app.route("/api/searchPosts")
+def searchPosts():
+    splist=SPCSV()
+    splist.pop(0)
+    
+    searchPosts = search_posts_db(request.args.get("searchPosts"))
+    stockData = ''
+    if(request.args.get("stock")):
+        ticker=request.args.get("stock")
+        stockData = query_stock(ticker)
+    for stock in splist:
+        stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
+    
+    return render_template('mainpage.html', splist=splist, posts=searchPosts, stockData = stockData)
 
 
 
