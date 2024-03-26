@@ -1,11 +1,9 @@
 
 
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, session,send_file
 from jinja2 import Environment, Template
 import os
 import filetype
-from flask import Flask, render_template, redirect, jsonify
-from flask import current_app, g, request, url_for, session,send_file
 from contextlib import contextmanager
 import json
 from jsonify import *
@@ -20,8 +18,7 @@ from stock_api import *
 from database_stuff import *
 from werkzeug.utils import secure_filename
 from io import *
-import io
-from datetime import date, timedelta
+
 app = Flask(__name__)
 environment = Environment
 
@@ -172,17 +169,21 @@ def logout():
 def mainpage():
     url_for('static', filename = 'styling/style.css')
     
-    splist=SPCSV()
-    splist.pop(0)
+    spAll, splist=SPCSV()
+    
     recent_posts=get_recent_posts()
     stockData=''
-    if(request.args.get("stock")):
-        ticker=request.args.get("stock")
-        stockData = query_stock(ticker)
-    for stock in splist:
-        stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
     subs=[]
     follows=[]
+    if(request.args.get("stock")):
+        ticker=request.args.get("stock")
+        name = request.args.get("name")
+        print(name)
+        stockData = query_stock(ticker,name)
+        stockData["name"] = name
+        
+        
+        
     if session["user"].get("userinfo"):
         user=session["user"].get("userinfo").get("sub")
         
@@ -191,8 +192,8 @@ def mainpage():
             subs= subs+cur.fetchall()
             cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
             follows = follows+cur.fetchall()
-            print(follows)
-    print(subs)
+            
+    
     
     return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 

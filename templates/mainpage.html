@@ -58,6 +58,7 @@
 <h1 class="pure-u-1-2">Date of Data: {{stockData.from}}</h1>
 </div>
 <div clas="pure-g">
+    <img src="{{stockData.logo}}" alt="{{stockData.name}} Logo"/>
     <h1>Open Price: {{stockData.open}}</h1>
     <h1>Close Price: {{stockData.close}}</h1>
     <h1>High: {{stockData.high}}</h1>
@@ -81,6 +82,7 @@
     </thead>
     <tbody>        
         {%for stock in splist%}
+
         <tr>
             
            <td><a href={{stock.link}}>{{stock.symbol}}</td>
@@ -91,7 +93,7 @@
             {%else%}
             <td><a href="/followStock/{{stock.symbol}}"><button>follow stock</button></a></td>
             {%endif%}
-            <td><a href="/?stock={{stock.symbol}}"><button>view stock</button></a></td>
+            <td><a href="/?stock={{stock.symbol}}&name={{stock.name}}"><button>view stock</button></a></td>
         </tr>
         {%endfor%}
        

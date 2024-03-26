@@ -13,15 +13,19 @@ from datetime import date, timedelta
 def SPCSV():
     file = open('static\csv\constituents.csv')
     csvreader = csv.reader(file)
-    spAll = []
-    
+    spAll = {}
+    spList = []
     for row in csvreader:
-        spAll.append({"symbol":row[0],"name":row[1]})
-    print(len(spAll))
+        symbol, name = row[0], row[1]
+        spList.append({"symbol":symbol,"name":name, "link":f'https://finance.yahoo.com/quote/{symbol}?.tsrc=fin-srch'})
+        spAll[symbol]={"symbol":symbol,"name":name, "link":f'https://finance.yahoo.com/quote/{symbol}?.tsrc=fin-srch'
+    }
+    spList.pop(0)    
     
-    return spAll
+    
+    return spAll, spList
 
-def query_stock(ticker):
+def query_stock(ticker, name):
     
     today=date.today()
     if(date.weekday(today)>4):
@@ -36,5 +40,21 @@ def query_stock(ticker):
     
     r = requests.get(url)
     stockData = r.json()
+    print(name)
+    url = "https://api.brandfetch.io/v2/search/{name}"
+
+    headers = {
+        "accept": "application/json",
+        "Referer": "localhost:5000"
+    }
+
+    response = requests.get(url, headers=headers)
+    brandData = response.json()
+    
+    logo = brandData[0].get("icon")
+    
+    
+    stockData["logo"] = logo
+    
     return stockData
     
