@@ -1,6 +1,6 @@
 
 
-from flask import Flask, render_template, url_for, request, redirect, session,send_file
+from flask import Flask, render_template, url_for, request, redirect, session,send_file, g
 from jinja2 import Environment, Template
 import os
 import filetype
@@ -31,7 +31,7 @@ from jose import jwt
 app.secret_key = os.environ["FLASK_SECRET"]
 # from auth import *
 oauth = OAuth(app)
-
+splist=SPCSV()
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
@@ -63,6 +63,62 @@ app.config['OAUTH2_CLIENT_SECRET'] = os.environ.get("AUTH0_CLIENT_SECRET")
 # from flask_oauth2_validation import OAuth2Decorator
 # oauth2 = OAuth2Decorator(app)
 
+#Page Nav
+@app.route("/", methods=['GET'])
+def mainpage():
+    url_for('static', filename = 'styling/style.css')
+    recent_posts=get_recent_posts()
+    stockData=''
+    subs=[]
+    follows=[]
+    if(request.args.get("stock")):
+        ticker=request.args.get("stock")
+        name = request.args.get("name")
+        stockData = query_stock(ticker,name)
+        stockData["name"] = name
+         
+    if session["user"].get("userinfo"):
+        user=session["user"].get("userinfo").get("sub")
+        
+        with get_db_cursor(True) as cur:
+            cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
+            subs= subs+cur.fetchall()
+            cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
+            follows = follows+cur.fetchall()
+            
+    
+    
+    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+
+
+# @app.route("/stocks", methods=["GET"])
+# def viewStocks():
+    
+#     stockData=''
+    
+#     if(request.args.get("stock")):
+#         ticker=request.args.get("stock")
+#         stockData = query_stock(ticker)
+        
+    
+#     return render_template('stock_view.html', stocks=splist, stockData=stockData)
+
+
+@app.route("/profile", methods=['GET'])
+@cross_origin(headers=["Content-Type", "Authorization"])
+@cross_origin(headers=["Access-Control-Allow-Origin", "http://localhost:"])
+# @requires_auth
+def profilepage():
+    url_for('static', filename = 'styling/style.css')
+    with get_db_cursor(True) as cur:
+        cur.execute("select * FROM posts WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
+        posts = cur.fetchall()
+        cur.execute("select * FROM users WHERE ID = %s",((str(session["user"].get("userinfo").get("sub")),)))
+        userret=cur.fetchall()
+        return render_template('profile.html',username=userret[0][1],realname=userret[0][2],posts=posts, stocks=splist,userid=session["user"].get("userinfo").get("sub")) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    
+    
+#Authorization
 @app.errorhandler(AuthError)
 def handle_auth_error(ex):
     response = jsonify(ex.error)
@@ -78,21 +134,7 @@ def get_token_auth_header():
                             "Authorization header is expected"}, 401)
 
     parts = auth.get("access_token",None)
-    print(parts[0])
-    # if parts[0].lower() != "bearer":
-    #     raise AuthError({"code": "invalid_header",
-    #                     "description":
-    #                         "Authorization header must start with"
-    #                         " Bearer"}, 401)
-    # elif len(parts) == 1:
-    #     raise AuthError({"code": "invalid_header",
-    #                     "description": "Token not found"}, 401)
-    # elif len(parts) > 2:
-    #     raise AuthError({"code": "invalid_header",
-    #                     "description":
-    #                         "Authorization header must be"
-    #                         " Bearer token"}, 401)
-
+    
     token = parts
     return token
 
@@ -149,6 +191,7 @@ def requires_auth(f):
 
 
 # @requires_auth
+#user interaction
 @app.route("/logout")
 def logout():
     session.clear()
@@ -165,37 +208,6 @@ def logout():
     )
 
 
-@app.route("/", methods=['GET'])
-def mainpage():
-    url_for('static', filename = 'styling/style.css')
-    
-    spAll, splist=SPCSV()
-    
-    recent_posts=get_recent_posts()
-    stockData=''
-    subs=[]
-    follows=[]
-    if(request.args.get("stock")):
-        ticker=request.args.get("stock")
-        name = request.args.get("name")
-        print(name)
-        stockData = query_stock(ticker,name)
-        stockData["name"] = name
-        
-        
-        
-    if session["user"].get("userinfo"):
-        user=session["user"].get("userinfo").get("sub")
-        
-        with get_db_cursor(True) as cur:
-            cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
-            subs= subs+cur.fetchall()
-            cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
-            follows = follows+cur.fetchall()
-            
-    
-    
-    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 # # @requires_auth
 @app.route("/editProfile", methods=['POST'])
@@ -216,10 +228,28 @@ def editProfile():
         session["username"]=returnval[0][1]
         session["realname"]=returnval[0][2]
         return redirect("/profile")
+# @requires_auth
+@app.route("/Post",methods=['POST'])
+def post():
+    with get_db_cursor(True) as cur:
+        tags=request.form.getlist("tags")
+        user=session["user"].get("userinfo").get("sub")
+        ticker=request.form.get("stock")
+        postContent = request.form.get("description")
+        cur.execute("INSERT INTO posts (tags, ID, postContent ) VALUES (%s, %s,%s)", (tags,session["user"].get("userinfo").get("sub"),postContent,))
+        return render_template('profile.html')
 
     
-    
-    
+@app.route("/login")
+def login():
+    return oauth.auth0.authorize_redirect(
+        redirect_uri=url_for("callback", _external=True)
+    )
+
+
+
+
+
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     token = oauth.auth0.authorize_access_token()
@@ -242,57 +272,12 @@ def callback():
             print("\n added\n")
             return render_template("login.html")
             
+#Call functions non-session user
 
-# @requires_auth
-@app.route("/Post",methods=['POST'])
-def post():
-    with get_db_cursor(True) as cur:
-        tags=request.form.getlist("tags")
-        user=session["user"].get("userinfo").get("sub")
-        ticker=request.form.get("stock")
-        postContent = request.form.get("description")
-        cur.execute("INSERT INTO posts (tags, ID, postContent ) VALUES (%s, %s,%s)", (tags,session["user"].get("userinfo").get("sub"),postContent,))
-        return render_template('profile.html')
-
-@app.route("/stocks", methods=["GET"])
-def viewStocks():
-    splist=SPCSV()
-    splist.pop(0)
-    stockData=''
-    
-    if(request.args.get("stock")):
-        ticker=request.args.get("stock")
-        stockData = query_stock(ticker)
-        
-    
-    return render_template('stock_view.html', stocks=splist, stockData=stockData)
 
 @app.route("/stocks/<ticker>")
 def stockRedirect():
     pass
-
-@app.route("/login")
-def login():
-    return oauth.auth0.authorize_redirect(
-        redirect_uri=url_for("callback", _external=True)
-    )
-
-
-
-@app.route("/profile", methods=['GET'])
-@cross_origin(headers=["Content-Type", "Authorization"])
-@cross_origin(headers=["Access-Control-Allow-Origin", "http://localhost:"])
-# @requires_auth
-def profilepage():
-    url_for('static', filename = 'styling/style.css')
-    with get_db_cursor(True) as cur:
-        cur.execute("select * FROM posts WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
-        posts = cur.fetchall()
-        splist=SPCSV()
-        splist.pop(0)
-        cur.execute("select * FROM users WHERE ID = %s",((str(session["user"].get("userinfo").get("sub")),)))
-        userret=cur.fetchall()
-        return render_template('profile.html',username=userret[0][1],realname=userret[0][2],posts=posts, stocks=splist,userid=session["user"].get("userinfo").get("sub")) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 
 @app.route("/profile/<user>", methods=['GET'])
@@ -301,10 +286,6 @@ def profilepageUser(user):
     with get_db_cursor(True) as cur:
         cur.execute("select * FROM posts WHERE ID = %s",(user,)) 
         posts = cur.fetchall()
-        print("printing posts")
-        print(posts)
-        splist=SPCSV()
-        splist.pop(0)        
         cur.execute("select * FROM users WHERE ID = %s",(user,)) 
         userret=cur.fetchall()
         return render_template('profile.html',username=userret[0][1],realname=userret[0][2],posts=posts, stocks=splist,userid=user) #This will be changed when the basic frame is created and then used as an extension for all of our pages
@@ -362,11 +343,10 @@ def unfollowStock(ticker):
         cur.execute("INSERT INTO subscriptions (uid,ticker) VALUES (%s,%s)",(session["user"].get("userinfo").get("sub"),ticker,))
         print("executed")
         return redirect("/")
+    
+    
 @app.route("/api/searchPosts")
 def searchPosts():
-    splist=SPCSV()
-    splist.pop(0)
-    
     searchPosts = search_posts_db(request.args.get("searchPosts"))
     stockData = ''
     if(request.args.get("stock")):

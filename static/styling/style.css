@@ -310,7 +310,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         border:#000 solid;
     
     }
-    #stock-view-div, #trending-div, #top-gain-div{
+    #stock-div, #main-div{
         overflow-y:scroll;
         height:75vh;
         display:flex;
@@ -319,14 +319,11 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
         
     }
-    #stock-view-div{
-        margin-left:2vw;
-        background-color: black;
-    }
-    #stock-view-div *, #top-gain-div *{
+    
+    #stock-div *, #main-div *, #stock-view-div *{
         width: 100%;
     }
-    #stock-view-div h2, #top-gain-div h2{
+    #stock-div h2, #main-div h2, #stock-view-div h2{
         text-align: center;
     }
 }
@@ -348,11 +345,11 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         display:none;
     
     }
-    #stock-view-div, #top-gain-div{
+    #stock-div{
         display:none;
         
     }
-    #trending-div{
+    #main-div{
         overflow-y:scroll;
         height:75vh;
         display:block;
