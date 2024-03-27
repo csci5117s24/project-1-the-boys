@@ -154,14 +154,14 @@ appears on the left side of the page.
     left: 0;
     bottom: 0;
     z-index: 1000; /* so the menu or its navicon stays above all content */
-    background: #191818;
-    overflow-y: auto;
+    background: black;
+    overflow-y: none;
 }
     /*
     All anchors inside the menu should be styled like this.
     */
     #menu a {
-        color: #999;
+        color: white;
         border: none;
         padding: 0.6em 0 0.6em 0.6em;
     }
@@ -195,7 +195,8 @@ appears on the left side of the page.
     */
     #menu .pure-menu-selected,
     #menu .pure-menu-heading {
-        background: #1f8dd6;
+        background: darkblue;
+        height:20%;
     }
         /*
         This styles a link within a selected menu item `<li>`.
@@ -301,13 +302,10 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         left: 150px;
     }
     #user-menu-photo{
-        height:5vh;
-        width:5vh;
-        padding:2em;
-        position:fixed;
-        bottom:2em;
-        left:2em;
-        border:#000 solid;
+        
+        background-color: white;
+        display:block;
+        
     
     }
     #stock-div, #main-div{
@@ -325,6 +323,16 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     } */
     #stock-div h2, #main-div h2, #stock-view-div h2{
         text-align: center;
+    }
+    .pure-menu-list{
+        height:100%
+    }
+    .pure-menu-item{
+        line-height: 20%;
+        
+    }
+    .pure-menu-item a{
+        font-size: 1.5em;
     }
 }
 
@@ -395,7 +403,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 .post-design p{
     padding: 2%;
     border:solid black 1px;
-    height:100%;
+    height:60%;
 
 }
 
