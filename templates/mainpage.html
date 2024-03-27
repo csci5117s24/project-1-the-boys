@@ -1,39 +1,45 @@
 {%extends "columns.html"%}
 <script src="../static/js/stock_api.js"></script>
-{%block main%}
-<form method="GET" id="searchForm" action="/api/searchPosts">
-    <input type="text" name="searchPosts" id="searchContent">
-    <button type="submit" for="searchPosts" id="searchButton">Search</button>
-</form>
+{%block primary%}
 <h1>Recent Posts</h1>
+<form method="GET" id="searchForm" action="/api/searchPosts" class="pure-form">
+    <input type="text" name="searchPosts" id="searchContent" class="pure-input-2-3">
+    <button type="submit" for="searchPosts" id="searchButton" class="pure-button pure-button-primary">Search</button>
+</form>
 <div class="pure-g post-div">
-    <div class="pure-u-1-12">
+    <div class="pure-u-1-24">
     </div>
-    <div class="pure-u-20-24">
+    <div class="pure-u-22-24">
         {%for post in posts%}
             
             <div class="pure-g ">
-                <div class="pure-u-10-12">
+                <div class="pure-u-11-12">
                     <div class="post-design">
-                       <a href="/profile/{{posts[post]['posterID']}}"><button href> <img id="userImage" src="/getAvatar/{{posts[post]['posterID']}}" > </button></a>
-                        <h1>{{posts[post]["username"]}}</h1>
-                        <h1>{{posts[post]["posterID"]}}</h1>
-                        <h2>{{posts[post]["tags"]}}</h2>
-                        <p>{{posts[post]["content"]}}</p>
-                    </div>
-                    <div class="post-buttons">
-                        {%if [posts[post]["posterID"]] in followers %}
-                        <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" >unFollow</button></a>
-                        {%else%}
-                        <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" >Follow</button></a>
-                        <button id="like-button">Like</button>
-                        {%endif%}
+                        <div class="post-top">
+                            <img id="userImage" src="/getAvatar/{{posts[post]['posterID']}}" alt="{{posts[post]['username']}}'s PFP" > </button></a> 
+                            <h1>{{posts[post]['username']}}</h1>
+                        </div>                   
+                        <p>{{posts[post]["content"]}}
+                            
+                            {%for tag in posts[post]["tags"]%}
+                             #{{tag}}  
+                            {%endfor%}
+                        </p>
+                        <div class="post-buttons">
+                            {%if [posts[post]["posterID"]] in followers %}
+                            <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" class="pure-button">unFollow</button></a>
+                            {%else%}
+                            <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" class="pure-button" >Follow</button></a>
+                            <button id="like-button" class="pure-button">Like</button>
+                            {%endif%}
+                            
+                        </div>
                     </div>
                 </div>
             </div>
         {%endfor%}
         </div>
-    <div class="pure-u-1-12">
+    <div class="pure-u-1-24">
     </div>
 </div>
     
@@ -41,16 +47,19 @@
 
 {%block secondary%}
 <h2>Stock Data</h2>
-<form method="GET" id="stockForm">
-    <input list="stock" name="stock">
-    <datalist id="stock" class="pure-input-1-2">
-        {%for stock in stocks%}
-        <option value={{stock.symbol}}>{{stock.symbol}} - {{stock.name}}</option>
-        {%endfor%}
-    </datalist>
 
-    <button type="submit" class="pure-button">Search</button>
-</form>
+<form method="GET" id="stockForm" class="pure-form">
+    <div class="pure-u-1-5"></div>
+    <div class="pure-u-3-5 search">
+        <input list="stock-datalist" name="stock-datalist" class="pure-input-1">
+        <datalist id="stock-datalist">
+            {%for stock in splist%}
+            <option value={{stock.symbol}}>{{stock.symbol}} - {{stock.name}}</option>
+            {%endfor%}
+        </datalist>
+    </div>
+    <button type="submit" class="pure-button pure-button-primary">Search</button>
+    </form>
 <div class="pure-g">
 
 
@@ -85,7 +94,6 @@
         {%for stock in splist%}
 
         <tr>
-            
            <td><a href={{stock.link}}>{{stock.symbol}}</td>
             <td>{{stock.name}}</td>
             {%if [stock.symbol,stock.name] in subscriptions %}

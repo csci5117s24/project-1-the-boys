@@ -66,7 +66,7 @@ def get_user_info(postList: dict, cur):
         key=postList[post]["posterID"]
         postList[post]["username"]=userInfo[key]["username"]
         postList[post]["avatar"]=userInfo[key]["avatar"]
-        
+    print(postList)    
             
     return postList
 

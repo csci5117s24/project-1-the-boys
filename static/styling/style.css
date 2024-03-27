@@ -320,9 +320,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
     }
     
-    #stock-div *, #main-div *, #stock-view-div *{
+    /* #stock-div *, #main-div *, #stock-view-div *{
         width: 100%;
-    }
+    } */
     #stock-div h2, #main-div h2, #stock-view-div h2{
         text-align: center;
     }
@@ -359,29 +359,45 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 }
 
 
-
-
 .pure-g div:nth-child(even){
     background-color: black;
     position:relative;
     
 }
-
-
 .post-div{
     width: 100%;
 }
-#trending-div{
-    display:flex;
-    flex-direction: column;
-    
-}
+
 #top-space{
     height: 15vh;
     background-color: transparent;
 }
-#stock-viewer-back{
-    background-color: black;
-    height:75vh;
-    margin:auto
+
+
+
+/*work on post elements*/
+.post-design{
+    display: flex;
+    flex-direction: column;
+    height: 30vh;
+    background-color: #0C1D48;
+    width: 100%;
+    border: solid black 1px;
+    margin: 2%;
+    padding: 2%;
 }
+.post-top{  
+    display: flex;
+    flex-direction: row;
+    gap:5%
+}
+
+.post-design p{
+    padding: 2%;
+    border:solid black 1px;
+    height:100%;
+
+}
+
+
+/*post elements done*/

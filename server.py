@@ -71,15 +71,17 @@ def mainpage():
     stockData=''
     subs=[]
     follows=[]
+    picture="/static/images/profile-user.png"
     if(request.args.get("stock")):
         ticker=request.args.get("stock")
         name = request.args.get("name")
         stockData = query_stock(ticker,name)
         stockData["name"] = name
-         
+
     if session["user"].get("userinfo"):
-        user=session["user"].get("userinfo").get("sub")
-        
+        userSession=session["user"].get("userinfo")
+        user = userSession.get("sub")
+        picture = userSession.get("picture")
         with get_db_cursor(True) as cur:
             cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
             subs= subs+cur.fetchall()
@@ -88,20 +90,8 @@ def mainpage():
             
     
     
-    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData, userPFP=picture) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
-
-# @app.route("/stocks", methods=["GET"])
-# def viewStocks():
-    
-#     stockData=''
-    
-#     if(request.args.get("stock")):
-#         ticker=request.args.get("stock")
-#         stockData = query_stock(ticker)
-        
-    
-#     return render_template('stock_view.html', stocks=splist, stockData=stockData)
 
 
 @app.route("/profile", methods=['GET'])
