@@ -72,11 +72,14 @@ def mainpage():
     subs=[]
     follows=[]
     picture="/static/images/profile-user.png"
-    if(request.args.get("stock")):
-        ticker=request.args.get("stock")
-        name = request.args.get("name")
+    if(request.args.get("stock-datalist")):
+        ticker=request.args.get("stock-datalist")
+        for stock in splist:
+            if stock.get("symbol")==ticker:
+                name=stock.get("name")
         stockData = query_stock(ticker,name)
         stockData["name"] = name
+   
 
     if session["user"].get("userinfo"):
         userSession=session["user"].get("userinfo")

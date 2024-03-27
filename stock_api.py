@@ -38,7 +38,7 @@ def query_stock(ticker, name):
     
     r = requests.get(url)
     stockData = r.json()
-    print(name)
+    print(stockData)
     # url = "https://api.brandfetch.io/v2/search/{name}"
 
     # headers = {

@@ -409,3 +409,22 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 
 
 /*post elements done*/
+
+/*working on stock viewer elements*/
+.stock-info{
+    display:flex;
+    flex-direction: column;
+    margin-left: 5%;
+}
+.stock-info *{
+    background-color: #0C1D48;
+    margin-top:5%;
+    color:white;
+    padding:2%;
+    font-size:medium;
+
+
+}
+
+
+/*stock viewer elements done*/
