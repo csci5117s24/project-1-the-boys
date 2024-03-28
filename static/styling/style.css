@@ -5,6 +5,7 @@ body{
     margin:0;
     background-color: #0C1D48;
 }
+/*some mainpage stuff*/
 #topBar>*{
     background-color: #000939;
     height: 10vh;
@@ -26,7 +27,6 @@ div h1{
     font-size: medium;
     margin-top: 0;
 }
-
 .sideBarHeaders{
     
     height:8vh;
@@ -49,10 +49,28 @@ h3{
     height:100%;
     width:100%;
 }
+.post-field-visible{
+    
+    background-color: black;
+    display:flex;
+    justify-content: center;
+    width:30%;
+    padding: 2em;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+/*Done mainpage stuff*/
+
+/*Profile stuff*/
 #profile-container
 {
-    background-color: blueviolet;
-    position: center;
+    width: 80%;
+    margin: auto;
+    border: 5px solid black;
+
 }
 #profile-table
 {
@@ -154,14 +172,14 @@ appears on the left side of the page.
     left: 0;
     bottom: 0;
     z-index: 1000; /* so the menu or its navicon stays above all content */
-    background: #191818;
-    overflow-y: auto;
+    background: black;
+    overflow-y: none;
 }
     /*
     All anchors inside the menu should be styled like this.
     */
     #menu a {
-        color: #999;
+        color: white;
         border: none;
         padding: 0.6em 0 0.6em 0.6em;
     }
@@ -195,7 +213,8 @@ appears on the left side of the page.
     */
     #menu .pure-menu-selected,
     #menu .pure-menu-heading {
-        background: #1f8dd6;
+        background: darkblue;
+        height:20%;
     }
         /*
         This styles a link within a selected menu item `<li>`.
@@ -301,16 +320,13 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         left: 150px;
     }
     #user-menu-photo{
-        height:5vh;
-        width:5vh;
-        padding:2em;
-        position:fixed;
-        bottom:2em;
-        left:2em;
-        border:#000 solid;
+        
+        background-color: white;
+        display:block;
+        
     
     }
-    #stock-view-div, #trending-div, #top-gain-div{
+    #stock-div, #main-div{
         overflow-y:scroll;
         height:75vh;
         display:flex;
@@ -319,15 +335,28 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
         
     }
-    #stock-view-div{
-        margin-left:2vw;
+    
+    #stock-div, #main-div, #stock-view-div{
         background-color: black;
+        margin-top:15vh;
     }
-    #stock-view-div *, #top-gain-div *{
-        width: 100%;
-    }
-    #stock-view-div h2, #top-gain-div h2{
+    #stock-div h2, #main-div h2, #stock-view-div h2{
         text-align: center;
+    }
+    .pure-menu-list{
+        height:100%
+    }
+    .pure-menu-item{
+        line-height: 20%;
+        
+    }
+    .pure-menu-item a{
+        font-size: 1.5em;
+    }
+    #content-background{
+        background-color: darkblue;
+        padding:1em;
+        
     }
 }
 
@@ -348,11 +377,11 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         display:none;
     
     }
-    #stock-view-div, #top-gain-div{
+    #stock-div{
         display:none;
         
     }
-    #trending-div{
+    #main-div{
         overflow-y:scroll;
         height:75vh;
         display:block;
@@ -362,29 +391,66 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 }
 
 
-
-
-.pure-g div:nth-child(even){
+/* .pure-g div:nth-child(even){
     background-color: black;
     position:relative;
     
-}
-
-
+} */
 .post-div{
     width: 100%;
 }
-#trending-div{
+
+/*basically my top margin*/
+
+
+
+
+/*work on post elements*/
+.post-design{
+    display: flex;
+    flex-direction: column;
+    height: 30vh;
+    background-color: #0C1D48;
+    width: 100%;
+    border: solid black 1px;
+    margin: 2%;
+    padding: 2%;
+}
+.post-top{  
+    display: flex;
+    flex-direction: row;
+    gap:5%
+}
+
+.post-design p{
+    padding: 2%;
+    border:solid black 1px;
+    height:60%;
+
+}
+
+
+/*post elements done*/
+
+/*working on stock viewer elements*/
+.stock-info{
     display:flex;
     flex-direction: column;
-    
+    margin-left: 5%;
 }
-#top-space{
-    height: 15vh;
-    background-color: transparent;
+.stock-info *{
+    background-color: #0C1D48;
+    margin-top:5%;
+    color:white;
+    padding:2%;
+    font-size:medium;
+
+
 }
-#stock-viewer-back{
-    background-color: black;
-    height:75vh;
-    margin:auto
+#company-logo{
+    height:10em;
+    width:10em;
 }
+
+
+/*stock viewer elements done*/

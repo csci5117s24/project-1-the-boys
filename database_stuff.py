@@ -54,24 +54,25 @@ def get_user_info(postList: dict, cur):
     
     userInfo={}
     for  post in postList:
-        cur.execute("SELECT username, avatar FROM Users WHERE ID=%s", [postList[post]["posterID"]]) #Rewrite with separate function
+        cur.execute("SELECT username, avatar, realname FROM Users WHERE ID=%s", [postList[post]["posterID"]]) #Rewrite with separate function
         user=cur.fetchall()
-           
         key=postList[post]["posterID"]
         userInfo[key]={
             "username":user[0][0],
-            "avatar":user[0][1]
+            "avatar":user[0][1],
+            "name":user[0][2]
         }
     for post in postList:
         key=postList[post]["posterID"]
         postList[post]["username"]=userInfo[key]["username"]
         postList[post]["avatar"]=userInfo[key]["avatar"]
-        
+        postList[post]["name"]=userInfo[key]["name"]
+    
             
     return postList
 
 
-def createPostList(posts):
+def createPostList(posts, cur):
     postList={}
     for post in posts:
         key = f'post_id_{post[0]}'
@@ -87,7 +88,7 @@ def get_recent_posts():
         cur.execute("SELECT * FROM Posts")
         posts=cur.fetchall()
         
-        postList = createPostList(posts)
+        postList = createPostList(posts, cur)
         updatedPostList = get_user_info(postList, cur)
             
         return updatedPostList
@@ -97,11 +98,19 @@ def get_stock_list():
         cur.execute("SELECT * FROM Stocks")
         print(cur.fetchall())
 def search_posts_db(query):
-    query = query
+
     with get_db_cursor(True) as cur:
         cur.execute(f"SELECT * FROM Posts WHERE postContent LIKE '%{query}%'")
         posts = cur.fetchall()
-        postList = createPostList(posts)
+        postList = createPostList(posts, cur)
+        updatedPostList = get_user_info(postList,cur)
+        return updatedPostList
+def get_posts_by_id(user, cur):
+    
+        
+        cur.execute(f"SELECT * FROM Posts WHERE ID='{user[0][0]}'")
+        posts = cur.fetchall()
+        postList = createPostList(posts, cur)
         updatedPostList = get_user_info(postList,cur)
         return updatedPostList
     
