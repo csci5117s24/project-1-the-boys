@@ -31,7 +31,7 @@ from jose import jwt
 app.secret_key = os.environ["FLASK_SECRET"]
 # from auth import *
 oauth = OAuth(app)
-
+splist=SPCSV()
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
@@ -196,7 +196,7 @@ def mainpage():
     
     
     return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows,stockData=stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
-    return render_template('mainpage.html', splist=splist,  recent=recent_posts,subscriptions=subs,followers=follows,stockData=stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+   
 
 # # @requires_auth
 @app.route("/editProfile", methods=['POST'])
@@ -289,8 +289,7 @@ def profilepage():
     with get_db_cursor(True) as cur:
         cur.execute("select * FROM posts WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
         posts = cur.fetchall()
-        splist=SPCSV()
-        splist.pop(0)
+        
         cur.execute("select * FROM users WHERE ID = %s",((str(session["user"].get("userinfo").get("sub")),)))
         userret=cur.fetchall()
         return render_template('profile.html',username=userret[0][1],realname=userret[0][2],posts=posts, stocks=splist,userid=session["user"].get("userinfo").get("sub")) #This will be changed when the basic frame is created and then used as an extension for all of our pages
@@ -304,8 +303,7 @@ def profilepageUser(user):
         posts = cur.fetchall()
         print("printing posts")
         print(posts)
-        splist=SPCSV()
-        splist.pop(0)        
+              
         cur.execute("select * FROM users WHERE ID = %s",(user,)) 
         userret=cur.fetchall()
         return render_template('profile.html',username=userret[0][1],realname=userret[0][2],posts=posts, stocks=splist,userid=user) #This will be changed when the basic frame is created and then used as an extension for all of our pages
