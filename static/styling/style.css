@@ -5,6 +5,7 @@ body{
     margin:0;
     background-color: #0C1D48;
 }
+/*some mainpage stuff*/
 #topBar>*{
     background-color: #000939;
     height: 10vh;
@@ -26,7 +27,6 @@ div h1{
     font-size: medium;
     margin-top: 0;
 }
-
 .sideBarHeaders{
     
     height:8vh;
@@ -49,10 +49,28 @@ h3{
     height:100%;
     width:100%;
 }
+.post-field-visible{
+    
+    background-color: black;
+    display:flex;
+    justify-content: center;
+    width:30%;
+    padding: 2em;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+/*Done mainpage stuff*/
+
+/*Profile stuff*/
 #profile-container
 {
-    background-color: blueviolet;
-    position: center;
+    width: 80%;
+    margin: auto;
+    border: 5px solid black;
+
 }
 #profile-table
 {
@@ -318,9 +336,10 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
     }
     
-    /* #stock-div *, #main-div *, #stock-view-div *{
-        width: 100%;
-    } */
+    #stock-div, #main-div, #stock-view-div{
+        background-color: black;
+        margin-top:15vh;
+    }
     #stock-div h2, #main-div h2, #stock-view-div h2{
         text-align: center;
     }
@@ -333,6 +352,11 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
     .pure-menu-item a{
         font-size: 1.5em;
+    }
+    #content-background{
+        background-color: darkblue;
+        padding:1em;
+        
     }
 }
 
@@ -367,19 +391,17 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 }
 
 
-.pure-g div:nth-child(even){
+/* .pure-g div:nth-child(even){
     background-color: black;
     position:relative;
     
-}
+} */
 .post-div{
     width: 100%;
 }
 
-#top-space{
-    height: 15vh;
-    background-color: transparent;
-}
+/*basically my top margin*/
+
 
 
 
@@ -424,6 +446,10 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     font-size:medium;
 
 
+}
+#company-logo{
+    height:10em;
+    width:10em;
 }
 
 

@@ -17,9 +17,9 @@ from psycopg2.extras import DictCursor
 from stock_api import *
 from database_stuff import *
 from werkzeug.utils import secure_filename
-from io import *
+import io
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 environment = Environment
 
 import json
@@ -32,6 +32,8 @@ app.secret_key = os.environ["FLASK_SECRET"]
 # from auth import *
 oauth = OAuth(app)
 splist=SPCSV()
+
+picture="/static/images/profile-user.png"
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
@@ -71,7 +73,7 @@ def mainpage():
     stockData=''
     subs=[]
     follows=[]
-    picture="/static/images/profile-user.png"
+    
     if(request.args.get("stock-datalist")):
         ticker=request.args.get("stock-datalist")
         for stock in splist:
@@ -79,7 +81,8 @@ def mainpage():
                 name=stock.get("name")
         stockData = query_stock(ticker,name)
         stockData["name"] = name
-   
+        stockData["domain"] = name.replace(" ", "").split(".")[0]
+        print(stockData)
 
     if session["user"].get("userinfo"):
         userSession=session["user"].get("userinfo")
@@ -90,7 +93,7 @@ def mainpage():
             subs= subs+cur.fetchall()
             cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
             follows = follows+cur.fetchall()
-            
+        
     
     
     return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData, userPFP=picture) #This will be changed when the basic frame is created and then used as an extension for all of our pages
@@ -104,12 +107,33 @@ def mainpage():
 def profilepage():
     url_for('static', filename = 'styling/style.css')
     with get_db_cursor(True) as cur:
-        cur.execute("select * FROM posts WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
-        posts = cur.fetchall()
-        cur.execute("select * FROM users WHERE ID = %s",((str(session["user"].get("userinfo").get("sub")),)))
-        userret=cur.fetchall()
-        return render_template('profile.html',username=userret[0][1],realname=userret[0][2],posts=posts, stocks=splist,userid=session["user"].get("userinfo").get("sub")) #This will be changed when the basic frame is created and then used as an extension for all of our pages
-    
+        cur.execute(f"SELECT ID FROM USERS WHERE username = '{session['username']}'")
+        id=cur.fetchall()
+        
+        posts=get_posts_by_id(id, cur)
+        
+        
+        cur.execute(f"SELECT username, avatar, realname FROM Users WHERE ID='{id[0][0]}'")
+        user=cur.fetchall()
+        print(user)
+        userInfo={}
+        postList=[]
+        username=user[0][0]
+        realname=user[0][2]
+        userSession=session["user"].get("userinfo")
+        picture = userSession.get("picture")    
+        
+        for post in posts:
+            key=posts[post]["posterID"]
+            posts[post]["username"]=user[0][0]
+            posts[post]["avatar"]=user[0][1]
+            posts[post]["name"]=user[0][2]
+         
+        postList=posts
+        print(postList)
+        
+        return render_template('profile.html',username=username,realname=realname,posts=postList, stocks=splist,userid=id, userPFP=picture) 
+
     
 #Authorization
 @app.errorhandler(AuthError)
@@ -277,11 +301,12 @@ def stockRedirect():
 def profilepageUser(user):
     url_for('static', filename = 'styling/style.css')
     with get_db_cursor(True) as cur:
-        cur.execute("select * FROM posts WHERE ID = %s",(user,)) 
-        posts = cur.fetchall()
-        cur.execute("select * FROM users WHERE ID = %s",(user,)) 
-        userret=cur.fetchall()
-        return render_template('profile.html',username=userret[0][1],realname=userret[0][2],posts=posts, stocks=splist,userid=user) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+        posts=get_posts_by_id(user, cur)
+        posts=createPostList(posts, cur)
+        print(posts)
+        posts=get_user_info(posts, cur)
+        
+        return render_template('profile.html',username=posts[0]["username"],realname=posts[0]["name"],posts=posts, stocks=splist,userid=user) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 # @requires_auth
 @app.route("/follow/<uid>")
@@ -298,7 +323,7 @@ def getAvatar():
         cur.execute("select avatar.avatarmimetype FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
         returnval = cur.fetchall()
         stream = io.BytesIO(returnval[0][0])
-        print(returnval[0][1])
+        session['user']['userinfo']['picture'] = stream
         return send_file(stream,mimetype=returnval[0][1])
 
 

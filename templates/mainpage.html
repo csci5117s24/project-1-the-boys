@@ -1,5 +1,5 @@
 {%extends "columns.html"%}
-<script src="../static/js/stock_api.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 {%block primary%}
 <h1>Recent Posts</h1>
 <form method="GET" id="searchForm" action="/api/searchPosts" class="pure-form">
@@ -60,16 +60,40 @@
     </div>
     <button type="submit" class="pure-button pure-button-primary">Search</button>
     </form>
-<div class="pure-g stock-info">
-    <img src="{{stockData.logo}}" alt="{{stockData.name}}'s' Logo"/>
-    <h1 class="pure-u-1-2">Symbol: {{stockData.symbol}}</h1>
-    <h1 class="pure-u-1-2">Date of Data: {{stockData.from}}</h1>
-    <h1>Open Price: {{stockData.open}}</h1>
-    <h1>Close Price: {{stockData.close}}</h1>
-    <h1>High: {{stockData.high}}</h1>
-    <h1>Low: {{stockData.low}}</h1>
-    <h1>Volume: {{stockData.volume}}</h1>
-</div>
+    <img id='company-logo' src="https://logo.clearbit.com/{{stockData.domain}}.com"
+     onerror="this.src='../static/images/vecteezy_abstract-geometric-logo-icon-design_7752415.jpg'"/>
+    <h1>{{stockData.name}}</h1>
+    <table style="width:100%" class="pure-table pure-table-horizontal">
+        <tr>
+            <th>Ticker: </th>
+            <td>{{stockData.symbol}}</td>
+        </tr>
+        <tr>
+            <th>Date: </th>
+            <td>{{stockData.from}}</td>
+        </tr>
+        <tr>
+            <th>Open Price: </th>
+            <td>{{stockData.open}}</td>
+        </tr>
+        <tr>
+            <th>Close Price </th>
+            <td>{{stockData.close}}</td>
+        </tr>
+        <tr>
+            <th>High: </th>
+            <td>{{stockData.high}}</td>
+        </tr>
+        <tr>
+            <th>Low: </th>
+            <td>{{stockData.low}}</td>
+        </tr>
+        <tr>
+            <th>Volume: </th>
+            <td>{{stockData.volume}}</td>
+        </tr>
+    </table>
+
 
 
 {%endblock%}
@@ -78,7 +102,7 @@
 
 <h2>List of stocks</h2>
 <table class="pure-table pure-table-horizontal pure-table-striped">
-    <thead>
+    <thead class="stock-table">
         <tr>
             <th>Symbol</th>
             <th>Name</th>
@@ -105,4 +129,46 @@
     </tbody>
 </table>
 
+{%endblock%}
+
+
+{%block postPopup%}
+<div class="post-field-visible pure-u-1-3" hidden id="create-post-div">
+
+    <form enctype="multipart/form-data" hidden="true" action="/editProfile" id="profileUpdate" method="POST" class="pure-form pure-form-stacked">
+        <fieldset>
+            <legend>update your profile</legend>
+            <span class="pure-form-message">This is a required field.</span>
+            <label for="multi-first-name">real name</label>
+        <input name="realname"  type="text" minlength="3" id="realname" class="pure-u-23-24" />
+        <label for="multi-first-name">username</label>
+        <input name="username"  type="text" minlength="3" id="username" class="pure-u-23-24" />
+        <input type = "file" name = "image" />
+        <button type="submit" class="pure-button pure-button-primary">submit</button>
+    </fieldset>
+</form> 
+
+<form action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
+    <fieldset>
+        <legend>Create your post</legend>
+        <span class="pure-form-message">This is a required field.</span>
+        <div class="pure-u-1 pure-u-md-1-3">
+            <label for="stock">Stock</label>
+            <input list="stock">
+            <datalist id="stock" name="stock" class="pure-input-1-2">
+                {%for stock in splist%}
+                <option value=`{{stock.symbol}}`>{{stock.symbol}} - {{stock.name}}</option>
+                {%endfor%}
+            </datalist>
+        </div>
+        <textarea height="15" width="40"></textarea>
+        <label for="tags" class="pure-checkbox">
+            <input type="checkbox" id="tags" name="tags"value="bullish"/>
+            <input type="checkbox" id="tags" name="tags" value="bearish"/>
+            <input type="checkbox" id="tags" name="tags" value="top-pick"/> 
+        </label>
+        <button type="submit" class="pure-button pure-button-primary">submit</button>
+    </fieldset>
+</form>
+</div>
 {%endblock%}

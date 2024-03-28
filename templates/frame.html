@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/styling/style.css">
-    <script src="../static/js/stock_api.js"></script>
+    <script defer src="{{ url_for('static', filename='js/stock_api.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/us.js') }}"></script>
 </head>
 <body>
 
@@ -27,9 +28,7 @@
             <ul class="pure-menu-list">
                 <li class="pure-menu-item menu-item-divided"><a href="/" class="pure-menu-link">Home</a></li>
                 <li class="pure-menu-item menu-item-divided"><a href="/profile" class="pure-menu-link">Profile</a></li>
-                <li class="pure-menu-item menu-item-divided">
-                    <a href="/post" class="pure-menu-link">Post</a>
-                </li>
+                <li class="pure-menu-item menu-item-divided"><button id="post-button">Post</button></li>
                 <li class="pure-menu-item menu-item-divided"><a href="/profile" class="pure-menu-link"> <img src="{{userPFP}}"  id="user-menu-photo" /></a></li>
                 
 
@@ -43,16 +42,30 @@
 
     </div>
     <div class="pure-g" id="top-space">
+        
 
     </div>
-    {%block content%}
-    {%endblock%}
+    
+        {%block content%}
+        {%endblock%}
+    
        
+    </div>
+    <div class="pure-g">
+        <div class="pure-u-1-3"></div>
+        {%block postPopup%}
+        {%endblock%}
+        
+        
+    </div>
+
     </div>
 </div>
 
 <footer>
-    <a href="https://clearbit.com">Logos provided by Clearbit</a>
+    <a href="https://clearbit.com" hidden>Logos provided by Clearbit</a>
+    <a href="https://www.vecteezy.com/free-vector/minimal" hidden>Minimal Vectors by Vecteezy</a>
 </footer>
+
 </body>
 </html>
