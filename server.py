@@ -195,7 +195,8 @@ def mainpage():
             
     
     
-    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows,stockData=stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('mainpage.html', splist=splist,  recent=recent_posts,subscriptions=subs,followers=follows,stockData=stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 # # @requires_auth
 @app.route("/editProfile", methods=['POST'])
@@ -321,7 +322,7 @@ def follow(uid):
 @app.route("/getAvatar")
 def getAvatar():
     with get_db_cursor(True) as cur:
-        cur.execute("select avatar.avatarmimetype FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
+        cur.execute("select avatar,avatarmimetype FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
         returnval = cur.fetchall()
         stream = io.BytesIO(returnval[0][0])
         print(returnval[0][1])
@@ -334,6 +335,7 @@ def getAvatarWithUid(uid):
         cur.execute("select avatar,avatarmimetype FROM users WHERE ID = %s",(uid,)) 
         returnval = cur.fetchall()
         stream = io.BytesIO(returnval[0][0])
+        print(returnval[0][1])
         return send_file(stream,mimetype=returnval[0][1])
         
 
