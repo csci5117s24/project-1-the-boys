@@ -20,10 +20,40 @@
                         <h1>{{posts[post]["posterID"]}}</h1>
                         <h2>{{posts[post]["tags"]}}</h2>
                         <p>{{posts[post]["content"]}}</p>
+                        <p>{{post}}</p>
                     </div>
                     <div class="post-buttons">
+                        {%if [posts[post]["posterID"]] in [yourid] %}
+                        <a href="/deletePost/{{post}}"><button id="follow-button" >delete post</button></a>
+                        <button id="editPost{{post}}" onClick="display('Post{{post}}')">edit post</button>
+                        
+        <form action="/editPost" id="Post{{post}}" hidden="true" method="POST" class="pure-form pure-form-stacked">
+            <fieldset>
+                <legend>Create your post</legend>
+                <span class="pure-form-message">This is a required field.</span>
+                <label for="multi-first-name">description</label>
+                <input name="description"  type="text" minlength="3" id="postDescription" class="pure-u-23-24" />
+                <label for="tags" class="pure-checkbox">
+                    <input type="checkbox" id="tags" name="tags"value="bullish"/>
+                    <input type="checkbox" id="tags" name="tags" value="bearish"/>
+                    <input type="checkbox" id="tags" name="tags" value="top-pick"/> 
+                </label>
+                <div class="pure-u-1 pure-u-md-1-3">
+                <label for="stock">Stock</label>
+                <input list="stock">
+                <datalist id="stock" name="stock" class="pure-input-1-2">
+                    {%for stock in stocks%}
+                        <option value=`{{stock.symbol}}`>{{stock.symbol}} - {{stock.name}}</option>
+                    {%endfor%}
+                </datalist>
+                </div>
+                <button type="submit" class="pure-button pure-button-primary">submit</button>
+            </fieldset>
+        </form>
+                        {%endif%}
+x
                         {%if [posts[post]["posterID"]] in followers %}
-                        <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" >unFollow</button></a>
+                        <a href="/unfollow/{{posts[post]['posterID']}}"><button id="follow-button" >unFollow</button></a>
                         {%else%}
                         <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" >Follow</button></a>
                         <button id="like-button">Like</button>
@@ -87,7 +117,7 @@
             <td>{{stock.name}}</td>
             {%if [stock.symbol,stock.name] in subscriptions %}
 
-            <td><a href="/followStock/{{stock.symbol}}"><button>unfollow stock</button></a></td>
+            <td><a href="/unsubscribe/{{stock.symbol}}"><button>unfollow stock</button></a></td>
             {%else%}
             <td><a href="/followStock/{{stock.symbol}}"><button>follow stock</button></a></td>
             {%endif%}
@@ -98,4 +128,5 @@
     </tbody>
 </table>
 
+<script src="../static/js/edit_post.js"> </script>
 {%endblock%}
