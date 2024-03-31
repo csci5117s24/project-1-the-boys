@@ -6,49 +6,23 @@ body{
     background-color: #0C1D48;
 }
 /*some mainpage stuff*/
-#topBar>*{
-    background-color: #000939;
-    height: 10vh;
-}
-#mainPage{
-    position:absolute;
-    height:100%;
-    width:100%;
-}
+
 .sideColumn, .centerColumn{
     margin-top:5%;
     border-style: solid;
     text-align: center;
     
     height: 100%;
-    text-align: center;
-}
-div h1{
-    font-size: medium;
-    margin-top: 0;
-}
-.sideBarHeaders{
     
-    height:8vh;
-    width:100%;
-    background-color:black;
-    color:white;
-
 }
+
+
 .centerTrendingHeader{
     background-color: black;
     height:8vh;
     color:white;
 }
-h3{
-    margin-top:0;
-}
 
-.sideBarContent{
-    background-color: #000939;
-    height:100%;
-    width:100%;
-}
 .post-field-visible{
     
     background-color: black;
@@ -62,6 +36,7 @@ h3{
     transform: translate(-50%, -50%);
     
 }
+
 /*Done mainpage stuff*/
 
 /*Profile stuff*/
@@ -174,6 +149,7 @@ appears on the left side of the page.
     z-index: 1000; /* so the menu or its navicon stays above all content */
     background: black;
     overflow-y: none;
+    
 }
     /*
     All anchors inside the menu should be styled like this.
@@ -199,6 +175,7 @@ appears on the left side of the page.
     #menu .pure-menu ul,
     #menu .pure-menu .menu-item-divided {
         border-top: 1px solid #333;
+        width: 150px;
     }
         /*
         Change color of the anchor links on hover/focus.
@@ -308,7 +285,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
     #menu {
         left: 150px;
+        
     }
+    
 
     .menu-link {
         position: fixed;
@@ -322,7 +301,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     #user-menu-photo{
         
         background-color: white;
-        display:block;
+        height:130px;
+        width:130px;
+        border: solid white 2px;
         
     
     }
@@ -343,21 +324,45 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     #stock-div h2, #main-div h2, #stock-view-div h2{
         text-align: center;
     }
-    .pure-menu-list{
-        height:100%
+    #side-bar-list{
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
-    .pure-menu-item{
-        line-height: 20%;
+    
+    .resize-button{
+        line-height: 25vh;
         
     }
-    .pure-menu-item a{
-        font-size: 1.5em;
-    }
+    
     #content-background{
         background-color: darkblue;
         padding:1em;
         
     }
+    .side-buttons{
+        width: 100%;
+        height:25vh;
+        background-color:transparent;
+        color:white;
+        text-align: center;
+        overflow:hidden;
+        
+    }
+    #stock-up h1{
+        
+        font-family: "Oswald", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 10;
+        font-style: normal;
+        font-size: 4em;
+        text-wrap: wrap;
+         
+    }
+    
+    
 }
 
 @media (max-width: 48em) {
@@ -428,6 +433,10 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     height:60%;
 
 }
+.user-post-picture{
+    height:5em;
+    width: 5em;
+}
 
 
 /*post elements done*/
@@ -450,7 +459,53 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 #company-logo{
     height:10em;
     width:10em;
+    margin-left: 25%;
+    border: solid grey 6px;
+    border-radius: 5%;
+}
+.company-display{
+    margin-top:10vh;
+    margin-bottom: 5vh;
+    border: solid red 10px;
+    width:66%;
+    margin-left: 10%;
 }
 
+.group-stock{
+    display: flex;
+    flex-direction: column;
+    margin-left: 25%;
+}
 
 /*stock viewer elements done*/
+
+/*stock table elements*/
+
+.stock-list-table table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.stock-list-table thead tr{
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+.stock-list-table th,
+.stock-list-table td {
+    padding: 12px 15px;
+}
+
+/*stock table elements done*/
+.oswald-header{
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 10;
+    font-style: normal;
+    font-size: 5em;
+    text-align: center;
+    margin-bottom: .5em;
+  }

@@ -22,10 +22,35 @@
 
 // }
 
-
-let postPopup = document.getElementById("post-button").addEventListener("click", ()=>{
-    let postDiv = document.getElementById("create-post-div")
-    postDiv.toggleAttribute("hidden")
-    console.log("ye it works lol")
+let postHidden=true
+let postDiv = document.getElementById("create-post-div")
+let postPopup = document.getElementById("post-button").addEventListener("click", function(event){
+  
+    postDiv.toggleAttribute('hidden')
+    postHidden = !postHidden
+    console.log(postHidden)
+    
 })
+// let body = document.querySelector('body')
 
+// body.addEventListener("click", function(event){
+//   if(!postHidden){
+//     if(event.target.closest('#html-body')) return
+//     postDiv.toggleAttribute('hidden')
+//     postHidden=true
+//   }
+// })
+
+// const onClickOutside = (element, callback) => {
+//     document.addEventListener('click', e => {
+//       if (!element.contains(e.target)) callback();
+//     });
+    
+//   };
+  
+//   onClickOutside(postDiv, () => 
+// {
+    
+//     console.log(postDiv.getAttribute("hidden"))
+//     postDiv.setAttribute("hidden", true)}
+//     );

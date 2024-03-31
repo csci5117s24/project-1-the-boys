@@ -81,7 +81,10 @@ def mainpage():
                 name=stock.get("name")
         stockData = query_stock(ticker,name)
         stockData["name"] = name
-        stockData["domain"] = name.replace(" ", "").split(".")[0]
+        if(stockData["domain"] is None):
+            
+            # stockData["domain"] = name.replace(" ", "").split(".")[0]
+            stockData["domain"] = name.split(" ")[0]
         print(stockData)
 
     if session["user"].get("userinfo"):

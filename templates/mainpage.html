@@ -1,7 +1,7 @@
 {%extends "columns.html"%}
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 {%block primary%}
-<h1>Recent Posts</h1>
+<h1 class="oswald-header">Recent Posts</h1>
 <form method="GET" id="searchForm" action="/api/searchPosts" class="pure-form">
     <input type="text" name="searchPosts" id="searchContent" class="pure-input-2-3">
     <button type="submit" for="searchPosts" id="searchButton" class="pure-button pure-button-primary">Search</button>
@@ -16,7 +16,7 @@
                 <div class="pure-u-11-12">
                     <div class="post-design">
                         <div class="post-top">
-                            <img id="userImage" src="/getAvatar/{{posts[post]['posterID']}}" alt="{{posts[post]['username']}}'s PFP" > </button></a> 
+                            <img class="user-post-picture" src="/getAvatar/{{posts[post]['posterID']}}" alt="{{posts[post]['username']}}'s PFP" ></button></a> 
                             <h1>{{posts[post]['username']}}</h1>
                         </div>                   
                         <p>{{posts[post]["content"]}}
@@ -46,7 +46,7 @@
 {%endblock%}
 
 {%block secondary%}
-<h2>Stock Data</h2>
+<h1 class="oswald-header">Stock Data</h1>
 
 <form method="GET" id="stockForm" class="pure-form">
     <div class="pure-u-1-5"></div>
@@ -59,19 +59,21 @@
         </datalist>
     </div>
     <button type="submit" class="pure-button pure-button-primary">Search</button>
-    </form>
-    <img id='company-logo' src="https://logo.clearbit.com/{{stockData.domain}}.com"
-     onerror="this.src='../static/images/vecteezy_abstract-geometric-logo-icon-design_7752415.jpg'"/>
-    <h1>{{stockData.name}}</h1>
+</form>
+
+    <div class="company-display pure-g">
+        <div class="pure-u-1-3">
+            <img id='company-logo' src="https://logo.clearbit.com/{{stockData.domain}}.com"
+            onerror="this.src='../static/images/vecteezy_abstract-geometric-logo-icon-design_7752415.jpg'"/>
+        </div>
+        <div class="group-stock pure-u-1-3">
+            <h1>{{stockData.name}}</h1>
+            <h1>{{stockData.symbol}}</h1>
+            <h1>{{stockData.from}}</h1>
+        </div>
+    </div>
     <table style="width:100%" class="pure-table pure-table-horizontal">
-        <tr>
-            <th>Ticker: </th>
-            <td>{{stockData.symbol}}</td>
-        </tr>
-        <tr>
-            <th>Date: </th>
-            <td>{{stockData.from}}</td>
-        </tr>
+        
         <tr>
             <th>Open Price: </th>
             <td>{{stockData.open}}</td>
@@ -100,9 +102,9 @@
 
 {%block tertiary%}
 
-<h2>List of stocks</h2>
+<div class="stock-list-table">
 <table class="pure-table pure-table-horizontal pure-table-striped">
-    <thead class="stock-table">
+    <thead >
         <tr>
             <th>Symbol</th>
             <th>Name</th>
@@ -110,43 +112,32 @@
             <th>View</th>
         </tr>
     </thead>
-    <tbody>        
+    <tbody>
+        
         {%for stock in splist%}
-
+        
         <tr>
-           <td><a href={{stock.link}}>{{stock.symbol}}</td>
-            <td>{{stock.name}}</td>
-            {%if [stock.symbol,stock.name] in subscriptions %}
-
-            <td><a href="/followStock/{{stock.symbol}}"><button>unfollow stock</button></a></td>
-            {%else%}
-            <td><a href="/followStock/{{stock.symbol}}"><button>follow stock</button></a></td>
-            {%endif%}
-            <td><a href="/?stock={{stock.symbol}}&name={{stock.name}}"><button>view stock</button></a></td>
-        </tr>
-        {%endfor%}
-       
-    </tbody>
-</table>
+            <td><a href={{stock.link}}>{{stock.symbol}}</td>
+                <td>{{stock.name}}</td>
+                {%if [stock.symbol,stock.name] in subscriptions %}
+                
+                <td><a href="/followStock/{{stock.symbol}}"><button>unfollow stock</button></a></td>
+                {%else%}
+                <td><a href="/followStock/{{stock.symbol}}"><button>follow stock</button></a></td>
+                {%endif%}
+                <td><a href="/?stock={{stock.symbol}}&name={{stock.name}}"><button>view stock</button></a></td>
+            </tr>
+            {%endfor%}
+            
+        </tbody>
+    </table>
+</div>
 
 {%endblock%}
 
 
 {%block postPopup%}
-<div class="post-field-visible pure-u-1-3" hidden id="create-post-div">
-
-    <form enctype="multipart/form-data" hidden="true" action="/editProfile" id="profileUpdate" method="POST" class="pure-form pure-form-stacked">
-        <fieldset>
-            <legend>update your profile</legend>
-            <span class="pure-form-message">This is a required field.</span>
-            <label for="multi-first-name">real name</label>
-        <input name="realname"  type="text" minlength="3" id="realname" class="pure-u-23-24" />
-        <label for="multi-first-name">username</label>
-        <input name="username"  type="text" minlength="3" id="username" class="pure-u-23-24" />
-        <input type = "file" name = "image" />
-        <button type="submit" class="pure-button pure-button-primary">submit</button>
-    </fieldset>
-</form> 
+<div class="post-field-visible pure-u-1-3" hidden="true" id="create-post-div">
 
 <form action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
     <fieldset>

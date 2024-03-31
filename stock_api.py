@@ -33,13 +33,26 @@ def query_stock(ticker, name):
         today = today-timedelta(days=3)
     else:
         today= today-timedelta(days=1)
-       
-    url=f'https://api.polygon.io/v1/open-close/{ticker}/{today}?adjusted=true&apiKey={os.environ.get("POLYGON.IO_API_KEY")}'
+    print(today)
+    #url=f'https://api.polygon.io/v1/open-close/{ticker}/{today}?adjusted=true&apiKey={os.environ.get("POLYGON.IO_API_KEY")}'
+    url=f'https://api.polygon.io/v2/aggs/ticker/{ticker}/prev?adjusted=true&apiKey={os.environ.get("POLYGON.IO_API_KEY")}'
     
     r = requests.get(url)
-    stockData = r.json()
+    stockResponse = r.json()
+    print(stockResponse)
+    stockData = {
+        'symbol':stockResponse.get('ticker'),
+        'name': stockResponse.get('name'),
+        'domain':stockResponse.get('domain'),
+        'from':today,
+        'open':stockResponse.get('results')[0].get('o'),
+        'close':stockResponse.get('results')[0].get('c'),
+        'high':stockResponse.get('results')[0].get('h'),
+        'low':stockResponse.get('results')[0].get('l'),
+        'volume':stockResponse.get('results')[0].get('v')
+        
+    }
     print(stockData)
-    
     
     
     return stockData

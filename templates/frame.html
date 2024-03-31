@@ -9,10 +9,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/styling/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <script defer src="{{ url_for('static', filename='js/stock_api.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/us.js') }}"></script>
+    <script src="https://kit.fontawesome.com/5d00ed0135.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body id="html-body">
 
 <div id="layout">
     <!-- Menu toggle -->
@@ -22,17 +26,14 @@
     </a>
 
     <div id="menu">
-        <div class="pure-menu">
-            <a class="pure-menu-heading" href="/">Stock Up</a>
-
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item menu-item-divided"><a href="/" class="pure-menu-link">Home</a></li>
-                <li class="pure-menu-item menu-item-divided"><a href="/profile" class="pure-menu-link">Profile</a></li>
-                <li class="pure-menu-item menu-item-divided"><button id="post-button">Post</button></li>
-                <li class="pure-menu-item menu-item-divided"><a href="/profile" class="pure-menu-link"> <img src="{{userPFP}}"  id="user-menu-photo" /></a></li>
-                
-
-                
+        <div class="pure-menu" id="side-bar-div">
+            
+            <ul id='side-bar-list' class="pure-menu-list">
+                <li class="pure-menu-item menu-item-divided resize-button"><button class="pure-button side-buttons" id="stock-up" onclick="window.location.href='/'"><h1>Stock Up</h1></button></li>
+                <li class="pure-menu-item menu-item-divided resize-button"><button class='pure-button side-buttons'><i class="fa-solid fa-house fa-5x" onclick="window.location.href='/'"></i></button></li>
+                <li class="pure-menu-item menu-item-divided resize-button"><button id="post-button" class='pure-button side-buttons'><i class="fa-solid fa-plus fa-8x" ></i></button></li>
+                <li class="pure-menu-item menu-item-divided resize-button"><button  class='pure-button side-buttons'><img src="{{userPFP}}"  id="user-menu-photo" onclick="window.location.href='/profile'" /></button></li>
+                <!-- <li class="pure-menu-item menu-item-divided resize-button"><button  class='pure-button side-buttons'><img src="{{userPFP}}"  id="user-menu-photo" onclick="window.location.href='/profile'" /></button></li> -->
             </ul>
         </div>
         
@@ -62,7 +63,7 @@
     </div>
 </div>
 
-<footer>
+<footer hidden>
     <a href="https://clearbit.com" hidden>Logos provided by Clearbit</a>
     <a href="https://www.vecteezy.com/free-vector/minimal" hidden>Minimal Vectors by Vecteezy</a>
 </footer>
