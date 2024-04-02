@@ -104,7 +104,7 @@ def get_recent_posts():
 def get_stock_list():
     with get_db_cursor(True) as cur:
         cur.execute("SELECT * FROM Stocks")
-        print(cur.fetchall())
+        
 def search_posts_db(query):
 
     with get_db_cursor(True) as cur:

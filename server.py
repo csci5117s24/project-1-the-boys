@@ -136,7 +136,7 @@ def profilepage():
             posts[post]["name"]=user[0][2]
          
         postList=posts
-        print(postList)
+        
         
         return render_template('profile.html',username=username,realname=realname,posts=postList, stocks=splist,userid=id, userPFP=picture) 
 
@@ -309,7 +309,6 @@ def profilepageUser(user):
     with get_db_cursor(True) as cur:
         posts=get_posts_by_id(user, cur)
         posts=createPostList(posts, cur)
-        print(posts)
         posts=get_user_info(posts, cur)
         
         return render_template('profile.html',username=posts[0]["username"],realname=posts[0]["name"],posts=posts, stocks=splist,userid=user) #This will be changed when the basic frame is created and then used as an extension for all of our pages
@@ -372,7 +371,6 @@ def unfollowStock(ticker):
     
 @app.route("/api/searchPosts")
 def searchPosts():
-    
     searchPosts = search_posts_db(request.args.get("searchPosts"))
     stockData = ''
     if(request.args.get("stock")):

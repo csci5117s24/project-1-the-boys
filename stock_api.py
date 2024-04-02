@@ -24,7 +24,7 @@ def SPCSV():
     return spList
 
 def query_stock(ticker, name):
-    print(ticker,name)
+    
     today=date.today()
     if(date.weekday(today)>4):
         daysBack= date.weekday(today)-4
@@ -33,13 +33,13 @@ def query_stock(ticker, name):
         today = today-timedelta(days=3)
     else:
         today= today-timedelta(days=1)
-    print(today)
+    
     #url=f'https://api.polygon.io/v1/open-close/{ticker}/{today}?adjusted=true&apiKey={os.environ.get("POLYGON.IO_API_KEY")}'
     url=f'https://api.polygon.io/v2/aggs/ticker/{ticker}/prev?adjusted=true&apiKey={os.environ.get("POLYGON.IO_API_KEY")}'
     
     r = requests.get(url)
     stockResponse = r.json()
-    print(stockResponse)
+    
     stockData = {
         'symbol':stockResponse.get('ticker'),
         'name': stockResponse.get('name'),
