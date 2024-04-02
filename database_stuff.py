@@ -63,6 +63,7 @@ def get_user_info(postList: dict, cur):
             "name":user[0][2]
         }
     for post in postList:
+        
         key=postList[post]["posterID"]
         postList[post]["username"]=userInfo[key]["username"]
         postList[post]["avatar"]=userInfo[key]["avatar"]
@@ -74,12 +75,16 @@ def get_user_info(postList: dict, cur):
 
 def createPostList(posts, cur):
     postList={}
+    # for post in posts:
+        
+    #     post.append(find_ticker_via_post(post[0],cur))
     for post in posts:
         key = f'post_id_{post[0]}'
         postList[key]={
         "tags":post[1],
         "posterID":post[2],
         "content":post[3]}
+    
     return postList
 
 
@@ -88,8 +93,11 @@ def get_recent_posts():
         cur.execute("SELECT * FROM Posts")
         posts=cur.fetchall()
         
+        
         postList = createPostList(posts, cur)
         updatedPostList = get_user_info(postList, cur)
+        
+            
             
         return updatedPostList
 
@@ -113,7 +121,8 @@ def get_posts_by_id(user, cur):
         postList = createPostList(posts, cur)
         updatedPostList = get_user_info(postList,cur)
         return updatedPostList
-    
-        
 
-    
+def find_ticker_via_post(id,cur):
+    cur.execute("SELECT ticker FROM Postmeta WHERE PID=%s",[id])    
+    ticker = cur.fetchall()
+    return ticker

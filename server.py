@@ -70,22 +70,25 @@ app.config['OAUTH2_CLIENT_SECRET'] = os.environ.get("AUTH0_CLIENT_SECRET")
 def mainpage():
     url_for('static', filename = 'styling/style.css')
     recent_posts=get_recent_posts()
+    
+    
     stockData=''
     subs=[]
     follows=[]
     
     if(request.args.get("stock-datalist")):
+        
         ticker=request.args.get("stock-datalist")
         for stock in splist:
             if stock.get("symbol")==ticker:
                 name=stock.get("name")
         stockData = query_stock(ticker,name)
         stockData["name"] = name
-        if(stockData["domain"] is None):
-            
+        if(stockData["domain"] is None):            
             # stockData["domain"] = name.replace(" ", "").split(".")[0]
             stockData["domain"] = name.split(" ")[0]
-        print(stockData)
+    
+        
 
     if session["user"].get("userinfo"):
         userSession=session["user"].get("userinfo")
@@ -369,6 +372,7 @@ def unfollowStock(ticker):
     
 @app.route("/api/searchPosts")
 def searchPosts():
+    
     searchPosts = search_posts_db(request.args.get("searchPosts"))
     stockData = ''
     if(request.args.get("stock")):

@@ -1,11 +1,22 @@
-// let submitSearch = document.getElementById("searchButton")
-// submitSearch.addEventListener("click", searchPosts)
-// let searchForm = document.getElementById("searchForm").addEventListener("submit", function(event){
-//     event.preventDefault()
-// })
-// let stockForm = document.getElementById("stockForm").addEventListener("submit", function(event){
-//     event.preventDefault()
-// })
+
+let searchForm = document.getElementById("searchForm").addEventListener("submit", async function(event){
+    //event.preventDefault()
+    // url = window.location.origin
+    // const form = event.currentTarget;
+    // const sendData = FormData(form)
+    // let data = Object.fromEntries(sendData)
+    // const sendThis = JSON.stringify(data)
+    // console.log(sendThis)
+    // searchResults = await fetch(url+"/api/searchPosts",{
+    //     method:"POST",
+    //     body:sendThis
+
+    // }
+    // )
+})
+let stockForm = document.getElementById("stockForm").addEventListener("submit", function(event){
+    //event.preventDefault()
+})
 
 
 // async function searchPosts(){

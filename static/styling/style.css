@@ -1,9 +1,14 @@
 *{
     font-size:12px;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 10;
+    font-style: normal;
 }
 body{
     margin:0;
     background-color: #0C1D48;
+    overflow-y: hidden;
 }
 /*some mainpage stuff*/
 
@@ -320,6 +325,13 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     #stock-div, #main-div, #stock-view-div{
         background-color: black;
         margin-top:15vh;
+        margin-bottom: 10vh;
+        overflow-x: hidden;
+    }
+    #stock-view-div{
+        overflow-y: hidden;
+        
+        
     }
     #stock-div h2, #main-div h2, #stock-view-div h2{
         text-align: center;
@@ -382,7 +394,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         display:none;
     
     }
-    #stock-div{
+    #stock-view-div, .stock-list-table{
         display:none;
         
     }
@@ -414,7 +426,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 .post-design{
     display: flex;
     flex-direction: column;
-    height: 30vh;
+    height: 30em;
     background-color: #0C1D48;
     width: 100%;
     border: solid black 1px;
@@ -424,18 +436,26 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 .post-top{  
     display: flex;
     flex-direction: row;
-    gap:5%
+    gap:5%;
+    align-items:flex-start;
+    border: 1px black solid;
+    padding:1%;
 }
 
 .post-design p{
     padding: 2%;
     border:solid black 1px;
     height:60%;
+    font-size: 1.5em;
 
 }
 .user-post-picture{
     height:5em;
     width: 5em;
+}
+.post-design h1{
+    font-size:2.5em;
+    margin:0;
 }
 
 
@@ -462,21 +482,43 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     margin-left: 25%;
     border: solid grey 6px;
     border-radius: 5%;
+    margin-top:2em;
 }
 .company-display{
-    margin-top:10vh;
-    margin-bottom: 5vh;
-    border: solid red 10px;
-    width:66%;
-    margin-left: 10%;
+    margin-top:5vh;
+    margin-bottom: 3vh;
+    border: solid grey 10px;
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+    height:17em;
 }
 
 .group-stock{
     display: flex;
     flex-direction: column;
     margin-left: 25%;
+    margin-top:1em;
 }
 
+.group-stock h1{
+    
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: .5em;
+}
+.stock-nums *{
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 10;
+    font-style: normal;
+    font-size: 1.5em;
+    text-align: center;
+    
+}
+.padding-table{
+    padding:1em;
+}
 /*stock viewer elements done*/
 
 /*stock table elements*/

@@ -52,8 +52,10 @@ def query_stock(ticker, name):
         'volume':stockResponse.get('results')[0].get('v')
         
     }
-    print(stockData)
+    
     
     
     return stockData
     
+    
+  
