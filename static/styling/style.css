@@ -294,7 +294,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
         
     }
-    
+    #stock-div{
+        padding:1em;
+    }
     #stock-div, #main-div, #stock-view-div{
         background-color: black;
         margin-top:15vh;
@@ -506,7 +508,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .stock-list-table thead tr{
-    background-color: #009879;
+    background-color: #2d59ab;
     color: #ffffff;
     text-align: left;
 }
