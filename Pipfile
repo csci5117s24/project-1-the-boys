@@ -20,6 +20,7 @@ python-jose = "*"
 flask-oauth2-validation = "*"
 python-dotenv = "*"
 filetype = "*"
+gunicorn = "*"
 
 [dev-packages]
 
