@@ -18,7 +18,7 @@ def setup():
     global pool
     DATABASE_URL = os.environ['DATABASE_URL']
     current_app.logger.info(f"creating db connection pool")
-    pool = ThreadedConnectionPool(1, 100, dsn=DATABASE_URL, sslmode='require')
+    pool = ThreadedConnectionPool(1, 500, dsn=DATABASE_URL, sslmode='require')
 
 
 @contextmanager
@@ -79,7 +79,7 @@ def createPostList(posts, cur):
         
     #     post.append(find_ticker_via_post(post[0],cur))
     for post in posts:
-        key = f'post_id_{post[0]}'
+        key = post[0]
         postList[key]={
         "tags":post[1],
         "posterID":post[2],

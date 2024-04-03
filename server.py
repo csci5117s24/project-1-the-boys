@@ -87,23 +87,57 @@ def mainpage():
         if(stockData["domain"] is None):            
             # stockData["domain"] = name.replace(" ", "").split(".")[0]
             stockData["domain"] = name.split(" ")[0]
-    
+    picture=None
+    yourid=[]
+    if session.get("user",None):
+        if session["user"].get("userinfo"):
+            userSession=session["user"].get("userinfo")
+            user = userSession.get("sub")
+            picture = userSession.get("picture")
+            with get_db_cursor(True) as cur:
+                cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
+                subs= subs+cur.fetchall()
+                cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
+                follows = follows+cur.fetchall()
+                yourid+=[session["user"].get("userinfo").get("sub")]
         
+    
+    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData, userPFP=picture,yourid=yourid) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
-    if session["user"].get("userinfo"):
-        userSession=session["user"].get("userinfo")
-        user = userSession.get("sub")
-        picture = userSession.get("picture")
-        with get_db_cursor(True) as cur:
-            cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
-            subs= subs+cur.fetchall()
-            cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
-            follows = follows+cur.fetchall()
+
+# # @app.route("/", methods=['GET'])
+# # def mainpage():
+# #     url_for('static', filename = 'styling/style.css')
+    
+# #     splist=SPCSV()
+# #     splist.pop(0)
+# #     recent_posts=get_recent_posts()
+# #     stockData=''
+# #     if(request.args.get("stock")):
+# #         ticker=request.args.get("stock")
+# #         stockData = query_stock(ticker)
+# #     for stock in splist:
+# #         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
+# #     subs=[]
+# #     follows=[]
+# #     yourid=[]
+    
+# #     if session.get("user",None):
+# #         user=session["user"].get("userinfo").get("sub")
         
+# #         with get_db_cursor(True) as cur:
+# #             cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
+# #             subs= subs+cur.fetchall()
+# #             cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
+# #             follows = follows+cur.fetchall()
+# #             yourid+=[session["user"].get("userinfo").get("sub")]
+# #             # cur.execute("select postid FROM posts WHERE id= %s",(session["user"].get("userinfo").get("sub"),))
+# #             # yourposts = yourposts + cur.fetchall()
+# #             print(follows)  
+# #     print(subs)
     
-    
-    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData, userPFP=picture) #This will be changed when the basic frame is created and then used as an extension for all of our pages
-
+#     return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows,stockData=stockData, yourid=yourid) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+#     return render_template('mainpage.html', splist=splist,  recent=recent_posts,subscriptions=subs,followers=follows,stockData=stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 
 @app.route("/profile", methods=['GET'])
@@ -231,7 +265,31 @@ def logout():
     )
 
 
+@app.route("/unsubscribe/<ticker>", methods=['GET'])
+def unsubscribe(ticker):
+    url_for('static', filename = 'styling/style.css')
+    user=session["user"].get("userinfo").get("sub")
+    with get_db_cursor(True) as cur:
+            cur.execute("delete from subscriptions where uid = %s and ticker = %s",(user,ticker),)
+    return redirect("/")
 
+
+@app.route("/unfollow/<uid>", methods=['GET'])
+def unfollow(uid):
+    url_for('static', filename = 'styling/style.css')
+    user=session["user"].get("userinfo").get("sub")
+    with get_db_cursor(True) as cur:
+            cur.execute("delete from followers where follower = %s and poster = %s",(user,uid),)
+    return redirect("/")
+
+@app.route("/deletePost/<pid>", methods=['GET'])
+def deletePost(pid):
+    url_for('static', filename = 'styling/style.css')
+    user=session["user"].get("userinfo").get("sub")
+    with get_db_cursor(True) as cur:
+            cur.execute("delete from posts where ID = %s and postID = %s",(user,pid))
+    return redirect("/")
+            
 # # @requires_auth
 @app.route("/editProfile", methods=['POST'])
 def editProfile():
@@ -288,7 +346,7 @@ def callback():
             print("found users with query: " +"and userinfo of" + str(returnval[0][0]))  
             session["username"]=returnval[0][1]
             session["realname"]=returnval[0][2]
-            return redirect("/profile/" + returnval[0][0])
+            return redirect("/profile")
         else:
             print("found no users with query: ")
             cur.execute("INSERT INTO Users (ID, realname) VALUES (%s, %s)", (session["user"].get("userinfo").get("sub"),token.get("userinfo").get("given_name")))
@@ -311,7 +369,7 @@ def profilepageUser(user):
         posts=createPostList(posts, cur)
         posts=get_user_info(posts, cur)
         
-        return render_template('profile.html',username=posts[0]["username"],realname=posts[0]["name"],posts=posts, stocks=splist,userid=user) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+        return render_template('profile.html',username=posts[0]["username"],realname=posts[0]["name"],posts=posts,userid=user) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 # @requires_auth
 @app.route("/follow/<uid>")
@@ -324,22 +382,22 @@ def follow(uid):
 # @requires_auth
 @app.route("/getAvatar")
 def getAvatar():
-    with get_db_cursor(True) as cur:
+    with get_db_cursor(False) as cur:
         cur.execute("select avatar,avatarmimetype FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
         returnval = cur.fetchall()
-        stream = io.BytesIO(returnval[0][0])
-        session['user']['userinfo']['picture'] = stream
-        return send_file(stream,mimetype=returnval[0][1])
+    stream = io.BytesIO(returnval[0][0])
+    session['user']['userinfo']['picture'] = stream
+    return send_file(stream,mimetype=returnval[0][1])
 
 
 @app.route("/getAvatar/<uid>")
 def getAvatarWithUid(uid):
-    with get_db_cursor(True) as cur:
+    with get_db_cursor(False) as cur:
         cur.execute("select avatar,avatarmimetype FROM users WHERE ID = %s",(uid,)) 
         returnval = cur.fetchall()
-        stream = io.BytesIO(returnval[0][0])
-        print(returnval[0][1])
-        return send_file(stream,mimetype=returnval[0][1])
+    stream = io.BytesIO(returnval[0][0])
+    print(returnval[0][1])
+    return send_file(stream,mimetype=returnval[0][1])
         
 
 @app.route("/submitUser", methods=['POST'])
