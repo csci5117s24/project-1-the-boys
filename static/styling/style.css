@@ -286,7 +286,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     
     }
     #stock-div, #main-div{
-        overflow-y:scroll;
+       
         height:75vh;
         display:flex;
         flex-direction: column;
@@ -294,7 +294,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
         
     }
-    
+    #stock-div{
+        padding:1em;
+    }
     #stock-div, #main-div, #stock-view-div{
         background-color: black;
         margin-top:15vh;
@@ -496,7 +498,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 /*stock viewer elements done*/
 
 /*stock table elements*/
-
+.stock-list-table{
+    
+}
 .stock-list-table table{
     border-collapse: collapse;
     margin: 25px 0;
@@ -504,11 +508,16 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    overflow: scroll;
 }
 .stock-list-table thead tr{
-    background-color: #009879;
+    background-color: #005EB5;
     color: #ffffff;
     text-align: left;
+}
+.stock-list-table tbody{
+    height:100%;
+    overflow-y: scroll;
 }
 .stock-list-table th,
 .stock-list-table td {
