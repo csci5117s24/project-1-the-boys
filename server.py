@@ -184,6 +184,7 @@ def unfollow(uid):
     with get_db_cursor(True) as cur:
             cur.execute("delete from followers where follower = %s and poster = %s",(user,uid),)
     return redirect("/")
+
 @app.route("/deletePost/<pid>", methods=['GET'])
 def deletePost(pid):
     url_for('static', filename = 'styling/style.css')
