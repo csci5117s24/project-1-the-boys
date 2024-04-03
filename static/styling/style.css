@@ -511,7 +511,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     overflow: scroll;
 }
 .stock-list-table thead tr{
-    background-color: #005EB5;
+    background-color: #2d59ab;
     color: #ffffff;
     text-align: left;
 }
