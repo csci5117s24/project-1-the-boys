@@ -8,7 +8,7 @@
 body{
     margin:0;
     background-color: #0C1D48;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 /*some mainpage stuff*/
 
@@ -339,6 +339,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         overflow:hidden;
         
     }
+    .side-buttons:hover{
+        background-color: white;
+    }
     #stock-up h1{
         
         font-family: "Oswald", sans-serif;
@@ -462,19 +465,19 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 }
 .company-display{
     margin-top:3vh;
-    margin-bottom: 3vh;
+    margin-bottom: 1vh;
     border: solid grey 10px;
     width:80%;
     margin-left: auto;
     margin-right: auto;
-    height:17em;
+    height:18em;
 }
 
 .group-stock{
     display: flex;
     flex-direction: column;
     margin-left: 25%;
-    margin-top:1em;
+    
 }
 
 .group-stock h1{
@@ -547,16 +550,10 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     margin: auto;
     border: 5px solid black;
     height:40em;
-    margin-bottom: 10em;
+    
 
 }
-#profile-table
-{
-    margin-left: auto;
-    margin-right: auto;
-    width:100%;
-    height:100%;
-}
+
 #signup-container
 {
     margin-left:auto;

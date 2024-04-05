@@ -56,7 +56,7 @@
             </fieldset>
         </form>
                         {%endif%}
-x
+
                         {%if [posts[post]["posterID"]] in followers %}
                             <a href="/unfollow/{{posts[post]['posterID']}}"><button id="follow-button" class="pure-button">unFollow</button></a>
                             {%else%}
@@ -169,31 +169,3 @@ x
 {%endblock%}
 
 
-{%block postPopup%}
-<div class="post-field-visible pure-u-1-3" hidden="true" id="create-post-div">
-
-<form action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
-    <fieldset>
-        <legend>Create your post</legend>
-        <span class="pure-form-message">This is a required field.</span>
-        <div class="pure-u-1 pure-u-md-1-3">
-            <label for="stock">Stock</label>
-            <input list="stock">
-            <datalist id="stock" name="stock" class="pure-input-1-2">
-                {%for stock in splist%}
-                <option value=`{{stock.symbol}}`>{{stock.symbol}} - {{stock.name}}</option>
-                {%endfor%}
-            </datalist>
-        </div>
-        <textarea height="15" width="40"></textarea>
-        <label for="tags" class="pure-checkbox">
-            <input type="checkbox" id="tags" name="tags"value="bullish"/>
-            <input type="checkbox" id="tags" name="tags" value="bearish"/>
-            <input type="checkbox" id="tags" name="tags" value="top-pick"/> 
-        </label>
-        <button type="submit" class="pure-button pure-button-primary">submit</button>
-    </fieldset>
-</form>
-</div>
-<script src="../static/js/edit_post.js"> </script>
-{%endblock%}

@@ -93,7 +93,7 @@ def mainpage():
         if session["user"].get("userinfo"):
             userSession=session["user"].get("userinfo")
             user = userSession.get("sub")
-            picture = userSession.get("picture")
+            
             with get_db_cursor(True) as cur:
                 cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
                 subs= subs+cur.fetchall()
@@ -168,11 +168,12 @@ def profilepage():
             posts[post]["username"]=user[0][0]
             posts[post]["avatar"]=user[0][1]
             posts[post]["name"]=user[0][2]
+            
          
         postList=posts
         
         
-        return render_template('profile.html',username=username,realname=realname,posts=postList, stocks=splist,userid=id, userPFP=picture) 
+        return render_template('profile.html',username=username,realname=realname,posts=postList, stocks=splist,userid=id[0][0], userPFP=picture) 
 
     
 #Authorization
@@ -382,6 +383,7 @@ def follow(uid):
 # @requires_auth
 @app.route("/getAvatar")
 def getAvatar():
+    
     with get_db_cursor(False) as cur:
         cur.execute("select avatar,avatarmimetype FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
         returnval = cur.fetchall()
@@ -392,6 +394,7 @@ def getAvatar():
 
 @app.route("/getAvatar/<uid>")
 def getAvatarWithUid(uid):
+    print(uid)
     with get_db_cursor(False) as cur:
         cur.execute("select avatar,avatarmimetype FROM users WHERE ID = %s",(uid,)) 
         returnval = cur.fetchall()
