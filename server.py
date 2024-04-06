@@ -105,40 +105,6 @@ def mainpage():
     return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData, userPFP=picture,yourid=yourid) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 
-# # @app.route("/", methods=['GET'])
-# # def mainpage():
-# #     url_for('static', filename = 'styling/style.css')
-    
-# #     splist=SPCSV()
-# #     splist.pop(0)
-# #     recent_posts=get_recent_posts()
-# #     stockData=''
-# #     if(request.args.get("stock")):
-# #         ticker=request.args.get("stock")
-# #         stockData = query_stock(ticker)
-# #     for stock in splist:
-# #         stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
-# #     subs=[]
-# #     follows=[]
-# #     yourid=[]
-    
-# #     if session.get("user",None):
-# #         user=session["user"].get("userinfo").get("sub")
-        
-# #         with get_db_cursor(True) as cur:
-# #             cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
-# #             subs= subs+cur.fetchall()
-# #             cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
-# #             follows = follows+cur.fetchall()
-# #             yourid+=[session["user"].get("userinfo").get("sub")]
-# #             # cur.execute("select postid FROM posts WHERE id= %s",(session["user"].get("userinfo").get("sub"),))
-# #             # yourposts = yourposts + cur.fetchall()
-# #             print(follows)  
-# #     print(subs)
-    
-#     return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows,stockData=stockData, yourid=yourid) #This will be changed when the basic frame is created and then used as an extension for all of our pages
-#     return render_template('mainpage.html', splist=splist,  recent=recent_posts,subscriptions=subs,followers=follows,stockData=stockData) #This will be changed when the basic frame is created and then used as an extension for all of our pages
-
 
 @app.route("/profile", methods=['GET'])
 @cross_origin(headers=["Content-Type", "Authorization"])
@@ -156,7 +122,6 @@ def profilepage():
         cur.execute(f"SELECT username, avatar, realname FROM Users WHERE ID='{id[0][0]}'")
         user=cur.fetchall()
         print(user)
-        userInfo={}
         postList=[]
         username=user[0][0]
         realname=user[0][2]
@@ -168,7 +133,7 @@ def profilepage():
             posts[post]["username"]=user[0][0]
             posts[post]["avatar"]=user[0][1]
             posts[post]["name"]=user[0][2]
-            
+             
          
         postList=posts
         
@@ -430,6 +395,20 @@ def unfollowStock(ticker):
         return redirect("/")
     
     
+# @app.post("/api/searchPosts")
+# def searchPosts():
+    
+#     stockData = ''
+#     # if(request.args.get("stock")):
+#     #     ticker=request.args.get("stock")
+#     #     stockData = query_stock(ticker)
+#     # for stock in splist:
+#     #     stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
+#     searchFor = request.get_json()
+#     searchPosts = search_posts_db(searchFor['searchPosts'])
+#     print(searchPosts)
+#     return render_template('mainpage.html', splist=splist, posts=searchPosts, stockData = stockData)
+
 @app.route("/api/searchPosts")
 def searchPosts():
     searchPosts = search_posts_db(request.args.get("searchPosts"))
@@ -442,7 +421,6 @@ def searchPosts():
     
     
     return render_template('mainpage.html', splist=splist, posts=searchPosts, stockData = stockData)
-
 
 
 

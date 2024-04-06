@@ -15,6 +15,7 @@
     <script defer src="{{ url_for('static', filename='js/stock_api.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/us.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/edit_post.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/edit_profile.js') }}"></script>
     <script src="https://kit.fontawesome.com/5d00ed0135.js" crossorigin="anonymous"></script>
 </head>
 <body id="html-body">
@@ -31,9 +32,9 @@
             
             <ul id='side-bar-list' class="pure-menu-list">
                 <li class="pure-menu-item menu-item-divided resize-button"><button class="pure-button side-buttons" id="stock-up" onclick="window.location.href='/'"><h1>Stock Up</h1></button></li>
-                <li class="pure-menu-item menu-item-divided resize-button"><button class='pure-button side-buttons'><i class="fa-solid fa-house fa-5x" onclick="window.location.href='/'"></i></button></li>
+                <li class="pure-menu-item menu-item-divided resize-button"><button class='pure-button side-buttons' onclick="window.location.href='/'"><i class="fa-solid fa-house fa-5x"></i></button></li>
                 <li class="pure-menu-item menu-item-divided resize-button"><button id="post-button" class='pure-button side-buttons'><i class="fa-solid fa-plus fa-8x" ></i></button></li>
-                <li class="pure-menu-item menu-item-divided resize-button"><button  class='pure-button side-buttons'><img src="/getAvatar"  id="user-menu-photo" onclick="window.location.href='/profile'" /></button></li>
+                <li class="pure-menu-item menu-item-divided resize-button"><button  class='pure-button side-buttons'><img src="/getAvatar"  id="user-menu-photo" onclick="window.location.href='/profile'" onerror="this.src='/static/images/profile-user.png'"/></button></li>
                 <!-- <li class="pure-menu-item menu-item-divided resize-button"><button  class='pure-button side-buttons'><img src="{{userPFP}}"  id="user-menu-photo" onclick="window.location.href='/profile'" /></button></li> -->
             </ul>
         </div>

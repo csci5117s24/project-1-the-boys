@@ -8,7 +8,7 @@
 body{
     margin:0;
     background-color: #0C1D48;
-    overflow-y: scroll;
+    overflow: hidden;
 }
 /*some mainpage stuff*/
 
@@ -283,7 +283,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         width:130px;
         border: solid white 2px;
         overflow-x: hidden;
-    
+        
     }
     #stock-div, #main-div{
        
@@ -301,7 +301,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         background-color: black;
         margin-top:15vh;
         margin-bottom: 10vh;
-        overflow-x: hidden;
+        overflow-x:hidden;
     }
     #stock-view-div{
         overflow-y: hidden;
@@ -539,21 +539,42 @@ Hides the menu at `48em`, but modify this based on your app's needs.
   }
 
   /*Profile page stuff*/
-  #profile-posts{
+#profile-posts{
     background-color: #000;
-    margin:auto;
-  }
-
+    margin-left: 5em;
+    overflow-y:scroll;
+    margin-top: 10em;
+}
+#profile-posts .post-div{
+    
+}
 #profile-container
 {
-    width: 60%;
-    margin: auto;
+    width: 20%;
+    margin-left: 5em;
     border: 5px solid black;
-    height:40em;
+    height:20em;
+    margin-top:15vh;
+    padding: 1em;
     
-
+}
+#profile-container .pure-u-2-3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+#profile-container img{
+    width:7vw;
+    height:7vw;
+    
+    
+    
+}
+#profile-container .pure-g{
+    height:100%;
+    width:100%;
+}
 #signup-container
 {
     margin-left:auto;

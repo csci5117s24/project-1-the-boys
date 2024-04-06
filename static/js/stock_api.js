@@ -1,22 +1,40 @@
 
 let searchForm = document.getElementById("searchForm").addEventListener("submit", async function(event){
-    //event.preventDefault()
+    // event.preventDefault()
     // url = window.location.origin
     // const form = event.currentTarget;
-    // const sendData = FormData(form)
+    // const sendData = new FormData(form)
     // let data = Object.fromEntries(sendData)
-    // const sendThis = JSON.stringify(data)
-    // console.log(sendThis)
+    // const formStuff = JSON.stringify(data)
+    // console.log(formStuff)
     // searchResults = await fetch(url+"/api/searchPosts",{
     //     method:"POST",
-    //     body:sendThis
+    //     headers:{
+    //         "Content-Type":"application/json"
+    //     },
+    //     body:formStuff
 
     // }
     // )
 })
-let stockForm = document.getElementById("stockForm").addEventListener("submit", function(event){
-    //event.preventDefault()
-})
+// let stockForm = document.getElementById("stockForm").addEventListener("submit", function(event){
+//      event.preventDefault()
+//     url = window.location.origin
+//     const form = event.currentTarget;
+//     const sendData = new FormData(form)
+//     let data = Object.fromEntries(sendData)
+//     const formStuff = JSON.stringify(data)
+//     console.log(formStuff)
+//     searchResults = await fetch(url+"/api/searchPosts",{
+//         method:"POST",
+//         headers:{
+//             "Content-Type":"application/json"
+//         },
+//         body:formStuff
+
+//     }
+//     )
+// })
 
 
 // async function searchPosts(){

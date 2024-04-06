@@ -1,90 +1,116 @@
 {%extends "frame.html"%}
 {%block content%}
-<div id="profile-container">
-    <div class="pure-g">
-        <div class="pure-u-1-4">
-            <img src="/getAvatar/{{userid}}">
-        </div>
-        <div class="pure-g-1-2">
 
-        </div>
-
-    </div>
-    
-</div>
 <!-- <ul>
     <li>username: {{username}}</li>
     <li>real name: {{realname}}</li>
     <li><img src="/getAvatar/{{user}}"></li>
 </ul> -->
+
 <div class="pure-g">
-    <div class="pure-u-1-2" id="profile-posts">
-        <div class="pure-g post-div">
-            <div class="pure-u-1-24">
+
+    <div id="profile-container" class="pure-u-1-4">
+        <div class="pure-g">
+            <div class="pure-u-1-3">
+                <img src="/getAvatar/{{userid}}">
             </div>
-            <div class="pure-u-22-24">
-                {%for post in posts%}
-                    
-                    <div class="pure-g ">
-                        <div class="pure-u-11-12">
-                            <div class="post-design">
-                                <div class="post-top">
-                                    <img class="user-post-picture" src="/getAvatar/{{posts[post]['posterID']}}" alt="{{posts[post]['username']}}'s PFP" ></button></a> 
-                                    <h1>{{posts[post]['username']}}</h1>
-                                    <!-- <img id='company-logo' src="https://logo.clearbit.com/{{posts[post][]}}.com"/> -->
-                                </div>                   
-                                <p>{{posts[post]["content"]}}
-                                    
-                                    {%for tag in posts[post]["tags"]%}
-                                     #{{tag}}  
-                                    {%endfor%}
-                                </p>
-                                <div class="post-buttons">
-                                    {%if [posts[post]["posterID"]] in followers %}
-                                    <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" class="pure-button">unFollow</button></a>
-                                    {%else%}
-                                    <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button" class="pure-button" >Follow</button></a>
-                                    <button id="like-button" class="pure-button">Like</button>
-                                    {%endif%}
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {%endfor%}
-                </div>
-            <div class="pure-u-1-24">
+            <div class="pure-u-2-3">
+                <h1>{{username}}</h1>
+                <button id="edit">Edit Profile</button>
+
+
+
+                <form enctype="multipart/form-data" hidden="true" action="/editProfile" id="profileUpdate" method="POST"
+                    class="pure-form pure-form-stacked">
+                    <fieldset>
+                        <legend>update your profile</legend>
+                        <span class="pure-form-message">This is a required field.</span>
+                        <label for="multi-first-name">real name</label>
+                        <input name="realname" type="text" minlength="3" id="realname" class="pure-u-23-24" />
+                        <label for="multi-first-name">username</label>
+                        <input name="username" type="text" minlength="3" id="username" class="pure-u-23-24" />
+                        <input type="file" name="image" />
+                        <button type="submit" class="pure-button pure-button-primary">submit</button>
+                    </fieldset>
+                </form>
             </div>
         </div>
-        </div>
+
     </div>
 
-    {%endblock%}
+
+
+<div class="pure-u-1-2" id="main-div">
+    <div class="pure-g post-div">
+        <div class="pure-u-1-24">
+        </div>
+
+        <div class="pure-u-22-24">
+            <h1 class="oswald-header">{{username}}'s Posts</h1>
+            {%for post in posts%}
+
+            <div class="pure-g ">
+                <div class="pure-u-11-12">
+                    <div class="post-design">
+                        <div class="post-top">
+                            <img class="user-post-picture" src="/getAvatar/{{posts[post]['posterID']}}"
+                                alt="{{posts[post]['username']}}'s PFP"></button></a>
+                            <h1>{{posts[post]['username']}}</h1>
+                            <!-- <img id='company-logo' src="https://logo.clearbit.com/{{posts[post][]}}.com"/> -->
+                        </div>
+                        <p>{{posts[post]["content"]}}
+
+                            {%for tag in posts[post]["tags"]%}
+                            #{{tag}}
+                            {%endfor%}
+                        </p>
+                        <div class="post-buttons">
+                            {%if [posts[post]["posterID"]] in followers %}
+                            <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button"
+                                    class="pure-button">unFollow</button></a>
+                            {%else%}
+                            <a href="/follow/{{posts[post]['posterID']}}"><button id="follow-button"
+                                    class="pure-button">Follow</button></a>
+                            <button id="like-button" class="pure-button">Like</button>
+                            {%endif%}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        <div class="pure-u-1-24">
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{%endblock%}
 {%block postPopup%}
 <div class="post-field-visible pure-u-1-3" hidden="true" id="create-post-div">
 
-<form action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
-    <fieldset>
-        <legend>Create your post</legend>
-        <span class="pure-form-message">This is a required field.</span>
-        <div class="pure-u-1 pure-u-md-1-3">
-            <label for="stock">Stock</label>
-            <input list="stock">
-            <datalist id="stock" name="stock" class="pure-input-1-2">
-                {%for stock in splist%}
-                <option value=`{{stock.symbol}}`>{{stock.symbol}} - {{stock.name}}</option>
-                {%endfor%}
-            </datalist>
-        </div>
-        <textarea height="15" width="40"></textarea>
-        <label for="tags" class="pure-checkbox">
-            <input type="checkbox" id="tags" name="tags"value="bullish"/>
-            <input type="checkbox" id="tags" name="tags" value="bearish"/>
-            <input type="checkbox" id="tags" name="tags" value="top-pick"/> 
-        </label>
-        <button type="submit" class="pure-button pure-button-primary">submit</button>
-    </fieldset>
-</form>
+    <form action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
+        <fieldset>
+            <legend>Create your post</legend>
+            <span class="pure-form-message">This is a required field.</span>
+            <div class="pure-u-1 pure-u-md-1-3">
+                <label for="stock">Stock</label>
+                <input list="stock">
+                <datalist id="stock" name="stock" class="pure-input-1-2">
+                    {%for stock in splist%}
+                    <option value=`{{stock.symbol}}`>{{stock.symbol}} - {{stock.name}}</option>
+                    {%endfor%}
+                </datalist>
+            </div>
+            <textarea height="15" width="40"></textarea>
+            <label for="tags" class="pure-checkbox">
+                <input type="checkbox" id="tags" name="tags" value="bullish" />
+                <input type="checkbox" id="tags" name="tags" value="bearish" />
+                <input type="checkbox" id="tags" name="tags" value="top-pick" />
+            </label>
+            <button type="submit" class="pure-button pure-button-primary">submit</button>
+        </fieldset>
+    </form>
 </div>
 {%endblock%}
-
