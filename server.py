@@ -331,11 +331,14 @@ def stockRedirect():
 def profilepageUser(user):
     url_for('static', filename = 'styling/style.css')
     with get_db_cursor(True) as cur:
+        cur.execut("SELECT ID FROM Users WHERE username=='%s'", user)
+        id = cur.fetchall()
+        print(cur.fetchall())
         posts=get_posts_by_id(user, cur)
         posts=createPostList(posts, cur)
         posts=get_user_info(posts, cur)
         
-        return render_template('profile.html',username=posts[0]["username"],realname=posts[0]["name"],posts=posts,userid=user) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+        return render_template('profile.html',username=posts[0]["username"],realname=posts[0]["name"],posts=posts,userid=id) #This will be changed when the basic frame is created and then used as an extension for all of our pages
 
 # @requires_auth
 @app.route("/follow/<uid>")

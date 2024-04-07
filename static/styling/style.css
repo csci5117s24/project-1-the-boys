@@ -28,7 +28,7 @@ body{
     color:white;
 }
 
-.post-field-visible{
+.popup-field-visible{
     
     background-color: black;
     display:flex;
@@ -287,7 +287,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
     #stock-div, #main-div{
        
-        height:75vh;
+        height:80vh;
         display:flex;
         flex-direction: column;
         align-items: center;
@@ -305,7 +305,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
     #stock-view-div{
         overflow-y: hidden;
-        max-height: 75vh;
+        max-height: 80vh;
         
         
     }
@@ -376,6 +376,12 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     #stock-view-div, .stock-list-table{
         display:none;
         
+    }
+    #main-div{
+        background-color: black;
+        margin-top:15vh;
+        margin-bottom: 10vh;
+        overflow-x:hidden;
     }
     #main-div{
         overflow-y:scroll;
@@ -464,7 +470,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     margin-top:2em;
 }
 .company-display{
-    margin-top:3vh;
+    margin-top:2vh;
     margin-bottom: 1vh;
     border: solid grey 10px;
     width:80%;
@@ -501,18 +507,17 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 /*stock viewer elements done*/
 
 /*stock table elements*/
-.stock-list-table{
-    
-}
-.stock-list-table table{
+
+/* .stock-list-table table{
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    overflow: scroll;
-}
+    overflow-y: scroll;
+    
+} */
 .stock-list-table thead tr{
     background-color: #2d59ab;
     color: #ffffff;
@@ -558,17 +563,21 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     padding: 1em;
     
 }
-#profile-container .pure-u-2-3{
+#profile-container .pure-u-1-2{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    border: .3em solid black;
+    border-left: none;
+    height:7vw;
 }
 
 #profile-container img{
     width:7vw;
     height:7vw;
-    
-    
+    border: .3em solid black;
+    border-right: none;
     
 }
 #profile-container .pure-g{

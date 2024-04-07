@@ -75,9 +75,7 @@ def get_user_info(postList: dict, cur):
 
 def createPostList(posts, cur):
     postList={}
-    # for post in posts:
-        
-    #     post.append(find_ticker_via_post(post[0],cur))
+   
     for post in posts:
         key = post[0]
         postList[key]={
@@ -92,13 +90,9 @@ def get_recent_posts():
     with get_db_cursor(True) as cur:
         cur.execute("SELECT * FROM Posts")
         posts=cur.fetchall()
-        
-        
         postList = createPostList(posts, cur)
         updatedPostList = get_user_info(postList, cur)
         
-            
-            
         return updatedPostList
 
 def get_stock_list():

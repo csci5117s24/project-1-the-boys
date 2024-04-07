@@ -14,31 +14,29 @@
             <div class="pure-u-1-3">
                 <img src="/getAvatar/{{userid}}">
             </div>
-            <div class="pure-u-2-3">
+            <div class="pure-u-1-2">
                 <h1>{{username}}</h1>
-                <button id="edit">Edit Profile</button>
-
-
-
-                <form enctype="multipart/form-data" hidden="true" action="/editProfile" id="profileUpdate" method="POST"
-                    class="pure-form pure-form-stacked">
-                    <fieldset>
-                        <legend>update your profile</legend>
-                        <span class="pure-form-message">This is a required field.</span>
-                        <label for="multi-first-name">real name</label>
-                        <input name="realname" type="text" minlength="3" id="realname" class="pure-u-23-24" />
-                        <label for="multi-first-name">username</label>
-                        <input name="username" type="text" minlength="3" id="username" class="pure-u-23-24" />
-                        <input type="file" name="image" />
-                        <button type="submit" class="pure-button pure-button-primary">submit</button>
-                    </fieldset>
-                </form>
+                <button id="edit">Edit Profile</button> 
             </div>
         </div>
 
     </div>
+    <div>
 
-
+        <form enctype="multipart/form-data" hidden="true" action="/editProfile" id="profileUpdate" method="POST"
+        class="pure-form pure-form-stacked popup-field-visible">
+    <fieldset>
+        <legend>update your profile</legend>
+        <span class="pure-form-message">This is a required field.</span>
+        <label for="multi-first-name">real name</label>
+        <input name="realname" type="text" minlength="3" id="realname" class="pure-u-23-24" />
+        <label for="multi-first-name">username</label>
+        <input name="username" type="text" minlength="3" id="username" class="pure-u-23-24" />
+        <input type="file" name="image" />
+        <button type="submit" class="pure-button pure-button-primary">submit</button>
+    </fieldset>
+</div>
+</form>
 
 <div class="pure-u-1-2" id="main-div">
     <div class="pure-g post-div">
@@ -87,7 +85,7 @@
 </div>
 </div>
 {%endblock%}
-{%block postPopup%}
+<!-- {%block postPopup%}
 <div class="post-field-visible pure-u-1-3" hidden="true" id="create-post-div">
 
     <form action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
@@ -113,4 +111,4 @@
         </fieldset>
     </form>
 </div>
-{%endblock%}
+{%endblock%} -->
