@@ -117,7 +117,10 @@ def mainpage():
 # @requires_auth
 def profilepage():
     url_for('static', filename = 'styling/style.css')
+    if not session.get("user",None):
+        return redirect("/login")
     with get_db_cursor(True) as cur:
+        
         cur.execute(f"SELECT ID FROM USERS WHERE username = '{session['username']}'")
         id=cur.fetchall()
         
