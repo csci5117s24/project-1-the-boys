@@ -28,6 +28,7 @@ def get_db_connection():
         connection = pool.getconn()
         yield connection
     finally:
+        
         pool.putconn(connection)
 
 
@@ -99,14 +100,14 @@ def get_stock_list():
     with get_db_cursor(True) as cur:
         cur.execute("SELECT * FROM Stocks")
         
-def search_posts_db(query):
+def search_posts_db(query, cur):
 
-    with get_db_cursor(True) as cur:
-        cur.execute(f"SELECT * FROM Posts WHERE postContent LIKE '%{query}%'")
-        posts = cur.fetchall()
-        postList = createPostList(posts, cur)
-        updatedPostList = get_user_info(postList,cur)
-        return updatedPostList
+    
+    cur.execute(f"SELECT * FROM Posts WHERE postContent LIKE '%{query}%'")
+    posts = cur.fetchall()
+    postList = createPostList(posts, cur)
+    updatedPostList = get_user_info(postList,cur)
+    return updatedPostList
 def get_posts_by_id(user, cur):
     
         

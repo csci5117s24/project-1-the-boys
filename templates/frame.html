@@ -58,26 +58,29 @@
         <div class="pure-u-1-3"></div>
         <div class="popup-field-visible pure-u-1-3" hidden="true" id="create-post-div">
 
-            <form action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked">
+            <form action="/Post" id="Post" method="POST" class="pure-form pure-form-stacked" style="width:100%;">
                 <fieldset>
-                    <legend>Create your post</legend>
-                    <span class="pure-form-message">This is a required field.</span>
+                    <legend style="font-size:5em">Create your post</legend>
+                    <span class="pure-form-message" style="font-size:2em">This is a required field.</span>
                     <div class="pure-u-1 pure-u-md-1-3">
-                        <label for="stock">Stock</label>
+                        <label for="stock" style="font-size:2em">Stock</label>
                         <input list="stock-datalist" name="stock-datalist" class="pure-input-1">
-                        <datalist id="stock-datalist">
+                        <datalist id="stock-datalist" style="font-size:2em">
                             {%for stock in splist%}
+                            
                             <option value={{stock.symbol}}>{{stock.symbol}} - {{stock.name}}</option>
                             {%endfor%}
                         </datalist>
                     </div>
-                    <textarea height="15" width="40"></textarea>
+                    <textarea style="width:100%; height:10em; font-size:2em"></textarea>
                     <label for="tags" class="pure-checkbox">
-                        <input type="checkbox" id="tags" name="tags"value="bullish"/>
-                        <input type="checkbox" id="tags" name="tags" value="bearish"/>
-                        <input type="checkbox" id="tags" name="tags" value="top-pick"/> 
+                        <div id="tag-check">
+                            <input type="checkbox" id="tags" name="tags"value="bullish"/><p>Bullish</p>
+                            <input type="checkbox" id="tags" name="tags" value="bearish"/><p>Bearish</p>
+                            <input type="checkbox" id="tags" name="tags" value="top-pick"/><p>Top</p>
+                        </div>
                     </label>
-                    <button type="submit" class="pure-button pure-button-primary">submit</button>
+                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
                 </fieldset>
             </form>
             </div>

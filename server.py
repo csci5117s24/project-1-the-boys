@@ -66,16 +66,16 @@ app.config['OAUTH2_CLIENT_SECRET'] = os.environ.get("AUTH0_CLIENT_SECRET")
 # oauth2 = OAuth2Decorator(app)
 
 #Page Nav
-@app.route("/", methods=['GET'])
+@app.route("/", methods=['GET', 'POST'])
 def mainpage():
+    yourid, subs, follows = [], [], []
+    
+    
     url_for('static', filename = 'styling/style.css')
-    recent_posts=get_recent_posts()
-    
-    
-    stockData=''
+    stockData, posts = '', get_recent_posts()
     subs=[]
     follows=[]
-    
+    search=''
     if(request.args.get("stock-datalist")):
         
         ticker=request.args.get("stock-datalist")
@@ -89,6 +89,33 @@ def mainpage():
             stockData["domain"] = name.split(" ")[0]
     picture=None
     yourid=[]
+    if request.args.get("searchPosts"):
+        search = request.args.get("searchPosts")
+        with get_db_cursor(True) as cur:
+            posts =search_posts_db(search, cur)
+    
+    # elif request.method=="POST" and request.content_type=="application/json":
+    #     input_data = request.get_json()
+    #     print(input_data)
+    #     if input_data["type"]=="Search":
+    #         with get_db_cursor(True) as cur:
+    #             posts = search_posts_db(input_data['searchPosts'], cur)
+    #             stockData = input_data
+    #     elif input_data["type"]=="Stock":
+    #         ticker = input_data['stock-datalist']
+    #         name=''
+    #         for stock in splist:
+    #             if stock.get("symbol")==ticker:
+    #                 name=stock.get("name")
+    #         if len(input_data['searchFor']):
+    #             posts = search_posts_db(input_data['searchFor'])
+    #         else:
+    #             posts = get_recent_posts()
+    #         stockData=query_stock(ticker,name)
+    #         stockData["name"] = name
+    #         if(stockData["domain"] is None):            
+    #             stockData["domain"] = name.split(" ")[0]    
+        
     if session.get("user",None):
         if session["user"].get("userinfo"):
             userSession=session["user"].get("userinfo")
@@ -102,7 +129,7 @@ def mainpage():
                 yourid+=[session["user"].get("userinfo").get("sub")]
         
     
-    return render_template('mainpage.html', splist=splist,  posts=recent_posts,subscriptions=subs,followers=follows, stockData = stockData, userPFP=picture,yourid=yourid) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+    return render_template('mainpage.html', splist=splist,  posts=posts,subscriptions=subs,followers=follows, stockData = stockData, userPFP=picture,yourid=yourid, search=search) 
 
 
 
@@ -398,32 +425,76 @@ def unfollowStock(ticker):
         return redirect("/")
     
     
-# @app.post("/api/searchPosts")
-# def searchPosts():
-    
-#     stockData = ''
-#     # if(request.args.get("stock")):
-#     #     ticker=request.args.get("stock")
-#     #     stockData = query_stock(ticker)
-#     # for stock in splist:
-#     #     stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
-#     searchFor = request.get_json()
-#     searchPosts = search_posts_db(searchFor['searchPosts'])
-#     print(searchPosts)
-#     return render_template('mainpage.html', splist=splist, posts=searchPosts, stockData = stockData)
-
-@app.route("/api/searchPosts")
+@app.route("/api/searchPosts", methods=["POST", "GET"])
 def searchPosts():
-    searchPosts = search_posts_db(request.args.get("searchPosts"))
-    stockData = ''
-    if(request.args.get("stock")):
-        ticker=request.args.get("stock")
-        stockData = query_stock(ticker)
-    for stock in splist:
-        stock['link'] = f'https://finance.yahoo.com/quote/{stock["symbol"]}?.tsrc=fin-srch'
+    
+    subs=[]
+    follows=[]
+    picture=None
+    yourid=[]
+    searchFor = request.get_json()
+    print("searchFor", searchFor)
+    stockData = searchFor
+    if session.get("user",None):
+        if session["user"].get("userinfo"):
+            userSession=session["user"].get("userinfo")
+            user = userSession.get("sub")
+            
+            with get_db_cursor(True) as cur:
+                cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
+                subs= subs+cur.fetchall()
+                cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
+                follows = follows+cur.fetchall()
+                yourid+=[session["user"].get("userinfo").get("sub")]
+                searchPosts = search_posts_db(searchFor['searchPosts'], cur)
+    else:
+        with get_db_cursor(True) as cur:
+            searchPosts = search_posts_db(searchFor['searchPosts'], cur)
     
     
-    return render_template('mainpage.html', splist=splist, posts=searchPosts, stockData = stockData)
+    print(splist,  searchPosts,subs,follows, stockData,picture,yourid)
+    return render_template('mainpage.html', splist=splist,  posts=searchPosts,  subscriptions=subs,followers=follows, stockData = stockData, userPFP=picture,yourid=yourid) 
+
+@app.route("/api/queryStock", methods=["POST", "GET"])
+def stockSearch():
+    yourid, subs, follows = [], [], []
+    url_for('static', filename = 'styling/style.css')
+    
+    if request.method=="POST" and request.content_type=="application/json":
+        input_data = request.get_json()
+        print(input_data)
+        if input_data["type"]=="Search":
+            with get_db_cursor(True) as cur:
+                posts = search_posts_db(input_data['searchPosts'], cur)
+                stockData = input_data
+        elif input_data["type"]=="Stock":
+            ticker = input_data['stock-datalist']
+            name=''
+            for stock in splist:
+                if stock.get("symbol")==ticker:
+                    name=stock.get("name")
+            if len(input_data['searchFor']):
+                posts = search_posts_db(input_data['searchFor'])
+            else:
+                posts = get_recent_posts()
+            stockData=query_stock(ticker,name)
+            stockData["name"] = name
+            if(stockData["domain"] is None):            
+                stockData["domain"] = name.split(" ")[0] 
+    
+    if session.get("user",None):
+        if session["user"].get("userinfo"):
+            userSession=session["user"].get("userinfo")
+            user = userSession.get("sub")
+            
+            with get_db_cursor(True) as cur:
+                cur.execute("select ticker, name from stocks where ticker in (select ticker FROM subscriptions WHERE uid = %s)",(str(session["user"].get("userinfo").get("sub")),))
+                subs= subs+cur.fetchall()
+                cur.execute("select poster FROM followers WHERE follower = %s",(session["user"].get("userinfo").get("sub"),))
+                follows = follows+cur.fetchall()
+                yourid+=[session["user"].get("userinfo").get("sub")]
+    
+    return render_template('mainpage.html', splist=splist,  posts=posts,subscriptions=subs,followers=follows, stockData = stockData, userPFP=picture,yourid=yourid) 
 
 
 

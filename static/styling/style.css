@@ -12,34 +12,35 @@ body{
 }
 /*some mainpage stuff*/
 
-.sideColumn, .centerColumn{
-    margin-top:5%;
-    border-style: solid;
-    text-align: center;
-    
-    height: 100%;
-    
-}
 
 
-.centerTrendingHeader{
-    background-color: black;
-    height:8vh;
-    color:white;
-}
+
+/* post/edit popup*/
 
 .popup-field-visible{
     
     background-color: black;
     display:flex;
     justify-content: center;
-    width:30%;
+    width:20vw;
+    height:60vh;
     padding: 2em;
     position:absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
+    min-height: fit-content;
+}
+#tag-check{
+    display: flex;
+    gap:2em;
+}
+#tag-check p{
+    font-size: 2em;
+}
+
+#edit-field label{
+    font-size: 3em;
 }
 
 /*Done mainpage stuff*/
@@ -294,9 +295,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
         
     }
-    #stock-div{
-        padding:1em;
-    }
+    
     #stock-div, #main-div, #stock-view-div{
         background-color: black;
         margin-top:15vh;
@@ -352,6 +351,20 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         text-wrap: wrap;
          
     }
+    #profile-container
+{
+    width: 20%;
+    margin-left: 2em;
+    margin-right: 2em;
+    height:15%;
+    margin-top:15vh;
+    padding: 1em;
+    border-style: solid;
+    border-radius: 1em;
+    background-color: black;
+    border-color: black;
+    
+}
     
     
 }
@@ -370,8 +383,13 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     /* 
     User photo styling for sidebar */
     #user-menu-photo{
-        display:none;
-    
+        
+        background-color: white;
+        height:130px;
+        width:130px;
+        border: solid white 2px;
+        overflow-x: hidden;
+        
     }
     #stock-view-div, .stock-list-table{
         display:none;
@@ -389,7 +407,48 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         display:block;
         width:50%;
     }
+    .side-buttons{
+        width: 100%;
+        height:25vh;
+        background-color:transparent;
+        color:white;
+        text-align: center;
+        overflow:hidden;
+        
+    }
+    .side-buttons:hover{
+        background-color: white;
+    }
+    #stock-up h1{
+        
+        font-family: "Oswald", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 10;
+        font-style: normal;
+        font-size: 4em;
+        text-wrap: wrap;
+         
+    }
+    #side-bar-list{
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #profile-container
+{
+    width: 20%;
+    margin-left: 2em;
+    margin-right: 2em;
+    height:fit-content;
+    margin-top:15vh;
+    padding: 1em;
+    border-style: solid;
+    border-radius: 1em;
+    background-color: black;
     
+}
 }
 
 
@@ -553,22 +612,29 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 #profile-posts .post-div{
     
 }
-#profile-container
-{
-    width: 20%;
-    margin-left: 5em;
-    border: 5px solid black;
-    height:20em;
-    margin-top:15vh;
-    padding: 1em;
+#profileUpdate fieldset{
+    width:100%;
     
 }
+/* #profile-container
+{
+    width: 20%;
+    margin-left: 2em;
+    margin-right: 2em;
+    height:15%;
+    margin-top:15vh;
+    padding: 1em;
+    border-style: solid;
+    border-radius: 1em;
+    background-color: black;
+    
+} */
 #profile-container .pure-u-1-2{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-around;
-    border: .3em solid black;
+    
     border-left: none;
     height:7vw;
 }
@@ -576,13 +642,16 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 #profile-container img{
     width:7vw;
     height:7vw;
-    border: .3em solid black;
+    
     border-right: none;
     
 }
 #profile-container .pure-g{
     height:100%;
     width:100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 #signup-container
 {

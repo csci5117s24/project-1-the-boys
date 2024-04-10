@@ -21,6 +21,8 @@ flask-oauth2-validation = "*"
 python-dotenv = "*"
 filetype = "*"
 gunicorn = "*"
+charset-normalizer = "*"
+chardet = "*"
 
 [dev-packages]
 

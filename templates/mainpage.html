@@ -1,10 +1,12 @@
 {%extends "columns.html"%}
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script defer src="{{ url_for('static', filename='js/stock_api.js') }}"></script>
 {%block primary%}
 <h1 class="oswald-header">Recent Posts</h1>
-<form method="GET" action="/api/searchPosts" id="searchForm" class="pure-form">
+<form action='/' id="searchForm" class="pure-form">
     <input type="text" name="searchPosts" id="searchContent" class="pure-input-2-3">
     <button type="submit" for="searchPosts" id="searchButton" class="pure-button pure-button-primary">Search</button>
+    <input hidden name="stock-datalist" value={{stockData.symbol}}>
 </form>
 <div class="pure-g post-div">
     <div class="pure-u-1-24">
@@ -83,7 +85,7 @@
 
 {%block secondary%}
 <h1 class="oswald-header">Stock Data</h1>
-<form method="GET" id="stockForm" class="pure-form">
+<form action='/' id="stockForm" class="pure-form">
     <div class="pure-u-1-5"></div>
     <div class="pure-u-3-5 search">
         <input list="stock-datalist" name="stock-datalist" class="pure-input-1">
@@ -92,8 +94,10 @@
             <option value={{stock.symbol}}>{{stock.symbol}} - {{stock.name}}</option>
             {%endfor%}
         </datalist>
+        
     </div>
     <button type="submit" class="pure-button pure-button-primary">Search</button>
+    <input hidden name="searchPosts" value={{search}}>
 </form>
 
 <div class="company-display pure-g">
@@ -104,7 +108,7 @@
     </div>
     <div class="group-stock pure-u-1-3">
         <h1>{{stockData.name}}</h1>
-        <h1>{{stockData.symbol}}</h1>
+        <h1 id="stock-ticker-viewer">{{stockData.symbol}}</h1>
         <h1>{{stockData.from}}</h1>
     </div>
 </div>
