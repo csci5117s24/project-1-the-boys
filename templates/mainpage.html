@@ -18,8 +18,8 @@
             <div class="pure-u-11-12">
                 <div class="post-design">
                     <div class="post-top">
-                        <img class="user-post-picture" src="/getAvatar/{{posts[post]['posterID']}}"
-                            alt="{{posts[post]['username']}}'s PFP"></button></a>
+                        <a href="/profile/{{posts[post]['username']}}"><img class="user-post-picture" src="/getAvatar/{{posts[post]['posterID']}}"
+                            alt="{{posts[post]['username']}}'s PFP" ></a>
                         <h1>{{posts[post]['username']}}</h1>
                         <!-- <img id='company-logo' src="https://logo.clearbit.com/{{posts[post][]}}.com"/> -->
 
@@ -32,31 +32,37 @@
                     </p>
                     <div class="post-buttons">
                         {%if [posts[post]["posterID"]] in [yourid] %}
-                        <a href="/deletePost/{{post}}"><button id="follow-button" class="pure-button">Delete</button></a>
-                        <button id="editPost{{post}}" onClick="display('Post{{post}}')" class="pure-button">Edit</button>
+                        <a href="/deletePost/{{post}}"><button id="follow-button"
+                                class="pure-button">Delete</button></a>
+                        <button id="editPost{{post}}" onClick="display('Post{{post}}')"
+                            class="pure-button">Edit</button>
 
                         <form action="/editPost" id="Post{{post}}" hidden="true" method="POST"
-                            class="pure-form pure-form-stacked">
+                            class="pure-form pure-form-stacked popup-field-visible">
                             <fieldset>
-                                <legend>Create your post</legend>
-                                <span class="pure-form-message">This is a required field.</span>
-                                <label for="multi-first-name">description</label>
-                                <input name="description" type="text" minlength="3" id="postDescription"
-                                    class="pure-u-23-24" />
-                                <label for="tags" class="pure-checkbox">
-                                    <input type="checkbox" id="tags" name="tags" value="bullish" />
-                                    <input type="checkbox" id="tags" name="tags" value="bearish" />
-                                    <input type="checkbox" id="tags" name="tags" value="top-pick" />
-                                </label>
+                                <legend style="font-size:5em">Edit your post</legend>
+                                <span class="pure-form-message" style="font-size:2em">This is a required field.</span>
                                 <div class="pure-u-1 pure-u-md-1-3">
-                                    <label for="stock">Stock</label>
-                                    <input list="stock">
-                                    <datalist id="stock" name="stock" class="pure-input-1-2">
-                                        {%for stock in stocks%}
-                                        <option value=`{{stock.symbol}}`>{{stock.symbol}} - {{stock.name}}</option>
+                                    <label for="stock" style="font-size:2em">Stock</label>
+                                    <input list="stock-datalist" name="stock-datalist" class="pure-input-1">
+                                    <datalist id="stock-datalist" style="font-size:2em">
+                                        {%for stock in splist%}
+                                        <option value={{stock.symbol}}>{{stock.symbol}} - {{stock.name}}</option>
                                         {%endfor%}
                                     </datalist>
                                 </div>
+
+                                <textarea style="width:100%; height:10em; font-size:2em" name="description"></textarea>
+                                <label for="tags" class="pure-checkbox">
+                                    <div id="tag-check">
+                                        <input type="checkbox" id="tags" name="tags" value="bullish" />
+                                        <p>Bullish</p>
+                                        <input type="checkbox" id="tags" name="tags" value="bearish" />
+                                        <p>Bearish</p>
+                                        <input type="checkbox" id="tags" name="tags" value="top-pick" />
+                                        <p>Top</p>
+                                    </div>
+                                </label>
                                 <button type="submit" class="pure-button pure-button-primary">Submit</button>
                             </fieldset>
                         </form>
@@ -94,7 +100,7 @@
             <option value={{stock.symbol}}>{{stock.symbol}} - {{stock.name}}</option>
             {%endfor%}
         </datalist>
-        
+
     </div>
     <button type="submit" class="pure-button pure-button-primary">Search</button>
     <input hidden name="searchPosts" value={{search}}>
@@ -167,7 +173,8 @@
                 {%else%}
                 <td><a href="/followStock/{{stock.symbol}}"><button class="pure-button">Follow</button></a></td>
                 {%endif%}
-                <td><a href="/?stock-datalist={{stock.symbol}}&name={{stock.name}}"><button class="pure-button">View</button></a></td>
+                <td><a href="/?stock-datalist={{stock.symbol}}&name={{stock.name}}&searchPosts={{search}}"><button
+                            class="pure-button">View</button></a></td>
             </tr>
             {%endfor%}
 

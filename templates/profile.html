@@ -34,8 +34,8 @@
                         <div class="pure-u-11-12">
                             <div class="post-design">
                                 <div class="post-top">
-                                    <img class="user-post-picture" src="/getAvatar/{{posts[post]['posterID']}}"
-                                        alt="{{posts[post]['username']}}'s PFP"></button></a>
+                                    <a href="/profile/{{posts[post]['username']}}"><img class="user-post-picture" src="/getAvatar/{{posts[post]['posterID']}}"
+                                        alt="{{posts[post]['username']}}'s PFP"></a>
                                     <h1>{{posts[post]['username']}}</h1>
                                     <!-- <img id='company-logo' src="https://logo.clearbit.com/{{posts[post][]}}.com"/> -->
                                 </div>
@@ -70,12 +70,12 @@
 
 
 
-<div class="pure-g">
+<div class="pure-g" id="edit-div">
     <div class="pure-u-4-5">
 
-        <form enctype="multipart/form-data" hidden="true" action="/editProfile" id="profileUpdate" method="POST"
+        <form enctype="multipart/form-data" hidden action="/editProfile" id="profileUpdate" method="POST"
         class="pure-form pure-form-stacked popup-field-visible">
-        <fieldset id="edit-field">
+        <fieldset id="edit-field" style="min-height:fit-content;"> 
             <legend style="font-size:5em">Edit Profile</legend>
             <span class="pure-form-message" style="font-size:2em">This is a required field.</span>
             <label for="multi-first-name">Real Name</label>

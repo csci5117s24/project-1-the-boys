@@ -23,13 +23,22 @@ body{
     display:flex;
     justify-content: center;
     width:20vw;
-    height:60vh;
+    height:65vh;
     padding: 2em;
     position:absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     min-height: fit-content;
+}
+.popup-field-visible legend{
+    font-size: 5em;
+}
+.popup-field-visible span{
+    font-size: 2em;
+}
+.popup-field-visible fieldset label{
+    font-size: 3em;
 }
 #tag-check{
     display: flex;
@@ -39,9 +48,7 @@ body{
     font-size: 2em;
 }
 
-#edit-field label{
-    font-size: 3em;
-}
+
 
 /*Done mainpage stuff*/
 
@@ -288,23 +295,25 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
     #stock-div, #main-div{
        
-        height:80vh;
+        height:85vh;
         display:flex;
         flex-direction: column;
         align-items: center;
         
         
     }
-    
+    #stock-div{
+        padding:1em;
+    }
     #stock-div, #main-div, #stock-view-div{
         background-color: black;
-        margin-top:15vh;
-        margin-bottom: 10vh;
+        margin-top:10vh;
+        margin-bottom: 5vh;
         overflow-x:hidden;
     }
     #stock-view-div{
         overflow-y: hidden;
-        max-height: 80vh;
+        max-height: 85vh;
         
         
     }
@@ -613,7 +622,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     
 }
 #profileUpdate fieldset{
-    width:100%;
+    width:100%
     
 }
 /* #profile-container

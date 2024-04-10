@@ -308,10 +308,10 @@ def post():
     with get_db_cursor(True) as cur:
         tags=request.form.getlist("tags")
         user=session["user"].get("userinfo").get("sub")
-        ticker=request.form.get("stock")
+        ticker=request.form.get("stock-datalist")
         postContent = request.form.get("description")
         cur.execute("INSERT INTO posts (tags, ID, postContent ) VALUES (%s, %s,%s)", (tags,session["user"].get("userinfo").get("sub"),postContent,))
-        return render_template('profile.html')
+    return redirect("/")
 
     
 @app.route("/login")
@@ -358,14 +358,19 @@ def stockRedirect():
 def profilepageUser(user):
     url_for('static', filename = 'styling/style.css')
     with get_db_cursor(True) as cur:
-        cur.execut("SELECT ID FROM Users WHERE username=='%s'", user)
+        cur.execute(f"SELECT ID FROM Users WHERE username='{user}'")
         id = cur.fetchall()
         print(cur.fetchall())
-        posts=get_posts_by_id(user, cur)
-        posts=createPostList(posts, cur)
-        posts=get_user_info(posts, cur)
+        posts=get_posts_by_id(id, cur)
+        cur.execute(f"SELECT username, avatar, realname FROM Users WHERE ID='{id[0][0]}'")
+        user=cur.fetchall()
+        username=user[0][0]
+        realname=user[0][2]
+        picture=user[0][1]
         
-        return render_template('profile.html',username=posts[0]["username"],realname=posts[0]["name"],posts=posts,userid=id) #This will be changed when the basic frame is created and then used as an extension for all of our pages
+        
+        return render_template('profile.html',username=username,realname=realname,posts=posts, stocks=splist,userid=id[0][0], userPFP=picture) 
+ 
 
 # @requires_auth
 @app.route("/follow/<uid>")

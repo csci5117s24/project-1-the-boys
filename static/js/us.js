@@ -54,15 +54,28 @@
 }(this, this.document));
 let postHidden=true
 let postDiv = document.getElementById("create-post-div")
+let editDiv = document.getElementById("profileUpdate")
 let postPopup = document.getElementById("post-button").addEventListener("click", function(event){
     
     postDiv.toggleAttribute('hidden')
+    if(!editDiv.hasAttribute('hidden')){
+        editDiv.toggleAttribute('hidden')
+    }
     postHidden = !postHidden
     console.log(postHidden)
     
 })
 
-
+let editPopup = document.getElementById("edit").addEventListener("click", function(event){
+    
+    editDiv.toggleAttribute('hidden')
+    if(!postDiv.hasAttribute('hidden')){
+        postDiv.toggleAttribute('hidden')
+    }
+    
+    console.log(postHidden)
+    
+})
 // let menu = document.getElementById("menu")
 
 // let items = menu.getElementsByTagName("li")

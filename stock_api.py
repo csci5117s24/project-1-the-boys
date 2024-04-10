@@ -19,7 +19,7 @@ def SPCSV():
         symbol, name = row[0], row[1]
         spList.append({"symbol":symbol,"name":name, "link":f'https://finance.yahoo.com/quote/{symbol}?.tsrc=fin-srch'})
     spList.pop(0)    
-    
+
     
     return spList
 
