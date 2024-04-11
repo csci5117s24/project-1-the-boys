@@ -111,17 +111,18 @@ def mainpage():
 
 
 
-@app.route("/profile", methods=['GET'])
-@cross_origin(headers=["Content-Type", "Authorization"])
-@cross_origin(headers=["Access-Control-Allow-Origin", "http://localhost:"])
+# @cross_origin(headers=["Content-Type", "Authorization"])
+# @cross_origin(headers=["Access-Control-Allow-Origin", "http://localhost:"])
 # @requires_auth
+
+@app.route("/profile", methods=['GET'])
 def profilepage():
     url_for('static', filename = 'styling/style.css')
     if not session.get("user",None):
         return redirect("/login")
     with get_db_cursor(True) as cur:
         
-        cur.execute(f"SELECT ID FROM USERS WHERE username = '{session['username']}'")
+        cur.execute("SELECT ID FROM USERS WHERE id = %s", (session["user"].get("userinfo").get("sub"),))
         id=cur.fetchall()
         
         posts=get_posts_by_id(id, cur)
@@ -136,13 +137,14 @@ def profilepage():
         userSession=session["user"].get("userinfo")
         picture = userSession.get("picture")    
         
-        for post in posts:
-            key=posts[post]["posterID"]
-            posts[post]["username"]=user[0][0]
-            posts[post]["avatar"]=user[0][1]
-            posts[post]["name"]=user[0][2]
-             
-         
+        if posts:
+            for post in posts:
+                key=posts[post]["posterID"]
+                posts[post]["username"]=user[0][0]
+                posts[post]["avatar"]=user[0][1]
+                posts[post]["name"]=user[0][2]
+                
+            
         postList=posts
         
         
@@ -283,6 +285,15 @@ def editProfile():
         session["username"]=returnval[0][1]
         session["realname"]=returnval[0][2]
         return redirect("/profile")
+    
+@app.route("/editPost/<pid>", methods=['POST'])
+def editPost(pid):
+    
+    with get_db_cursor(True) as cur:
+        print(request.form)
+
+        cur.execute("UPDATE posts SET (tags,postContent) = (%s,%s) WHERE ID = %s AND postID = %s",(request.form.getlist('tags'),request.form['description'],session["user"].get("userinfo").get("sub"),pid))
+        return redirect("/")
 # @requires_auth
 @app.route("/Post",methods=['POST'])
 def post():
