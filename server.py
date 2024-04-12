@@ -76,8 +76,8 @@ def mainpage():
     subs=[]
     follows=[]
     search=''
-    if(request.args.get("stock-datalist")):
-        
+    if(request.args.get("stock-datalist",None) and not request.args.get("stock-datalist") ==""):
+
         ticker=request.args.get("stock-datalist")
         for stock in splist:
             if stock.get("symbol")==ticker:
@@ -89,7 +89,7 @@ def mainpage():
             stockData["domain"] = name.split(" ")[0]
     picture=None
     yourid=[]
-    if request.args.get("searchPosts"):
+    if request.args.get("searchPosts",None):
         search = request.args.get("searchPosts")
         with get_db_cursor(True) as cur:
             posts =search_posts_db(search, cur)
@@ -228,21 +228,13 @@ def requires_auth(f):
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect(
-        "https://" + os.environ.get("AUTH0_DOMAIN")
-        + "/v2/logout?"
-        + urlencode(
-            {
-                "returnTo": url_for("home", _external=True),
-                "client_id": os.environ.get("AUTH0_CLIENT_ID"),
-            },
-            quote_via=quote_plus,
-        )
-    )
+    return redirect("/")
 
 
 @app.route("/unsubscribe/<ticker>", methods=['GET'])
 def unsubscribe(ticker):
+    if not session.get("user",None):
+        return redirect("/login")
     url_for('static', filename = 'styling/style.css')
     user=session["user"].get("userinfo").get("sub")
     with get_db_cursor(True) as cur:
@@ -252,6 +244,8 @@ def unsubscribe(ticker):
 
 @app.route("/unfollow/<uid>", methods=['GET'])
 def unfollow(uid):
+    if not session.get("user",None):
+        return redirect("/login")
     url_for('static', filename = 'styling/style.css')
     user=session["user"].get("userinfo").get("sub")
     with get_db_cursor(True) as cur:
@@ -260,6 +254,8 @@ def unfollow(uid):
 
 @app.route("/deletePost/<pid>", methods=['GET'])
 def deletePost(pid):
+    if not session.get("user",None):
+        return redirect("/login")
     url_for('static', filename = 'styling/style.css')
     user=session["user"].get("userinfo").get("sub")
     with get_db_cursor(True) as cur:
@@ -269,6 +265,8 @@ def deletePost(pid):
 # # @requires_auth
 @app.route("/editProfile", methods=['POST'])
 def editProfile():
+    if not session.get("user",None):
+        return redirect("/login")
     file = request.files["image"]
     file.filename = secure_filename(file.filename)
 
@@ -288,7 +286,8 @@ def editProfile():
     
 @app.route("/editPost/<pid>", methods=['POST'])
 def editPost(pid):
-    
+    if not session.get("user",None):
+        return redirect("/login")
     with get_db_cursor(True) as cur:
         print(request.form)
 
@@ -367,6 +366,8 @@ def profilepageUser(user):
 # @requires_auth
 @app.route("/follow/<uid>")
 def follow(uid):
+    if not session.get("user",None):
+        return redirect("/login")
     with get_db_cursor(True) as cur:
         user=session["user"].get("userinfo").get("sub")
         cur.execute("INSERT INTO followers (follower, poster ) VALUES (%s, %s)", (user,uid,))
@@ -375,7 +376,8 @@ def follow(uid):
 # @requires_auth
 @app.route("/getAvatar")
 def getAvatar():
-    
+    if not session.get("user",None):
+        return redirect("/login")
     with get_db_cursor(False) as cur:
         cur.execute("select avatar,avatarmimetype FROM users WHERE ID = %s",(str(session["user"].get("userinfo").get("sub")),)) 
         returnval = cur.fetchall()
@@ -409,6 +411,8 @@ def signup():
 # @requires_auth
 @app.route("/followStock/<ticker>")
 def followStock(ticker):
+    if not session.get("user",None):
+        return redirect("/login")
     with get_db_cursor(True) as cur:
         cur.execute("INSERT INTO subscriptions (uid,ticker) VALUES (%s,%s)",(session["user"].get("userinfo").get("sub"),ticker,))
         print("executed")
@@ -416,6 +420,8 @@ def followStock(ticker):
 
 @app.route("/unfollowStock/<ticker>")
 def unfollowStock(ticker):
+    if not session.get("user",None):
+        return redirect("/login")
     with get_db_cursor(True) as cur:
         cur.execute("INSERT INTO subscriptions (uid,ticker) VALUES (%s,%s)",(session["user"].get("userinfo").get("sub"),ticker,))
         print("executed")
