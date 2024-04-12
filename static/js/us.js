@@ -76,6 +76,7 @@ let editPopup = document.getElementById("edit").addEventListener("click", functi
     console.log(postHidden)
     
 })
+
 // let menu = document.getElementById("menu")
 
 // let items = menu.getElementsByTagName("li")

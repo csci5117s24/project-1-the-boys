@@ -85,7 +85,7 @@ def mainpage():
         stockData = query_stock(ticker,name)
         stockData["name"] = name
         if(stockData["domain"] is None):            
-            # stockData["domain"] = name.replace(" ", "").split(".")[0]
+            
             stockData["domain"] = name.split(" ")[0]
     picture=None
     yourid=[]
@@ -93,28 +93,6 @@ def mainpage():
         search = request.args.get("searchPosts")
         with get_db_cursor(True) as cur:
             posts =search_posts_db(search, cur)
-    
-    # elif request.method=="POST" and request.content_type=="application/json":
-    #     input_data = request.get_json()
-    #     print(input_data)
-    #     if input_data["type"]=="Search":
-    #         with get_db_cursor(True) as cur:
-    #             posts = search_posts_db(input_data['searchPosts'], cur)
-    #             stockData = input_data
-    #     elif input_data["type"]=="Stock":
-    #         ticker = input_data['stock-datalist']
-    #         name=''
-    #         for stock in splist:
-    #             if stock.get("symbol")==ticker:
-    #                 name=stock.get("name")
-    #         if len(input_data['searchFor']):
-    #             posts = search_posts_db(input_data['searchFor'])
-    #         else:
-    #             posts = get_recent_posts()
-    #         stockData=query_stock(ticker,name)
-    #         stockData["name"] = name
-    #         if(stockData["domain"] is None):            
-    #             stockData["domain"] = name.split(" ")[0]    
         
     if session.get("user",None):
         if session["user"].get("userinfo"):

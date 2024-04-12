@@ -4,6 +4,11 @@
     font-optical-sizing: auto;
     font-weight: 10;
     font-style: normal;
+    
+}
+html{
+
+    scrollbar-color: #212324;
 }
 body{
     margin:0;
@@ -33,20 +38,25 @@ body{
 }
 .popup-field-visible legend{
     font-size: 5em;
+    color:white;
 }
 .popup-field-visible span{
     font-size: 2em;
 }
 .popup-field-visible fieldset label{
     font-size: 3em;
+    color:white;
 }
 #tag-check{
     display: flex;
     gap:2em;
+    
 }
 #tag-check p{
     font-size: 2em;
+    color:white;
 }
+
 
 
 
@@ -286,7 +296,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
     #user-menu-photo{
         
-        background-color: white;
+        background-color: grey;
         height:130px;
         width:130px;
         border: solid white 2px;
@@ -302,23 +312,30 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
         
     }
-    #stock-div{
-        padding:1em;
-    }
+    
     #stock-div, #main-div, #stock-view-div{
         background-color: black;
         margin-top:10vh;
         margin-bottom: 5vh;
         overflow-x:hidden;
+        color:white;
+        scrollbar-color: #212324;
     }
     #stock-view-div{
-        overflow-y: hidden;
-        max-height: 85vh;
-        
+        overflow-y: scroll;
+        height:85vh;
+        display: flex;
+        flex-direction: column;
         
     }
     #stock-div h2, #main-div h2, #stock-view-div h2{
         text-align: center;
+    }
+    #stock-div tbody:nth-child(even){
+        background-color: black;
+    }
+    #stock-div tbody:nth-child(odd){
+        background-color: grey;
     }
     #side-bar-list{
         height:100%;
@@ -348,7 +365,10 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
     }
     .side-buttons:hover{
-        background-color: white;
+        
+        background-color:#2b2a33;
+        opacity: 50%;
+    
     }
     #stock-up h1{
         
@@ -426,7 +446,8 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         
     }
     .side-buttons:hover{
-        background-color: white;
+        background-color:#2b2a33;
+        opacity: 50%;
     }
     #stock-up h1{
         
@@ -461,18 +482,16 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 }
 
 
-/* .pure-g div:nth-child(even){
-    background-color: black;
-    position:relative;
-    
-} */
+
 .post-div{
     width: 100%;
 }
 
 /*basically my top margin*/
 
-
+input, .popup-field-visible textarea{
+    background-color: #2b2a33;
+}
 
 
 /*work on post elements*/
@@ -585,19 +604,39 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     overflow-y: scroll;
     
-} */
-.stock-list-table thead tr{
+} */    
+#stock-div table{
+    border-color: #404447;
+}
+#stock-div a{
+    color:white;
+}
+#stock-div td button,.post-buttons button{
+    background-color: #27292b;
+    color:white;
+}
+#stock-div thead tr{
     background-color: #2d59ab;
-    color: #ffffff;
+    color: white;
     text-align: left;
 }
-.stock-list-table tbody{
+#stock-div tbody{
     height:100%;
     overflow-y: scroll;
 }
-.stock-list-table th,
-.stock-list-table td {
+.pure-table-striped tr:nth-child(even) td{
+    background-color: black;
+}
+.pure-table-striped tr:nth-child(odd) td{
+    background-color: #202223;
+}
+#stock-div th,
+#stock-div td {
     padding: 12px 15px;
+}
+#stock-div{
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 /*stock table elements done*/
@@ -618,9 +657,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     overflow-y:scroll;
     margin-top: 10em;
 }
-#profile-posts .post-div{
-    
-}
+
 #profileUpdate fieldset{
     width:100%
     
@@ -643,7 +680,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-around;
-    
+    color:white;
     border-left: none;
     height:7vw;
 }
