@@ -47,6 +47,9 @@ body{
     font-size: 3em;
     color:white;
 }
+.popup-field-visible input, .popup-field-visible textarea{
+    color:white;
+}
 #tag-check{
     display: flex;
     gap:2em;
