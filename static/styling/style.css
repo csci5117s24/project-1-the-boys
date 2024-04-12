@@ -26,6 +26,7 @@ body{
     
     background-color: black;
     display:flex;
+    flex-direction: column;
     justify-content: center;
     width:20vw;
     height:65vh;
@@ -35,6 +36,7 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     min-height: fit-content;
+    min-width: fit-content
 }
 .popup-field-visible legend{
     font-size: 5em;
@@ -320,12 +322,12 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         background-color: black;
         margin-top:10vh;
         margin-bottom: 5vh;
-        overflow-x:hidden;
+        overflow-x:auto;
         color:white;
         scrollbar-color: #212324;
     }
     #stock-view-div{
-        overflow-y: scroll;
+        overflow: auto;
         height:85vh;
         display: flex;
         flex-direction: column;
@@ -386,8 +388,8 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     #profile-container
 {
     width: 20%;
-    margin-left: 2em;
-    margin-right: 2em;
+    margin-left: 2%;
+    margin-right: 2%;
     height:15%;
     margin-top:15vh;
     padding: 1em;
@@ -395,6 +397,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     border-radius: 1em;
     background-color: black;
     border-color: black;
+    min-height: fit-content;
     
 }
     
@@ -423,7 +426,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         overflow-x: hidden;
         
     }
-    #stock-view-div, .stock-list-table{
+    #stock-view-div, #stock-div{
         display:none;
         
     }
@@ -438,6 +441,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         height:75vh;
         display:block;
         width:50%;
+        color:white;
     }
     .side-buttons{
         width: 100%;
@@ -471,15 +475,17 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
     #profile-container
 {
-    width: 20%;
-    margin-left: 2em;
-    margin-right: 2em;
+    width: auto;
+    margin-left: 2%;
+    margin-right: 2%;
     height:fit-content;
     margin-top:15vh;
     padding: 1em;
     border-style: solid;
     border-radius: 1em;
     background-color: black;
+    border-color: black;
+    
     
 }
 }
@@ -696,11 +702,15 @@ input, .popup-field-visible textarea{
     
 }
 #profile-container .pure-g{
-    height:100%;
+    
     width:100%;
     display:flex;
     flex-direction: row;
     justify-content: space-around;
+}
+#profile-container h1{
+    margin:1%;
+    margin-left:3%;
 }
 #signup-container
 {
