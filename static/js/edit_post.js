@@ -1,4 +1,6 @@
 
+
+
 function display(idname)
 {   
     if(document.getElementById(idname).getAttribute("hidden") === "true")
@@ -10,6 +12,10 @@ function display(idname)
     {
         console.log("setting true");
         document.getElementById(idname).setAttribute("hidden","true");
+    }
+    if(!postDiv.hasAttribute('hidden')){
+        postDiv.toggleAttribute('hidden')
+        console.log("post hidden due to X")
     }
     
 }
