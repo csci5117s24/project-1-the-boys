@@ -1,6 +1,6 @@
 {%extends "frame.html"%}
 {%block content%}
-
+<script defer src="{{ url_for('static', filename='js/edit_profile.js') }}"></script>
 <!-- <ul>
     <li>username: {{username}}</li>
     <li>real name: {{realname}}</li>
@@ -71,9 +71,9 @@
 
 <div class="pure-g" id="edit-div">
     <div class="pure-u-4-5">
-
         <form enctype="multipart/form-data" hidden action="/editProfile" id="profileUpdate" method="POST"
         class="pure-form pure-form-stacked popup-field-visible">
+        <button type="button" class="close-popup pure-button">X</button>
         <fieldset id="edit-field" style="min-height:fit-content;"> 
             <legend style="font-size:5em">Edit Profile</legend>
             <span class="pure-form-message" style="font-size:2em">This is a required field.</span>

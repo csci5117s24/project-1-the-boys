@@ -61,7 +61,11 @@ body{
     font-size: 2em;
     color:white;
 }
-
+.popup-field-visible .close-popup{
+    width:10%;
+    margin-left: 90%;
+    margin-top: 2%;
+}
 
 
 
@@ -620,7 +624,7 @@ input, .popup-field-visible textarea{
 #stock-div a{
     color:white;
 }
-#stock-div td button,.post-buttons button{
+#stock-div td button,.post-buttons button, .popup-field-visible .close-popup{
     background-color: #27292b;
     color:white;
 }

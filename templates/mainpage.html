@@ -39,6 +39,7 @@
 
                         <form action="/editPost/{{post}}" id="Post{{post}}" hidden="true" method="POST"
                             class="pure-form pure-form-stacked popup-field-visible">
+                            <button type="button" class="close-popup pure-button" onClick="hideEditPost('Post{{post}}')">X</button>
                             <fieldset>
                                 <legend style="font-size:5em">Edit your post</legend>
                                 <span class="pure-form-message" style="font-size:2em">This is a required field.</span>
