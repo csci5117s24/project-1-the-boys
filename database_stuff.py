@@ -89,7 +89,7 @@ def createPostList(posts, cur):
 
 def get_recent_posts():
     with get_db_cursor(True) as cur:
-        cur.execute("SELECT * FROM Posts")
+        cur.execute("SELECT * FROM Posts ORDER BY postID DESC")
         posts=cur.fetchall()
         postList = createPostList(posts, cur)
         updatedPostList = get_user_info(postList, cur)

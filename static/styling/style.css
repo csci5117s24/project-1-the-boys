@@ -502,8 +502,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 
 /*basically my top margin*/
 
-input, .popup-field-visible textarea{
+input,.popup-field-visible textarea{
     background-color: #2b2a33;
+    color:white;
 }
 
 

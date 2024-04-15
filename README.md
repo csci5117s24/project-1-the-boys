@@ -7,8 +7,8 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 ## App Info:
 
 * Team Name: The Boys
-* App Name: TODO
-* App Link: <https://TODO.com/>
+* App Name: Stock Up
+* App Link: <https://project-1-the-boys.onrender.com/>
 
 ### Students
 
@@ -19,13 +19,15 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 ## Key Features
 
 **Describe the most challenging features you implemented
-(one sentence per bullet, maximum 4 bullets):**
 
-* ...
+
+* One of the things that was interesting to work with was the stock API usage, free plans are kind of rough (understandably) and like 6 different stock API's were used throughout development.
+* Considering that we were only 2 people there was not much beyond the base reqs so not much to say here
 
 ## Testing Notes
 
 **Is there anything special we need to know in order to effectively test your app? (optional):**
+All editing and deleting of posts should be done from the mainpage
 
 * ...
 
@@ -33,11 +35,19 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 ## Screenshots of Site
 
 **[Add a screenshot of each key page (around 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
-along with a very brief caption:**
+along with a very brief caption:** (Brevity is a rather large weakness of mine... sorry!)
 
 ![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
+![Mainpage](/static/images/final_mainpage.PNG)
+Mainpage basically has three columns, left one is a stock viewer that allows you to query any stock in the S&P 500 and display the most recent closing data. Center column displays post initially based on upload time (Most recent first) and has a search bar with functionality based on post content. The third column contains a list of stocks within the S&P 500 list, it allows the user to follow or view the stock in the left column. Each ticker is linked to Yahoo finance where the user can find more data.
 
+![Profile](/static/images/final_profile_page.PNG)
+The user profile became rather barebones and as such it only displays username, user picture, and all user posts. Profiles can be navigated to by clicking on another users profile picture.
 
+![Sidebar](/static/images/sidebar.PNG)
+Not a page but quick explanation of the sidebar navigation. Rather small due to limited options but from top to bottom it goes "Logo" and Home link to "/". + button pulls up the create post popup, non-users who try to submit a post are instead redirected to user sign-in page. Final button contains user profile picture (default for non-users) and links to the user page "/profile" (user sign-in for non-users).
+
+There originally were more pages that focused on each of the columns of mainpage but it seemed rather redundant as the mainpage ties everything together. (hence why Mainpage section is rather long)
 ## Mock-up 
 
 There are a few tools for mock-ups. Paper prototypes (low-tech, but effective and cheap), Digital picture edition software (gimp / photoshop / etc.), or dedicated tools like moqups.com (I'm calling out moqups here in particular since it seems to strike the best balance between "easy-to-use" and "wants your money" -- the free teir isn't perfect, but it should be sufficient for our needs with a little "creative layout" to get around the page-limit)
@@ -56,7 +66,9 @@ Please do not document required libraries. or libraries that are mentioned in th
 
 * Library or service name: description of use
 * ...
-
+Yahoo finance is linked through the stock table
+Polygon API is used within the stock viewer
+Clearbit logo API is used within the stock viewer
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
 here:**
