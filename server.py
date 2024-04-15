@@ -150,7 +150,24 @@ def profilepage():
         
         return render_template('profile.html',username=username,realname=realname,posts=postList, stocks=splist,userid=id[0][0], userPFP=picture) 
 
-    
+
+@app.route("/profile/<user>", methods=['GET'])
+def profilepageUser(user):
+    url_for('static', filename = 'styling/style.css')
+    with get_db_cursor(True) as cur:
+        cur.execute("SELECT ID FROM USERS WHERE id = %s", (user,),)
+        id = cur.fetchall()
+        print(cur.fetchall())
+        posts=get_posts_by_id(id, cur)
+        cur.execute(f"SELECT username, avatar, realname FROM Users WHERE ID='{id[0][0]}'")
+        user=cur.fetchall()
+        username=user[0][0]
+        realname=user[0][2]
+        picture=user[0][1]
+        
+        
+        return render_template('profile.html',username=username,realname=realname,posts=posts, stocks=splist,userid=id[0][0], userPFP=picture) 
+ 
 #Authorization
 @app.errorhandler(AuthError)
 def handle_auth_error(ex):
@@ -296,6 +313,8 @@ def editPost(pid):
 # @requires_auth
 @app.route("/Post",methods=['POST'])
 def post():
+    if not session.get("user",None):
+        return redirect("/login")
     with get_db_cursor(True) as cur:
         tags=request.form.getlist("tags")
         user=session["user"].get("userinfo").get("sub")
@@ -335,7 +354,7 @@ def callback():
             print("found no users with query: ")
             cur.execute("INSERT INTO Users (ID, realname) VALUES (%s, %s)", (session["user"].get("userinfo").get("sub"),token.get("userinfo").get("given_name")))
             print("\n added\n")
-            return render_template("login.html")
+            return redirect("/profile")
             
 #Call functions non-session user
 
@@ -345,23 +364,6 @@ def stockRedirect():
     pass
 
 
-@app.route("/profile/<user>", methods=['GET'])
-def profilepageUser(user):
-    url_for('static', filename = 'styling/style.css')
-    with get_db_cursor(True) as cur:
-        cur.execute(f"SELECT ID FROM Users WHERE username='{user}'")
-        id = cur.fetchall()
-        print(cur.fetchall())
-        posts=get_posts_by_id(id, cur)
-        cur.execute(f"SELECT username, avatar, realname FROM Users WHERE ID='{id[0][0]}'")
-        user=cur.fetchall()
-        username=user[0][0]
-        realname=user[0][2]
-        picture=user[0][1]
-        
-        
-        return render_template('profile.html',username=username,realname=realname,posts=posts, stocks=splist,userid=id[0][0], userPFP=picture) 
- 
 
 # @requires_auth
 @app.route("/follow/<uid>")
